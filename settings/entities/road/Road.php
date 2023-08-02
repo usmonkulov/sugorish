@@ -2,7 +2,7 @@
 
 namespace settings\entities\road;
 
-use settings\entities\user\Users;
+use settings\entities\user\User;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -25,8 +25,8 @@ use yii\db\ActiveRecord;
  * @property string $created_at
  * @property string $updated_at
  *
- * @property Users $createdBy
- * @property Users $updatedBy
+ * @property User $createdBy
+ * @property User $updatedBy
  * @property RoadTask[] $roadTasks
  */
 class Road extends ActiveRecord
@@ -51,8 +51,8 @@ class Road extends ActiveRecord
             [['status', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['road_name', 'code_name'], 'string', 'max' => 255],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['created_by' => 'id']],
-            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['updated_by' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
@@ -84,7 +84,7 @@ class Road extends ActiveRecord
      */
     public function getCreatedBy()
     {
-        return $this->hasOne(Users::class, ['id' => 'created_by']);
+        return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
     /**
@@ -92,7 +92,7 @@ class Road extends ActiveRecord
      */
     public function getUpdatedBy()
     {
-        return $this->hasOne(Users::class, ['id' => 'updated_by']);
+        return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 
     /**

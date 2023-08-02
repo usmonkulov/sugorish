@@ -36,12 +36,12 @@ class m230801_095038_create_road_table extends Migration
             'created_by'
         );
 
-        // add foreign key for table `{{%users}}`
+        // add foreign key for table `{{%user}}`
         $this->addForeignKey(
             '{{%fk-road-created_by}}',
             '{{%road}}',
             'created_by',
-            '{{%users}}',
+            '{{%user}}',
             'id',
             'RESTRICT',
             'CASCADE',
@@ -59,7 +59,7 @@ class m230801_095038_create_road_table extends Migration
             '{{%fk-road-updated_by}}',
             '{{%road}}',
             'updated_by',
-            '{{%users}}',
+            '{{%user}}',
             'id',
             'RESTRICT',
             'CASCADE'
@@ -71,7 +71,7 @@ class m230801_095038_create_road_table extends Migration
      */
     public function safeDown()
     {
-        // drops foreign key for table `{{%users}}`
+        // drops foreign key for table `{{%user}}`
         $this->dropForeignKey(
             '{{%fk-road-created_by}}',
             '{{%road}}'
@@ -83,7 +83,7 @@ class m230801_095038_create_road_table extends Migration
             '{{%road}}'
         );
 
-        // drops foreign key for table `{{%users}}`
+        // drops foreign key for table `{{%user}}`
         $this->dropForeignKey(
             '{{%fk-road-updated_by}}',
             '{{%road}}'

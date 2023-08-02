@@ -14,31 +14,28 @@ use yii\filters\VerbFilter;
  */
 class RoadController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
+//    /**
+//     * {@inheritdoc}
+//     */
+//    public function behaviors()
+//    {
+//        return [
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'delete' => ['POST'],
+//                ],
+//            ],
+//        ];
+//    }
 
-    /**
-     * Lists all Road models.
-     * @return mixed
-     */
+
     public function actionIndex()
     {
         $searchModel = new RoadSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
+        return $this->render('road/index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

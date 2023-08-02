@@ -32,7 +32,7 @@ use yii\db\ActiveQuery;
  * @property UserProfile[] userProfilesCreatedBy
  * @property UserRefreshToken[] $userRefreshTokens
  */
-class Users extends ActiveRecord
+class User extends ActiveRecord
 {
     /**
      * {@inheritdoc}

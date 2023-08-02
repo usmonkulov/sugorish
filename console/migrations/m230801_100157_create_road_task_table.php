@@ -52,12 +52,12 @@ class m230801_100157_create_road_task_table extends Migration
             'created_by'
         );
 
-        // add foreign key for table `{{%users}}`
+        // add foreign key for table `{{%user}}`
         $this->addForeignKey(
             '{{%fk-road_task-created_by}}',
             '{{%road_task}}',
             'created_by',
-            '{{%users}}',
+            '{{%user}}',
             'id',
             'RESTRICT',
             'CASCADE'
@@ -70,12 +70,12 @@ class m230801_100157_create_road_task_table extends Migration
             'updated_by'
         );
 
-        // add foreign key for table `{{%users}}`
+        // add foreign key for table `{{%user}}`
         $this->addForeignKey(
             '{{%fk-road_task-updated_by}}',
             '{{%road_task}}',
             'updated_by',
-            '{{%users}}',
+            '{{%user}}',
             'id',
             'RESTRICT',
             'CASCADE'
@@ -99,7 +99,7 @@ class m230801_100157_create_road_task_table extends Migration
             '{{%road_task}}'
         );
 
-        // drops foreign key for table `{{%users}}`
+        // drops foreign key for table `{{%user}}`
         $this->dropForeignKey(
             '{{%fk-road_task-created_by}}',
             '{{%road_task}}'
@@ -111,7 +111,7 @@ class m230801_100157_create_road_task_table extends Migration
             '{{%road_task}}'
         );
 
-        // drops foreign key for table `{{%users}}`
+        // drops foreign key for table `{{%user}}`
         $this->dropForeignKey(
             '{{%fk-road_task-updated_by}}',
             '{{%road_task}}'

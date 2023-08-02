@@ -58,17 +58,27 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        
-        'urlManager' => [
-            'scriptUrl' => '/backend/index.php',
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-                'user/<id:\d+>'=>'user/view',
-            ],
-        ],
+        'backendUrlManager' => require __DIR__ . '/urlManager.php',
+        'urlManager' => function () {
+            return Yii::$app->get('backendUrlManager');
+        },
        
     ],
+
+//    'as access' => [
+//        'class' => 'yii\filters\AccessControl',
+//        'except' => [
+//            'auth/login',
+//            'site/error'
+//        ],
+//        'rules' => [
+//            [
+//                'allow' => true,
+//                'roles' => ['admin'],
+//            ],
+//        ],
+//    ],
+
     'controllerMap' => [
         'elfinder' => [
             'class' => 'mihaildev\elfinder\PathController',

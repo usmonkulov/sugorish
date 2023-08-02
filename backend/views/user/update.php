@@ -3,10 +3,10 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model settings\entities\user\Users */
+/* @var $model settings\entities\user\User */
 
-$this->title = 'Update Users: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+$this->title = 'Update User: ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'User', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

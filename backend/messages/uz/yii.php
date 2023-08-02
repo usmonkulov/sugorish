@@ -136,7 +136,7 @@ return [
     'Image' => 'Rasm',
 
     'Posts' => 'Xabarlar',
-    'Users' => 'Foydalanuvchilar',
+    'User' => 'Foydalanuvchilar',
     'User' => 'Foydalanuvchi',
     'Description' => 'Qisqacha izoh',
     'Content' => 'Mazmuni',

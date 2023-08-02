@@ -3,10 +3,10 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model settings\entities\user\Users */
+/* @var $model settings\entities\user\User */
 
-$this->title = 'Create Users';
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+$this->title = 'Create User';
+$this->params['breadcrumbs'][] = ['label' => 'User', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="users-create">

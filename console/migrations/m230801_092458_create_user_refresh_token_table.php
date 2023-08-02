@@ -37,7 +37,7 @@ class m230801_092458_create_user_refresh_token_table extends Migration
             '{{%fk-user_refresh_token-user_id}}',
             '{{%user_refresh_token}}',
             'user_id',
-            '{{%users}}',
+            '{{%user}}',
             'id',
             'CASCADE'
         );
@@ -48,7 +48,7 @@ class m230801_092458_create_user_refresh_token_table extends Migration
      */
     public function safeDown()
     {
-        // drops foreign key for table `{{%users}}`
+        // drops foreign key for table `{{%user}}`
         $this->dropForeignKey(
             '{{%fk-user_refresh_token-user_id}}',
             '{{%user_refresh_token}}'

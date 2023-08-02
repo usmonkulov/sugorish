@@ -43,7 +43,7 @@ return [
 
     /**
      * Email used in contact form.
-     * Users will send you emails to this address.
+     * User will send you emails to this address.
      */
     'adminEmail' => 'admin@example.com', 
 

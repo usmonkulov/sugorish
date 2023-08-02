@@ -22,9 +22,9 @@ use yii\db\ActiveRecord;
  * @property string $created_at
  * @property string $updated_at
  *
- * @property Users $user
- * @property Users $createdBy
- * @property Users $updatedBy
+ * @property User $user
+ * @property User $createdBy
+ * @property User $updatedBy
  */
 class UserProfile extends ActiveRecord
 {
@@ -49,9 +49,9 @@ class UserProfile extends ActiveRecord
             [['address'], 'string'],
             [['first_name', 'last_name', 'middle_name'], 'string', 'max' => 255],
             [['gender'], 'string', 'max' => 1],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['user_id' => 'id']],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['created_by' => 'id']],
-            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['updated_by' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
+            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
@@ -81,7 +81,7 @@ class UserProfile extends ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(Users::class, ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     /**
@@ -89,7 +89,7 @@ class UserProfile extends ActiveRecord
      */
     public function getCreatedBy()
     {
-        return $this->hasOne(Users::class, ['id' => 'created_by']);
+        return $this->hasOne(User::class, ['id' => 'created_by']);
     }
 
     /**
@@ -97,6 +97,6 @@ class UserProfile extends ActiveRecord
      */
     public function getUpdatedBy()
     {
-        return $this->hasOne(Users::class, ['id' => 'updated_by']);
+        return $this->hasOne(User::class, ['id' => 'updated_by']);
     }
 }

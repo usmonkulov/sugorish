@@ -39,7 +39,7 @@ class m230801_093238_create_user_profile_table extends Migration
             '{{%fk-user_profile-user_id}}',
             '{{%user_profile}}',
             'user_id',
-            '{{%users}}',
+            '{{%user}}',
             'id',
             'CASCADE'
         );
@@ -55,7 +55,7 @@ class m230801_093238_create_user_profile_table extends Migration
             '{{%fk-user_profile-created_by}}',
             '{{%user_profile}}',
             'created_by',
-            '{{%users}}',
+            '{{%user}}',
             'id',
             'RESTRICT',
             'CASCADE',
@@ -85,7 +85,7 @@ class m230801_093238_create_user_profile_table extends Migration
      */
     public function safeDown()
     {
-        // drops foreign key for table `{{%users}}`
+        // drops foreign key for table `{{%user}}`
         $this->dropForeignKey(
             '{{%fk-user_profile-user_id}}',
             '{{%user_profile}}'
@@ -97,7 +97,7 @@ class m230801_093238_create_user_profile_table extends Migration
             '{{%user_profile}}'
         );
 
-        // drops foreign key for table `{{%users}}`
+        // drops foreign key for table `{{%user}}`
         $this->dropForeignKey(
             '{{%fk-user_profile-created_by}}',
             '{{%user_profile}}'
@@ -109,7 +109,7 @@ class m230801_093238_create_user_profile_table extends Migration
             '{{%user_profile}}'
         );
 
-        // drops foreign key for table `{{%users}}`
+        // drops foreign key for table `{{%user}}`
         $this->dropForeignKey(
             '{{%fk-user_profile-updated_by}}',
             '{{%user_profile}}'

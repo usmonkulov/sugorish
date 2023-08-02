@@ -17,7 +17,7 @@ use yii\db\ActiveRecord;
  * @property string $user_agent
  * @property string $created_at
  *
- * @property Users $user
+ * @property User $user
  */
 class UserRefreshToken extends ActiveRecord
 {
@@ -40,7 +40,7 @@ class UserRefreshToken extends ActiveRecord
             [['refresh_token', 'ip', 'user_agent'], 'string'],
             [['expired_date', 'created_at'], 'safe'],
             [['refresh_token'], 'unique'],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::class, 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -65,6 +65,6 @@ class UserRefreshToken extends ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(Users::class, ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 }
