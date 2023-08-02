@@ -1,10 +1,13 @@
 <?php
-
 namespace settings\forms\auth;
 
-use settings\entities\user\User;
+use Yii;
 use yii\base\Model;
+use settings\entities\user\User;
 
+/**
+ * Signup form
+ */
 class SignupForm extends Model
 {
     public $username;
@@ -20,20 +23,31 @@ class SignupForm extends Model
         return [
             ['username', 'trim'],
             ['username', 'required'],
-            ['username', 'unique', 'targetClass' => User::class, 'message' => 'This username has already been taken.'],
+            ['username', 'unique', 'targetClass' => User::class, 'message' => Yii::t('app',"Bu foydalanuvchi nomi allaqachon olingan.")],
             ['username', 'string', 'min' => 2, 'max' => 255],
 
             ['email', 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => User::class, 'message' => 'This email address has already been taken.'],
+            ['email', 'unique', 'targetClass' => User::class, 'message' => Yii::t('app',"Bu elektron pochta manzili allaqachon olingan.")],
 
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
 
             ['phone', 'required'],
             ['phone', 'integer'],
+            ['phone', 'unique', 'targetClass' => User::class, 'message' => Yii::t('app',"Bu telefon nomer allaqachon olingan.")],
+        ];
+    }
+
+    public function attributeLabels(): array
+    {
+        return [
+            'username' => Yii::t('app', 'Foydalanuvchi nomi'),
+            'email' => Yii::t('app', 'Pochta'),
+            'phone' => Yii::t('app', 'Telefon'),
+            'parol' => Yii::t('app', 'Parol'),
         ];
     }
 }

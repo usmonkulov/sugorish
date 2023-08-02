@@ -1,7 +1,7 @@
 <?php
+namespace candidate\forms\auth;
 
-namespace settings\forms\auth;
-
+use Yii;
 use yii\base\Model;
 
 class ResetPasswordForm extends Model
@@ -13,6 +13,13 @@ class ResetPasswordForm extends Model
         return [
             ['password', 'required'],
             ['password', 'string', 'min' => 6],
+        ];
+    }
+
+    public function attributeLabels(): array
+    {
+        return [
+            'password' => Yii::t('app', 'Parol'),
         ];
     }
 }

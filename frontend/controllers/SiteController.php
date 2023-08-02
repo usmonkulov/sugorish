@@ -1,7 +1,7 @@
 <?php
+
 namespace frontend\controllers;
-use common\models\Nomzod;
-use Yii;
+
 use yii\web\Controller;
 
 /**
@@ -9,11 +9,10 @@ use yii\web\Controller;
  */
 class SiteController extends Controller
 {
-
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function actions()
+    public function actions(): array
     {
         return [
             'error' => [
@@ -33,16 +32,6 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $model = new Nomzod();
-        if($model->load(Yii::$app->request->post())){
-            if($model->save()){
-                Yii::$app->session->setFlash('success', 'Arizangiz yuborildi');
-                 return $this->refresh();
-            }else{
-                Yii::$app->session->setFlash('error', 'Arizangiz yuborilmadi. Xatolik yuz berdi');
-            }
-        }
-        return $this->render('index', compact('session', 'model'));
+        return $this->render('index');
     }
-
 }

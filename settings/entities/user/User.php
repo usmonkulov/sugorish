@@ -2,148 +2,234 @@
 
 namespace settings\entities\user;
 
-use settings\entities\road\Road;
-use settings\entities\road\RoadTask;
+use settings\entities\EventTrait;
+use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
+use settings\entities\AggregateRoot;
+use settings\entities\user\events\UserSignUpConfirmed;
+use settings\entities\user\events\UserSignUpRequested;
 use Yii;
-use yii\db\ActiveRecord;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "{{%user}}".
+ * User model
  *
- * @property int $id
+ * @property integer $id
  * @property string $username
- * @property string $auth_key
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $email
  * @property string $email_confirm_token
  * @property string $phone
- * @property int $status
- * @property int $created_at
- * @property int $updated_at
+ * @property string $auth_key
+ * @property integer $status
+ * @property integer $created_at
+ * @property integer $updated_at
+ * @property string $password write-only password
  *
- * @property Road[] $roadsCreatedBy
- * @property Road[] $roadsUpdatedBy
- * @property RoadTask[] $roadTasksCreatedBy
- * @property RoadTask[] $roadTasksUpdatedBy
- * @property UserProfile $userProfile
- * @property UserProfile[] userProfilesUpdatedBy
- * @property UserProfile[] userProfilesCreatedBy
- * @property UserRefreshToken[] $userRefreshTokens
  */
-class User extends ActiveRecord
+class User extends ActiveRecord implements AggregateRoot
 {
+    use EventTrait;
+
+    const STATUS_WAIT = 0;
+    const STATUS_ACTIVE = 10;
+
+    public static function create(string $username, string $email, string $phone, string $password): self
+    {
+        $user = new User();
+        $user->username = $username;
+        $user->email = $email;
+        $user->phone = $phone;
+        $user->setPassword(!empty($password) ? $password : Yii::$app->security->generateRandomString());
+        $user->created_at = time();
+        $user->status = self::STATUS_ACTIVE;
+        $user->auth_key = Yii::$app->security->generateRandomString();
+        return $user;
+    }
+
+    public function edit(string $username, string $email, string $phone): void
+    {
+        $this->username = $username;
+        $this->email = $email;
+        $this->phone = $phone;
+        $this->updated_at = time();
+    }
+
+    public function editProfile(string $email, string $phone): void
+    {
+        $this->email = $email;
+        $this->phone = $phone;
+        $this->updated_at = time();
+    }
+
+    public static function requestSignup(string $username, string $email, string $phone, string $password): self
+    {
+        $user = new User();
+        $user->username = $username;
+        $user->email = $email;
+        $user->phone = $phone;
+        $user->setPassword($password);
+        $user->created_at = time();
+        $user->status = self::STATUS_ACTIVE;
+        $user->email_confirm_token = Yii::$app->security->generateRandomString();
+        $user->generateAuthKey();
+        $user->recordEvent(new UserSignUpRequested($user));
+        return $user;
+    }
+
+    public function confirmSignup(): void
+    {
+        if (!$this->isWait()) {
+            throw new \DomainException(Yii::t("app","Foydalanuvchi allaqachon faol."));
+        }
+        $this->status = self::STATUS_ACTIVE;
+        $this->email_confirm_token = null;
+        $this->recordEvent(new UserSignUpConfirmed($this));
+    }
+
+    public function requestPasswordReset(): void
+    {
+        if (!empty($this->password_reset_token) && self::isPasswordResetTokenValid($this->password_reset_token)) {
+            throw new \DomainException(Yii::t("app","Parolni tiklash allaqachon so'ralgan."));
+        }
+        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
+    }
+
+    public function resetPassword($password): void
+    {
+        if (empty($this->password_reset_token)) {
+            throw new \DomainException(Yii::t("app","Parolni tiklash talab qilinmaydi."));
+        }
+        $this->setPassword($password);
+        $this->password_reset_token = null;
+    }
+
+    public function isWait(): bool
+    {
+        return $this->status === self::STATUS_WAIT;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->status === self::STATUS_ACTIVE;
+    }
+
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function tableName()
     {
         return '{{%user}}';
     }
 
+
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    public function rules()
+    public function behaviors()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'email', 'phone', 'created_at', 'updated_at'], 'required'],
-            [['status', 'created_at', 'updated_at'], 'default', 'value' => null],
-            [['status', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'password_hash', 'password_reset_token'], 'string', 'max' => 255],
-            [['auth_key'], 'string', 'max' => 32],
-            [['email', 'email_confirm_token', 'phone'], 'string', 'max' => 50],
-            [['email_confirm_token'], 'unique'],
-            [['email'], 'unique'],
-            [['password_reset_token'], 'unique'],
-            [['phone'], 'unique'],
-            [['username'], 'unique'],
+            TimestampBehavior::className(),
+            [
+                'class' => SaveRelationsBehavior::className(),
+            ],
+        ];
+    }
+
+    public function attributeLabels(): array
+    {
+        return [
+            'id' => Yii::t('app', 'ID raqami'),
+            'username' => Yii::t('app', 'Foydalanuvchi nomi'),
+            'email' => Yii::t('app', 'Pochta'),
+            'phone' => Yii::t('app', 'Telefon'),
+            'status' => Yii::t('app', 'Holati'),
+            'created_at' => Yii::t('app', 'Yaratilgan vaqt'),
+            'updated_at' => Yii::t('app', "O'zgartirilgan vaqt"),
+        ];
+    }
+
+    public function transactions()
+    {
+        return [
+            self::SCENARIO_DEFAULT => self::OP_ALL,
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * Finds user by username
+     *
+     * @param string $username
+     * @return static|null
      */
-    public function attributeLabels()
+    public static function findByUsername($username)
     {
-        return [
-            'id' => Yii::t('app', 'ID'),
-            'username' => Yii::t('app', 'Username'),
-            'auth_key' => Yii::t('app', 'Auth Key'),
-            'password_hash' => Yii::t('app', 'Password Hash'),
-            'password_reset_token' => Yii::t('app', 'Password Reset Token'),
-            'email' => Yii::t('app', 'Email'),
-            'email_confirm_token' => Yii::t('app', 'Email Confirm Token'),
-            'phone' => Yii::t('app', 'Phone'),
-            'status' => Yii::t('app', 'Status'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-        ];
-    }
-
-
-    /**
-     * @return ActiveQuery
-     */
-    public function getRoadsCreatedBy()
-    {
-        return $this->hasMany(Road::class, ['created_by' => 'id']);
+        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
-     * @return ActiveQuery
+     * Finds user by password reset token
+     *
+     * @param string $token password reset token
+     * @return static|null
      */
-    public function getRoadsUpdatedBy()
+    public static function findByPasswordResetToken($token)
     {
-        return $this->hasMany(Road::class, ['updated_by' => 'id']);
+        if (!static::isPasswordResetTokenValid($token)) {
+            return null;
+        }
+
+        return static::findOne([
+            'password_reset_token' => $token,
+            'status' => self::STATUS_ACTIVE,
+        ]);
     }
 
     /**
-     * @return ActiveQuery
+     * Finds out if password reset token is valid
+     *
+     * @param string $token password reset token
+     * @return bool
      */
-    public function getRoadTasksCreatedBy()
+    public static function isPasswordResetTokenValid($token)
     {
-        return $this->hasMany(RoadTask::class, ['created_by' => 'id']);
+        if (empty($token)) {
+            return false;
+        }
+
+        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
+        $expire = Yii::$app->params['user.passwordResetTokenExpire'];
+        return $timestamp + $expire >= time();
     }
 
     /**
-     * @return ActiveQuery
+     * Validates password
+     *
+     * @param string $password password to validate
+     * @return bool if password provided is valid for current user
      */
-    public function getRoadTasksUpdatedBy()
+    public function validatePassword($password)
     {
-        return $this->hasMany(RoadTask::class, ['updated_by' => 'id']);
+        return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
 
     /**
-     * @return ActiveQuery
+     * Generates password hash from password and sets it to the model
+     *
+     * @param string $password
      */
-    public function getUserProfile()
+    private function setPassword($password)
     {
-        return $this->hasOne(UserProfile::class, ['user_id' => 'id']);
+        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
     /**
-     * @return ActiveQuery
+     * Generates "remember me" authentication key
      */
-    public function getUserProfilesCreatedBy()
+    private function generateAuthKey()
     {
-        return $this->hasMany(UserProfile::class, ['created_by' => 'id']);
-    }
-
-    /**
-     * @return ActiveQuery
-     */
-    public function getUserProfilesUpdatedBy()
-    {
-        return $this->hasMany(UserProfile::class, ['updated_by' => 'id']);
-    }
-
-    /**
-     * @return ActiveQuery
-     */
-    public function getUserRefreshTokens()
-    {
-        return $this->hasMany(UserRefreshToken::class, ['user_id' => 'id']);
+        $this->auth_key = Yii::$app->security->generateRandomString();
     }
 }

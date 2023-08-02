@@ -9,7 +9,11 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log',
+        'common\bootstrap\SetUp',
+        'frontend\bootstrap\SetUp',
+    ],
     'modules' => [
         'yii2images' => [
             'class' => 'rico\yii2images\Module',
@@ -30,13 +34,17 @@ return [
             'baseUrl' => '',
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'common\auth\Identity',
             'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+            'identityCookie' => ['name' => '_identity', 'httpOnly' => true, 'domain' => $params['cookieDomain']],
+            'loginUrl' => ['auth/auth/login'],
         ],
         'session' => [
-            // this is the name of the session cookie used for login on the frontend
-            'name' => 'advanced-frontend',
+            'name' => '_session',
+            'cookieParams' => [
+                'domain' => $params['cookieDomain'],
+                'httpOnly' => true,
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -51,14 +59,33 @@ return [
             'errorAction' => 'site/error',
         ],
 
-        'urlManager' => [
-            'scriptUrl' => '/index.php',
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
+        'backendUrlManager' => require __DIR__ . '/../../backend/config/urlManager.php',
+        'frontendUrlManager' => require __DIR__ . '/urlManager.php',
+        'urlManager' => function () {
+            return Yii::$app->get('frontendUrlManager');
+        },
 
     ],
+
+    'as access' => [
+        'class' => 'yii\filters\AccessControl',
+        'except' => [
+            'auth/auth/login',
+            'auth/signup/request',
+            'auth/signup/confirm',
+            'auth/reset/request',
+            'auth/reset/confirm',
+            'site/error',
+            'site/index',
+            'candidate/check',
+        ],
+        'rules' => [
+            [
+                'allow' => true,
+                'roles' => ['@'],
+            ],
+        ],
+    ],
+
     'params' => $params,
 ];

@@ -1,15 +1,18 @@
 <?php
-
 namespace settings\forms\auth;
 
-use settings\entities\user\User;
+use Yii;
 use yii\base\Model;
+use settings\entities\user\User;
 
 class PasswordResetRequestForm extends Model
 {
     public $email;
 
-    public function rules()
+    /**
+     * @return array
+     */
+    public function rules(): array
     {
         return [
             ['email', 'trim'],
@@ -18,8 +21,18 @@ class PasswordResetRequestForm extends Model
             ['email', 'exist',
                 'targetClass' => User::class,
                 'filter' => ['status' => User::STATUS_ACTIVE],
-                'message' => 'There is no user with this email address.'
+                'message' => Yii::t('app','Ushbu elektron pochta manziliga ega foydalanuvchi yo\'q.')
             ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function attributeLabels(): array
+    {
+        return [
+            'email' => Yii::t('app', 'Pochta'),
         ];
     }
 }

@@ -1,9 +1,11 @@
 <?php
-
 return [
     'adminEmail' => 'admin@example.com',
-    'supportEmail' => 'boburusmonkulov@yandex.com',
-    'secretKeyExpire' => 60 * 60,
-    'emailActivation' => true,
-    'loginWithEmail' => true,
+    'user.passwordResetTokenExpire' => 3600,
+    'user.rememberMeDuration' => 3600 * 24 * 30,
+    'cookieDomain' => 'localhost',
+    'frontendHostInfo' => 'http://sugorish/admin',
+    'backendHostInfo' => 'http://sugorish',
+    'mailChimpKey' => '',
+    'mailChimpListId' => '',
 ];
