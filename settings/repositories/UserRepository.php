@@ -2,6 +2,7 @@
 
 namespace settings\repositories;
 
+use settings\dispatchers\EventDispatcher;
 use settings\entities\user\User;
 
 class UserRepository

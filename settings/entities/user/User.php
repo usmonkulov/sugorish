@@ -9,7 +9,7 @@ use yii\db\ActiveRecord;
 use yii\db\ActiveQuery;
 
 /**
- * This is the model class for table "{{%users}}".
+ * This is the model class for table "{{%user}}".
  *
  * @property int $id
  * @property string $username
@@ -39,7 +39,7 @@ class User extends ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%users}}';
+        return '{{%user}}';
     }
 
     /**

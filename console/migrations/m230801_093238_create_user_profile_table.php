@@ -73,7 +73,7 @@ class m230801_093238_create_user_profile_table extends Migration
             '{{%fk-user_profile-updated_by}}',
             '{{%user_profile}}',
             'updated_by',
-            '{{%users}}',
+            '{{%user}}',
             'id',
             'RESTRICT',
             'CASCADE'

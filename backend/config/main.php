@@ -10,7 +10,11 @@ return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log',
+        'common\bootstrap\SetUp',
+        'backend\bootstrap\SetUp',
+    ],
         'modules' => [
             'yii2images' => [
                 'class' => 'rico\yii2images\Module',
@@ -30,10 +34,21 @@ return [
             'baseUrl' => '/admin',
         ],
         'user' => [
-            'identityClass' => 'common\models\UserIdentity',
+            'identityClass' => 'common\auth\Identity',
             'enableAutoLogin' => true,
-            // 'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+            'identityCookie' => [
+                'name' => '_identity',
+                'httpOnly' => true,
+//                'domain' => $params['cookieDomain'],
+            ],
+            'loginUrl' => ['auth/login'],
         ],
+//        'user' => [
+//            'identityClass' => 'common\models\UserIdentity',
+//            'enableAutoLogin' => true,
+//             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+//        ],
+
         'session' => [
             // this is the name of the session cookie used for login on the backend
             'name' => 'advanced-backend',
@@ -62,22 +77,22 @@ return [
         'urlManager' => function () {
             return Yii::$app->get('backendUrlManager');
         },
-       
+
     ],
 
-//    'as access' => [
-//        'class' => 'yii\filters\AccessControl',
-//        'except' => [
-//            'auth/login',
-//            'site/error'
-//        ],
-//        'rules' => [
-//            [
-//                'allow' => true,
-//                'roles' => ['admin'],
-//            ],
-//        ],
-//    ],
+    'as access' => [
+        'class' => 'yii\filters\AccessControl',
+        'except' => [
+            'auth/login',
+            'site/error'
+        ],
+        'rules' => [
+            [
+                'allow' => true,
+                'roles' => ['admin'],
+            ],
+        ],
+    ],
 
     'controllerMap' => [
         'elfinder' => [
