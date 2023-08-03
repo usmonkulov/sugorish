@@ -58,8 +58,8 @@ class JwtAuthService
         $newRefreshToken = $this->auth->generateRefreshToken($user->id);
 
         $this->transaction->wrap(function() use ($oldUserRefreshToken, $newRefreshToken) {
-            $this->tokens->remove($oldUserRefreshToken);
-            $this->tokens->save($newRefreshToken);
+             $this->tokens->remove($oldUserRefreshToken);
+             $this->tokens->save($newRefreshToken);
         });
 
         return [

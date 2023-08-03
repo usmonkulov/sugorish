@@ -1,6 +1,5 @@
 <?php
 
-
 namespace settings\dispatchers;
 
 use yii\di\Container;

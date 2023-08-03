@@ -1,8 +1,6 @@
 <?php
 
-
 namespace settings\dispatchers;
-
 
 class DeferredEventDispatcher implements EventDispatcher
 {

@@ -7,6 +7,8 @@ $params = array_merge(
 );
 
 return [
+    'name' => Yii::t('app', 'ADMIN'),
+    'language' => 'uz',
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
@@ -15,22 +17,11 @@ return [
         'common\bootstrap\SetUp',
         'backend\bootstrap\SetUp',
     ],
-        'modules' => [
-            'yii2images' => [
-                'class' => 'rico\yii2images\Module',
-                //be sure, that permissions ok
-                //if you cant avoid permission errors you have to create "images" folder in web root manually and set 777 permissions
-                'imagesStorePath' => 'upload/store', //path to origin images
-                'imagesCachePath' => 'upload/cache', //path to resized copies
-                'graphicsLibrary' => 'GD', //but really its better to use 'Imagick'
-                'placeHolderPath' => '@webroot/upload/store/placeHolder/user.png', // if you want to get placeholder when image not exists, string will be processed by Yii::getAlias
-                // 'imageCompressionQuality' => 100, // Optional. Default value is 85.
-            ],
-        ],
-    'language'=>'uz',
+    'modules' => [],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
+            'cookieValidationKey' => $params['cookieValidationKey'],
             'baseUrl' => '/admin',
         ],
         'user' => [
@@ -39,19 +30,16 @@ return [
             'identityCookie' => [
                 'name' => '_identity',
                 'httpOnly' => true,
-//                'domain' => $params['cookieDomain'],
+                'domain' => $params['cookieDomain'],
             ],
             'loginUrl' => ['auth/login'],
         ],
-//        'user' => [
-//            'identityClass' => 'common\models\UserIdentity',
-//            'enableAutoLogin' => true,
-//             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
-//        ],
-
         'session' => [
-            // this is the name of the session cookie used for login on the backend
-            'name' => 'advanced-backend',
+            'name' => '_session',
+            'cookieParams' => [
+                'domain' => $params['cookieDomain'],
+                'httpOnly' => true,
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -62,24 +50,15 @@ return [
                 ],
             ],
         ],
-        // 'session' => [
-        //     'class' => 'yii\web\Session',
-        //     'savePath' => '@app/runtime/session'
-        // ],
-        'authManager' => [
-            'class' => 'yii\rbac\DbManager',
-            'cache' => 'cache',
-        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
         'backendUrlManager' => require __DIR__ . '/urlManager.php',
+        'frontendUrlManager' => require __DIR__ . '/../../frontend/config/urlManager.php',
         'urlManager' => function () {
             return Yii::$app->get('backendUrlManager');
         },
-
     ],
-
     'as access' => [
         'class' => 'yii\filters\AccessControl',
         'except' => [
@@ -92,19 +71,6 @@ return [
                 'roles' => ['admin'],
             ],
         ],
-    ],
-
-    'controllerMap' => [
-        'elfinder' => [
-            'class' => 'mihaildev\elfinder\PathController',
-            'access' => ['@'],
-            'root' => [
-                'baseUrl'=>'@web',
-                'basePath'=>'@webroot',
-                'path' => 'files/global',
-                'name' => 'Global'
-            ],
-        ]
     ],
     'params' => $params,
 ];

@@ -1,5 +1,4 @@
 <?php
-
 namespace frontend\controllers\auth;
 
 use settings\useCases\auth\PasswordResetService;

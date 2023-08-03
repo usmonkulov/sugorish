@@ -1,8 +1,8 @@
 <?php
 
-use settings\forms\auth\ResetPasswordForm;
+use candidate\forms\auth\ResetPasswordForm;
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+use yii\bootstrap4\ActiveForm;
 use yii\web\View;
 
 /* @var $this View */
@@ -20,11 +20,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'reset-password-form']); ?>
 
-            <?= $form->field($model, 'password')->passwordInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'password')->passwordInput(['autofocus' => true]) ?>
 
-            <div class="form-group">
-                <?= Html::submitButton(Yii::t('app',"Saqlash"), ['class' => 'btn btn-primary']) ?>
-            </div>
+                <div class="form-group">
+                    <?= Html::submitButton(Yii::t('app',"Saqlash"), ['class' => 'btn btn-primary']) ?>
+                </div>
 
             <?php ActiveForm::end(); ?>
         </div>

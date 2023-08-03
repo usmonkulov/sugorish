@@ -2,68 +2,76 @@
 
 namespace settings\entities\user;
 
-use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "{{%user_refresh_token}}".
- *
  * @property int $id
  * @property int $user_id
  * @property string $refresh_token
  * @property string $expired_date
  * @property string $ip
  * @property string $user_agent
- * @property string $created_at
+ * @property int $created_at
  *
- * @property User $user
+ * @property-read User $user
  */
 class UserRefreshToken extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return static
      */
-    public static function tableName()
+    public static function create($user_id, $refresh_token, $expired_date, $ip, $user_agent)
     {
-        return '{{%user_refresh_token}}';
+        $item = new static();
+        $item->user_id = $user_id;
+        $item->refresh_token = $refresh_token;
+        $item->expired_date = $expired_date;
+        $item->ip = $ip;
+        $item->user_agent = $user_agent;
+        return $item;
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
-    public function rules()
+    public static function tableName(): string
+    {
+        return 'public.user_refresh_token';
+    }
+
+    /**
+     * @return array[]
+     */
+    public function behaviors(): array
     {
         return [
-            [['user_id'], 'default', 'value' => null],
-            [['user_id'], 'integer'],
-            [['refresh_token', 'ip', 'user_agent'], 'string'],
-            [['expired_date', 'created_at'], 'safe'],
-            [['refresh_token'], 'unique'],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            'timestamp' => [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => false,
+                'value' => date('Y-m-d H:i:s.u'),
+            ]
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return array[]
      */
-    public function attributeLabels()
+    public function rules(): array
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'user_id' => Yii::t('app', 'User ID'),
-            'refresh_token' => Yii::t('app', 'Refresh Token'),
-            'expired_date' => Yii::t('app', 'Expired Date'),
-            'ip' => Yii::t('app', 'Ip'),
-            'user_agent' => Yii::t('app', 'User Agent'),
-            'created_at' => Yii::t('app', 'Created At'),
+            [['user_id', 'refresh_token', 'ip', 'user_agent', 'expired_date'], 'required'],
+            [['user_id'], 'integer'],
+            [['refresh_token', 'ip', 'user_agent', 'expired_date'], 'string']
         ];
     }
 
     /**
      * @return ActiveQuery
      */
-    public function getUser()
+    public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }

@@ -28,7 +28,7 @@ $this->title = Yii::t('app', 'Bosh sahifa');
             <div class="col">
                 <div class="counter">
                     <h2 class="timer count-title count-number" data-to="157" data-speed="1500">Test_4</h2>
-                    <p class="count-text ">Test_4</p>
+                    <p class="count-text "><Test_4></Test_4></p>
                 </div>
             </div>
         </div>

@@ -1,9 +1,8 @@
 <?php
 
-namespace shop\jobs;
+namespace settings\jobs;
 
 use settings\dispatchers\EventDispatcher;
-use settings\jobs\AsyncEventJob;
 
 class AsyncEventJobHandler
 {

@@ -3,6 +3,7 @@
 namespace settings\repositories;
 
 use settings\dispatchers\EventDispatcher;
+use settings\entities\NotFoundException;
 use settings\entities\user\User;
 
 class UserRepository

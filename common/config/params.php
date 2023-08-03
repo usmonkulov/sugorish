@@ -4,8 +4,8 @@ return [
     'user.passwordResetTokenExpire' => 3600,
     'user.rememberMeDuration' => 3600 * 24 * 30,
     'cookieDomain' => 'localhost',
-    'frontendHostInfo' => 'http://sugorish/admin',
-    'backendHostInfo' => 'http://sugorish',
+    'frontendHostInfo' => 'http://sugorish',
+    'backendHostInfo' => 'http://sugorish/admin',
     'mailChimpKey' => '',
     'mailChimpListId' => '',
 ];

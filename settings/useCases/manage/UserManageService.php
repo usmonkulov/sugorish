@@ -2,7 +2,7 @@
 
 namespace settings\useCases\manage;
 
-use settings\entities\User\User;
+use settings\entities\user\User;
 use settings\forms\manage\user\UserCreateForm;
 use settings\forms\manage\user\UserEditForm;
 use settings\repositories\UserRepository;

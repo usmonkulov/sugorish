@@ -7,6 +7,7 @@ $params = array_merge(
 );
 
 return [
+    'name' => Yii::t('app', 'Nomzodlar'),
     'id' => 'app-frontend',
     'language' => 'uz',
     'timeZone' => 'Asia/Tashkent',
@@ -47,7 +48,6 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-
         'backendUrlManager' => require __DIR__ . '/../../backend/config/urlManager.php',
         'frontendUrlManager' => require __DIR__ . '/urlManager.php',
         'urlManager' => function () {
@@ -55,7 +55,6 @@ return [
         },
 
     ],
-
     'as access' => [
         'class' => 'yii\filters\AccessControl',
         'except' => [
@@ -75,6 +74,5 @@ return [
             ],
         ],
     ],
-
     'params' => $params,
 ];
