@@ -1,10 +1,10 @@
 <?php
 
-namespace backend\controllers\road;
+namespace backend\controllers;
 
 use Yii;
 use settings\entities\road\Road;
-use settings\forms\road\search\RoadSearch;
+use backend\forms\RoadSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

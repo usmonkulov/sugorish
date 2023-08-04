@@ -141,13 +141,13 @@ class User extends ActiveRecord implements AggregateRoot
     public function attributeLabels(): array
     {
         return [
-            'id' => Yii::t('app', 'ID raqami'),
-            'username' => Yii::t('app', 'Login'),
-            'email' => Yii::t('app', 'Pochta'),
-            'phone' => Yii::t('app', 'Telefon'),
-            'status' => Yii::t('app', 'Holati'),
-            'created_at' => Yii::t('app', 'Yaratilgan vaqt'),
-            'updated_at' => Yii::t('app', "O'zgartirilgan vaqt"),
+            'id' =>             Yii::t('app', 'ID raqami'),
+            'username' =>       Yii::t('app', 'Login'),
+            'email' =>          Yii::t('app', 'Pochta'),
+            'phone' =>          Yii::t('app', 'Telefon'),
+            'status' =>         Yii::t('app', 'Holati'),
+            'created_at' =>     Yii::t('app', 'Yaratilgan vaqt'),
+            'updated_at' =>     Yii::t('app', "O'zgartirilgan vaqt"),
         ];
     }
 

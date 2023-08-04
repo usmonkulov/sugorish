@@ -239,15 +239,15 @@ use yii\helpers\Html;
 <!--                                <a href="#" class="btn btn-default btn-flat">Profilga kirish</a>-->
                                 <?= Html::a(
                                     '<i class="fa fa-user"></i> ' . Yii::t('app', ' Profilga kirish'),
-                                    ['/site/logout'],
-                                    ['data-method' => 'post', 'class' => 'btn btn-primary btn-flat']
+                                    ['/user/view', 'id' => Yii::$app->user->id],
+                                    ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
                                 ) ?>
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(
                                      '<i class="fa fa-sign-out"></i> ' . Yii::t('app', ' Chiqish'),
                                     ['/site/logout'],
-                                    ['data-method' => 'post', 'class' => 'btn btn-danger btn-flat']
+                                    ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
                                 ) ?>
                             </div>
                         </li>
