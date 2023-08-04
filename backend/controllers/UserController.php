@@ -123,6 +123,7 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
+        if (Yii::$app->user->id != $id)
         $this->service->remove($id);
         return $this->redirect(['index']);
     }

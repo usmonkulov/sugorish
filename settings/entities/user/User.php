@@ -142,7 +142,7 @@ class User extends ActiveRecord implements AggregateRoot
     {
         return [
             'id' => Yii::t('app', 'ID raqami'),
-            'username' => Yii::t('app', 'Foydalanuvchi nomi'),
+            'username' => Yii::t('app', 'Login'),
             'email' => Yii::t('app', 'Pochta'),
             'phone' => Yii::t('app', 'Telefon'),
             'status' => Yii::t('app', 'Holati'),

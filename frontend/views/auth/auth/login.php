@@ -1,8 +1,8 @@
 <?php
 
-use candidate\forms\auth\LoginForm;
+use settings\forms\auth\LoginForm;
 use yii\helpers\Html;
-use yii\bootstrap4\ActiveForm;
+use yii\bootstrap\ActiveForm;
 use yii\web\View;
 
 /* @var $this View */

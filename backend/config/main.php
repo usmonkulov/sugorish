@@ -9,6 +9,7 @@ $params = array_merge(
 return [
     'name' => Yii::t('app', 'ADMIN'),
     'language' => 'uz',
+    'timeZone' => 'Asia/Tashkent',
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
