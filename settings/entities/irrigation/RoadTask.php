@@ -1,6 +1,6 @@
 <?php
 
-namespace settings\entities\road;
+namespace settings\entities\irrigation;
 
 use settings\entities\user\User;
 use Yii;
@@ -8,35 +8,33 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "{{%road}}".
+ * This is the model class for table "{{%road_task}}".
  *
  * @property int $id
- * @property string $road_name
- * @property string $code_name
- * @property string $address
- * @property string $coordination
- * @property string $enterprise_expert
- * @property string $plot_chief
- * @property string $water_employee
+ * @property int|null $road_id
+ * @property string $start_time
+ * @property string $end_time
  * @property int $status
- * @property string|null $image_url
+ * @property int $status_color
+ * @property string|null $description
+ * @property string|null $content
  * @property int $created_by
  * @property int|null $updated_by
  * @property string $created_at
  * @property string|null $updated_at
  *
  * @property User $createdBy
- * @property RoadTask[] $roadTasks
+ * @property Road $road
  * @property User $updatedBy
  */
-class Road extends ActiveRecord
+class RoadTask extends ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%road}}';
+        return '{{%road_task}}';
     }
 
     /**
@@ -45,12 +43,12 @@ class Road extends ActiveRecord
     public function rules()
     {
         return [
-            [['road_name', 'code_name', 'address', 'coordination', 'enterprise_expert', 'plot_chief', 'water_employee', 'created_by'], 'required'],
-            [['address', 'coordination', 'enterprise_expert', 'plot_chief', 'water_employee', 'image_url'], 'string'],
-            [['status', 'created_by', 'updated_by'], 'default', 'value' => null],
-            [['status', 'created_by', 'updated_by'], 'integer'],
+            [['road_id', 'status', 'status_color', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['road_id', 'status', 'status_color', 'created_by', 'updated_by'], 'integer'],
+            [['start_time', 'end_time', 'created_by'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
-            [['road_name', 'code_name'], 'string', 'max' => 255],
+            [['start_time', 'end_time', 'description', 'content'], 'string', 'max' => 255],
+            [['road_id'], 'exist', 'skipOnError' => true, 'targetClass' => Road::class, 'targetAttribute' => ['road_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
         ];
@@ -63,15 +61,13 @@ class Road extends ActiveRecord
     {
         return [
             'id' =>                 Yii::t('app', 'ID raqami'),
-            'road_name' =>          Yii::t('app', 'Yo\'l nomi'),
-            'code_name' =>          Yii::t('app', 'Yo\'l kodi'),
-            'address' =>            Yii::t('app', 'Manzil'),
-            'coordination' =>       Yii::t('app', 'Kordinatasi'),
-            'enterprise_expert' =>  Yii::t('app', 'Korxonadan biriktirilgan hodim'),
-            'plot_chief' =>         Yii::t('app', 'Uchastka boshlig\'i'),
-            'water_employee' =>     Yii::t('app', 'Suvchi'),
+            'road_id' =>            Yii::t('app', 'Yo\'l id raqami'),
+            'start_time' =>         Yii::t('app', 'boshlanish vaqti'),
+            'end_time' =>           Yii::t('app', 'Tugash vaqti'),
             'status' =>             Yii::t('app', 'Holati'),
-            'image_url' =>          Yii::t('app', 'Rasim Url'),
+            'status_color' =>       Yii::t('app', 'Holat rangi'),
+            'description' =>        Yii::t('app', 'Description'),
+            'content' =>            Yii::t('app', 'Content'),
             'created_by' =>         Yii::t('app', 'Yaratgan foydalanuvchi'),
             'updated_by' =>         Yii::t('app', 'Tahrirlagan foydalanuvchi'),
             'created_at' =>         Yii::t('app', 'Yaratilgan vaqti'),
@@ -90,13 +86,13 @@ class Road extends ActiveRecord
     }
 
     /**
-     * Gets query for [[RoadTasks]].
+     * Gets query for [[Road]].
      *
      * @return ActiveQuery
      */
-    public function getRoadTasks()
+    public function getRoad()
     {
-        return $this->hasMany(RoadTask::class, ['road_id' => 'id']);
+        return $this->hasOne(Road::class, ['id' => 'road_id']);
     }
 
     /**

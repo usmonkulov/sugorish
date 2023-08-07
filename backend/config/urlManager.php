@@ -10,6 +10,9 @@ return [
     'showScriptName' => false,
     'rules' => [
         '' => 'site/index',
+        'road'          => 'irrigation/road/index',
+        'road/create'   => 'irrigation/road/create',
+        'road/<action:(view)>/<id:\d+>'  => 'irrigation/road/<action>',
         '<_a:login|logout>' => 'auth/<_a>',
 
         '<_c:[\w\-]+>' => '<_c>/index',
