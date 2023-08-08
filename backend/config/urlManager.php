@@ -12,6 +12,8 @@ return [
         '' => 'site/index',
         'road'          => 'irrigation/road/index',
         'road/create'   => 'irrigation/road/create',
+        'enum-road-position'          => 'enum/enum-road-position/index',
+        'enum-road-position/create'   => 'enum/enum-road-position/create',
         'road/<action:(view)>/<id:\d+>'  => 'irrigation/road/<action>',
         '<_a:login|logout>' => 'auth/<_a>',
 

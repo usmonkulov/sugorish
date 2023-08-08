@@ -33,7 +33,7 @@
                     ['label' => 'Management', 'options' => ['class' => 'header']],
                         ['label' => Yii::t('app', "Sug'orish"), 'options' => ['class' => 'no-active'], 'icon' => 'folder', 'items' => [
                             ['label' => 'Yo\'l nomi', 'icon' => 'fa fa-irrigation', 'url' => ['/road/index'], 'active' => $this->context->id == 'irrigation/index'],
-                            ['label' => 'Suv quyush vaqti', 'icon' => 'file-o', 'url' => ['/shop/product/index'], 'active' => $this->context->id == 'shop/product'],
+                            ['label' => 'Lavozimlar', 'icon' => 'file-o', 'url' => ['/enum-road-position/index'], 'active' => $this->context->id == 'enum/enum-road-position'],
                         ]],
                         ['label' => 'Blog', 'options' => ['class' => 'no-active'], 'icon' => 'folder', 'items' => [
                             ['label' => 'Posts', 'icon' => 'file-o', 'url' => ['/blog/post/index'], 'active' => $this->context->id == 'blog/post'],

@@ -3,16 +3,16 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%road_task}}`.
+ * Handles the creation of table `{{%road_irrigation_tasks}}`.
  */
-class m230801_100157_create_road_task_table extends Migration
+class m230808_072259_create_road_irrigation_tasks_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('{{%road_task}}', [
+        $this->createTable('{{%road_irrigation_tasks}}', [
             'id'             => $this->primaryKey(),
             'road_id'        => $this->integer(),
             'start_time'     => $this->string()->notNull(),
@@ -29,15 +29,15 @@ class m230801_100157_create_road_task_table extends Migration
 
         // creates index for column `created_by`
         $this->createIndex(
-            '{{%idx-road_task-road_id}}',
-            '{{%road_task}}',
+            '{{%idx-road_irrigation_tasks-road_id}}',
+            '{{%road_irrigation_tasks}}',
             'road_id'
         );
 
         // add foreign key for table `{{%road}}`
         $this->addForeignKey(
-            '{{%fk-road_task-road_id}}',
-            '{{%road_task}}',
+            '{{%fk-road_irrigation_tasks-road_id}}',
+            '{{%road_irrigation_tasks}}',
             'road_id',
             '{{%road}}',
             'id',
@@ -47,15 +47,15 @@ class m230801_100157_create_road_task_table extends Migration
 
         // creates index for column `created_by`
         $this->createIndex(
-            '{{%idx-road_task-created_by}}',
-            '{{%road_task}}',
+            '{{%idx-road_irrigation_tasks-created_by}}',
+            '{{%road_irrigation_tasks}}',
             'created_by'
         );
 
         // add foreign key for table `{{%user}}`
         $this->addForeignKey(
-            '{{%fk-road_task-created_by}}',
-            '{{%road_task}}',
+            '{{%fk-road_irrigation_tasks-created_by}}',
+            '{{%road_irrigation_tasks}}',
             'created_by',
             '{{%user}}',
             'id',
@@ -65,15 +65,15 @@ class m230801_100157_create_road_task_table extends Migration
 
         // creates index for column `updated_by`
         $this->createIndex(
-            '{{%idx-road_task-updated_by}}',
-            '{{%road_task}}',
+            '{{%idx-road_irrigation_tasks-updated_by}}',
+            '{{%road_irrigation_tasks}}',
             'updated_by'
         );
 
         // add foreign key for table `{{%user}}`
         $this->addForeignKey(
-            '{{%fk-road_task-updated_by}}',
-            '{{%road_task}}',
+            '{{%fk-road_irrigation_tasks-updated_by}}',
+            '{{%road_irrigation_tasks}}',
             'updated_by',
             '{{%user}}',
             'id',
@@ -89,40 +89,40 @@ class m230801_100157_create_road_task_table extends Migration
     {
         // drops foreign key for table `{{%road}}`
         $this->dropForeignKey(
-            '{{%fk-road_task-road_id}}',
-            '{{%road_task}}'
+            '{{%fk-road_irrigation_tasks-road_id}}',
+            '{{%road_irrigation_tasks}}'
         );
 
         // drops index for column `road_id`
         $this->dropIndex(
-            '{{%idx-road_task-road_id}}',
-            '{{%road_task}}'
+            '{{%idx-road_irrigation_tasks-road_id}}',
+            '{{%road_irrigation_tasks}}'
         );
 
         // drops foreign key for table `{{%user}}`
         $this->dropForeignKey(
-            '{{%fk-road_task-created_by}}',
-            '{{%road_task}}'
+            '{{%fk-road_irrigation_tasks-created_by}}',
+            '{{%road_irrigation_tasks}}'
         );
 
         // drops index for column `created_by`
         $this->dropIndex(
-            '{{%idx-road_task-created_by}}',
-            '{{%road_task}}'
+            '{{%idx-road_irrigation_tasks-created_by}}',
+            '{{%road_irrigation_tasks}}'
         );
 
         // drops foreign key for table `{{%user}}`
         $this->dropForeignKey(
-            '{{%fk-road_task-updated_by}}',
-            '{{%road_task}}'
+            '{{%fk-road_irrigation_tasks-updated_by}}',
+            '{{%road_irrigation_tasks}}'
         );
 
         // drops index for column `updated_by`
         $this->dropIndex(
-            '{{%idx-road_task-updated_by}}',
-            '{{%road_task}}'
+            '{{%idx-road_irrigation_tasks-updated_by}}',
+            '{{%road_irrigation_tasks}}'
         );
 
-        $this->dropTable('{{%road_task}}');
+        $this->dropTable('{{%road_irrigation_tasks}}');
     }
 }

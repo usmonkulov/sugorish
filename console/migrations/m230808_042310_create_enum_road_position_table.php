@@ -3,26 +3,22 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%road}}`.
+ * Handles the creation of table `{{%enum_road_position}}`.
  */
-class m230801_095038_create_road_table extends Migration
+class m230808_042310_create_enum_road_position_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('{{%road}}', [
-            'id' => $this->primaryKey(),
-            'road_name'         => $this->string()->notNull(),
-            'code_name'         => $this->string()->notNull(),
-            'address'           => $this->text()->notNull(),
-            'coordination'      => $this->text()->notNull(),
-            'enterprise_expert' => $this->string()->notNull(),
-            'plot_chief'        => $this->string()->notNull(),
-            'water_employee'    => $this->string()->notNull(),
+        $this->createTable('{{%enum_road_position}}', [
+            'id'                => $this->primaryKey(),
+            'title_uz'          => $this->string()->notNull()->unique(),
+            'title_oz'          => $this->string()->notNull()->unique(),
+            'title_ru'          => $this->string()->notNull()->unique(),
+            'code_name'         => $this->string()->notNull()->unique(),
             'status'            => $this->smallInteger()->defaultValue(1)->notNull(),
-            'image_url'         => $this->text(),
             'created_by'        => $this->integer()->notNull(),
             'updated_by'        => $this->integer(),
             'created_at'        => $this->timestamp()->notNull()->defaultValue('NOW()'),
@@ -31,15 +27,15 @@ class m230801_095038_create_road_table extends Migration
 
         // creates index for column `created_by`
         $this->createIndex(
-            '{{%idx-road-created_by}}',
-            '{{%road}}',
+            '{{%idx-enum_road_position-created_by}}',
+            '{{%enum_road_position}}',
             'created_by'
         );
 
         // add foreign key for table `{{%user}}`
         $this->addForeignKey(
-            '{{%fk-road-created_by}}',
-            '{{%road}}',
+            '{{%fk-enum_road_position-created_by}}',
+            '{{%enum_road_position}}',
             'created_by',
             '{{%user}}',
             'id',
@@ -49,15 +45,15 @@ class m230801_095038_create_road_table extends Migration
 
         // creates index for column `updated_by`
         $this->createIndex(
-            '{{%idx-road-updated_by}}',
-            '{{%road}}',
+            '{{%idx-enum_road_position-updated_by}}',
+            '{{%enum_road_position}}',
             'updated_by'
         );
 
         // add foreign key for table `{{%users}}`
         $this->addForeignKey(
-            '{{%fk-road-updated_by}}',
-            '{{%road}}',
+            '{{%fk-enum_road_position-updated_by}}',
+            '{{%enum_road_position}}',
             'updated_by',
             '{{%user}}',
             'id',
@@ -73,28 +69,28 @@ class m230801_095038_create_road_table extends Migration
     {
         // drops foreign key for table `{{%user}}`
         $this->dropForeignKey(
-            '{{%fk-road-created_by}}',
-            '{{%road}}'
+            '{{%fk-enum_road_position-created_by}}',
+            '{{%enum_road_position}}'
         );
 
         // drops index for column `created_by`
         $this->dropIndex(
-            '{{%idx-road-created_by}}',
-            '{{%road}}'
+            '{{%idx-enum_road_position-created_by}}',
+            '{{%enum_road_position}}'
         );
 
         // drops foreign key for table `{{%user}}`
         $this->dropForeignKey(
-            '{{%fk-road-updated_by}}',
-            '{{%road}}'
+            '{{%fk-enum_road_position-updated_by}}',
+            '{{%enum_road_position}}'
         );
 
         // drops index for column `updated_by`
         $this->dropIndex(
-            '{{%idx-road-updated_by}}',
-            '{{%road}}'
+            '{{%idx-enum_road_position-updated_by}}',
+            '{{%enum_road_position}}'
         );
 
-        $this->dropTable('{{%road}}');
+        $this->dropTable('{{%enum_road_position}}');
     }
 }
