@@ -38,12 +38,48 @@ class m230808_043730_create_enum_road_employees_table extends Migration
             'position_id'
         );
 
-        // add foreign key for table `{{%user}}`
+        // add foreign key for table `{{%enum_road_position}}`
         $this->addForeignKey(
             '{{%fk-enum_road_employees-position_id}}',
             '{{%enum_road_employees}}',
             'position_id',
             '{{%enum_road_position}}',
+            'id',
+            'RESTRICT',
+            'CASCADE',
+        );
+
+        // creates index for column `region_id`
+        $this->createIndex(
+            '{{%idx-enum_road_employees-region_id}}',
+            '{{%enum_road_employees}}',
+            'region_id'
+        );
+
+        // add foreign key for table `{{%enum_regions}}`
+        $this->addForeignKey(
+            '{{%fk-enum_road_employees-region_id}}',
+            '{{%enum_road_employees}}',
+            'region_id',
+            '{{%enum_regions}}',
+            'id',
+            'RESTRICT',
+            'CASCADE',
+        );
+
+        // creates index for column `district_id`
+        $this->createIndex(
+            '{{%idx-enum_road_employees-district_id}}',
+            '{{%enum_road_employees}}',
+            'district_id'
+        );
+
+        // add foreign key for table `{{%enum_regions}}`
+        $this->addForeignKey(
+            '{{%fk-enum_road_employees-district_id}}',
+            '{{%enum_road_employees}}',
+            'district_id',
+            '{{%enum_regions}}',
             'id',
             'RESTRICT',
             'CASCADE',
@@ -102,6 +138,31 @@ class m230808_043730_create_enum_road_employees_table extends Migration
             '{{%idx-enum_road_employees-position_id}}',
             '{{%enum_road_employees}}'
         );
+
+        // drops foreign key for table `{{%enum_regions}}`
+        $this->dropForeignKey(
+            '{{%fk-enum_road_employees-region_id}}',
+            '{{%enum_road_employees}}'
+        );
+
+        // drops index for column `region_id`
+        $this->dropIndex(
+            '{{%idx-enum_road_employees-region_id}}',
+            '{{%enum_road_employees}}'
+        );
+
+        // drops foreign key for table `{{%enum_regions}}`
+        $this->dropForeignKey(
+            '{{%fk-enum_road_employees-district_id}}',
+            '{{%enum_road_employees}}'
+        );
+
+        // drops index for column `district_id`
+        $this->dropIndex(
+            '{{%idx-enum_road_employees-district_id}}',
+            '{{%enum_road_employees}}'
+        );
+
 
         // drops foreign key for table `{{%user}}`
         $this->dropForeignKey(
