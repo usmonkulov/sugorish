@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="user-index">
 
     <p>
-        <?= Html::a('<i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success','title'=>Yii::t('yii','Create')]) ?>
+        <?= Html::a('<i class="fa fa-user-plus"></i>', ['create'], ['class' => 'btn btn-success','title'=>Yii::t('yii','Create')]) ?>
         <?= Html::a('<i class="fa fa-rotate-right"></i>', ['/user'], ['class' => 'btn btn-info','title'=>Yii::t('app','Qayta yuklash')]) ?>
         <?= Html::a('<i class="fa fa-home"></i>', ['/'], ['class' => 'btn btn-default','title'=>Yii::t('yii','Home')]) ?>
     </p>

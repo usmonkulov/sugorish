@@ -19,9 +19,9 @@ class EnumRoadPositionForm extends Model
             [['created_at', 'updated_at'], 'safe'],
             [['title_uz', 'title_oz', 'title_ru', 'code_name'], 'string', 'max' => 255],
             [['code_name'], 'unique', 'targetClass' => EnumRoadPosition::class, 'filter' =>  $this->code_name ? ['<>', 'code_name', $this->code_name] : null, 'targetAttribute' => ['code_name']],
-            [['code_name'], 'unique', 'targetClass' => EnumRoadPosition::class, 'filter' =>  $this->title_oz ? ['<>', 'title_oz', $this->title_oz] : null, 'targetAttribute' => ['title_oz']],
-            [['code_name'], 'unique', 'targetClass' => EnumRoadPosition::class, 'filter' =>  $this->title_ru ? ['<>', 'title_ru', $this->title_ru] : null, 'targetAttribute' => ['title_ru']],
-            [['code_name'], 'unique', 'targetClass' => EnumRoadPosition::class, 'filter' =>  $this->title_uz ? ['<>', 'title_uz', $this->title_uz] : null, 'targetAttribute' => ['title_uz']],
+            [['title_oz'], 'unique', 'targetClass' => EnumRoadPosition::class, 'filter' =>  $this->title_oz ? ['<>', 'title_oz', $this->title_oz] : null, 'targetAttribute' => ['title_oz']],
+            [['title_ru'], 'unique', 'targetClass' => EnumRoadPosition::class, 'filter' =>  $this->title_ru ? ['<>', 'title_ru', $this->title_ru] : null, 'targetAttribute' => ['title_ru']],
+            [['title_uz'], 'unique', 'targetClass' => EnumRoadPosition::class, 'filter' =>  $this->title_uz ? ['<>', 'title_uz', $this->title_uz] : null, 'targetAttribute' => ['title_uz']],
         ];
     }
 }
