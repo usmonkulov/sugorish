@@ -8,6 +8,8 @@ $params = array_merge(
 );
 
 return [
+    'language' => 'uz',
+    'timeZone' => 'Asia/Tashkent',
     'id' => 'app-console',
     'basePath' => dirname(__DIR__),
     'bootstrap' => [

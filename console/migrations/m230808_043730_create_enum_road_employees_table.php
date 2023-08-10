@@ -17,8 +17,9 @@ class m230808_043730_create_enum_road_employees_table extends Migration
             'first_name'        => $this->string()->notNull(),
             'last_name'         => $this->string()->notNull(),
             'middle_name'       => $this->string(),
-            'phone'             => $this->string(50)->notNull(),
-            'email'             => $this->string(50),
+            'birthday'          => $this->date()->notNull(),
+            'phone'             => $this->string(50)->notNull()->unique(),
+            'email'             => $this->string(50)->unique(),
             'gender'            => $this->string(1)->defaultValue('m')->notNull(),
             'status'            => $this->smallInteger()->defaultValue(1)->notNull(),
             'position_id'       => $this->integer()->notNull(),
@@ -29,6 +30,7 @@ class m230808_043730_create_enum_road_employees_table extends Migration
             'updated_by'        => $this->integer(),
             'created_at'        => $this->timestamp()->notNull()->defaultValue('NOW()'),
             'updated_at'        => $this->timestamp(),
+            'CONSTRAINT first_last_middle_key UNIQUE (first_name, last_name, birthday)'
         ]);
 
         // creates index for column `position_id`

@@ -14,10 +14,16 @@ class m230808_070814_create_road_table extends Migration
     {
         $this->createTable('{{%road}}', [
             'id' => $this->primaryKey(),
-            'road_name'             => $this->string()->notNull(),
-            'code_name'             => $this->string()->notNull(),
-            'address'               => $this->text()->notNull(),
-            'coordination'          => $this->text()->notNull(),
+            'title_uz'              => $this->string()->notNull(),
+            'title_oz'              => $this->string()->notNull(),
+            'title_ru'              => $this->string()->notNull(),
+            'km'                    => $this->string()->notNull()->unique(),
+            'code_name'             => $this->string()->notNull()->unique(),
+            'address'               => $this->text(),
+            'coordination'          => $this->text(),
+            'region_id'             => $this->integer()->notNull(),
+            'district_id'           => $this->integer()->notNull(),
+            'type_id'               => $this->integer()->notNull(),
             'enterprise_expert_id'  => $this->integer()->notNull(),
             'plot_chief_id'         => $this->integer()->notNull(),
             'water_employee_id'     => $this->integer()->notNull(),
@@ -28,6 +34,60 @@ class m230808_070814_create_road_table extends Migration
             'created_at'            => $this->timestamp()->notNull()->defaultValue('NOW()'),
             'updated_at'            => $this->timestamp(),
         ]);
+
+        // creates index for column `region_id`
+        $this->createIndex(
+            '{{%idx-road-region_id}}',
+            '{{%road}}',
+            'region_id'
+        );
+
+        // add foreign key for table `{{%enum_regions}}`
+        $this->addForeignKey(
+            '{{%fk-road-region_id}}',
+            '{{%road}}',
+            'region_id',
+            '{{%enum_regions}}',
+            'id',
+            'RESTRICT',
+            'CASCADE',
+        );
+
+        // creates index for column `district_id`
+        $this->createIndex(
+            '{{%idx-road-district_id}}',
+            '{{%road}}',
+            'district_id'
+        );
+
+        // add foreign key for table `{{%enum_regions}}`
+        $this->addForeignKey(
+            '{{%fk-road-district_id}}',
+            '{{%road}}',
+            'district_id',
+            '{{%enum_regions}}',
+            'id',
+            'RESTRICT',
+            'CASCADE',
+        );
+
+        // creates index for column `type_id`
+        $this->createIndex(
+            '{{%idx-road-type_id}}',
+            '{{%road}}',
+            'type_id'
+        );
+
+        // add foreign key for table `{{%enum_road_type}}`
+        $this->addForeignKey(
+            '{{%fk-road-type_id}}',
+            '{{%road}}',
+            'type_id',
+            '{{%enum_road_type}}',
+            'id',
+            'RESTRICT',
+            'CASCADE',
+        );
 
         // creates index for column `enterprise_expert_id`
         $this->createIndex(
@@ -125,6 +185,42 @@ class m230808_070814_create_road_table extends Migration
      */
     public function safeDown()
     {
+        // drops foreign key for table `{{%enum_regions}}`
+        $this->dropForeignKey(
+            '{{%fk-road-region_id}}',
+            '{{%road}}'
+        );
+
+        // drops index for column `region_id`
+        $this->dropIndex(
+            '{{%idx-road-region_id}}',
+            '{{%road}}'
+        );
+
+        // drops foreign key for table `{{%enum_regions}}`
+        $this->dropForeignKey(
+            '{{%fk-road-district_id}}',
+            '{{%road}}'
+        );
+
+        // drops index for column `district_id`
+        $this->dropIndex(
+            '{{%idx-road-district_id}}',
+            '{{%road}}'
+        );
+
+        // drops foreign key for table `{{%enum_road_type}}`
+        $this->dropForeignKey(
+            '{{%fk-road-type_id}}',
+            '{{%road}}'
+        );
+
+        // drops index for column `type_id`
+        $this->dropIndex(
+            '{{%idx-road-type_id}}',
+            '{{%road}}'
+        );
+
         // drops foreign key for table `{{%enum_road_employees}}`
         $this->dropForeignKey(
             '{{%fk-road-enterprise_expert_id}}',

@@ -2,11 +2,14 @@
 
 namespace settings\entities\enums;
 
+use settings\behaviors\AuthorBehavior;
 use settings\entities\irrigation\Road;
 use settings\entities\user\User;
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "{{%enum_road_employees}}".
@@ -15,6 +18,7 @@ use yii\db\ActiveRecord;
  * @property string $first_name
  * @property string $last_name
  * @property string|null $middle_name
+ * @property string $birthday
  * @property string $phone
  * @property string|null $email
  * @property string $gender
@@ -28,11 +32,13 @@ use yii\db\ActiveRecord;
  * @property string $created_at
  * @property string|null $updated_at
  *
- * @property User $createdBy
+ * @property EnumRegions $district
  * @property EnumRoadPosition $position
+ * @property EnumRegions $region
  * @property Road[] $roadEnterpriseExpert
  * @property Road[] $roadPlotChief
  * @property Road[] $roadWaterEmployee
+ * @property User $createdBy
  * @property User $updatedBy
  */
 class EnumRoadEmployees extends ActiveRecord
@@ -46,19 +52,108 @@ class EnumRoadEmployees extends ActiveRecord
     }
 
     /**
+     * @return array
+     */
+    public function behaviors(): array
+    {
+        $behaviors = parent::behaviors();
+
+        $behaviors['timestamp'] = [
+            'class' => TimestampBehavior::class,
+            'attributes' => [
+                ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
+                ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+            ],
+            'value' => new Expression('NOW()'),
+        ];
+        $behaviors['author'] = [
+            'class' => AuthorBehavior::class,
+        ];
+
+        return $behaviors;
+    }
+
+    public static function create
+    (
+        $first_name,
+        $last_name,
+        $middle_name,
+        $birthday,
+        $phone,
+        $email,
+        $gender,
+        $status,
+        $position_id,
+        $region_id,
+        $district_id,
+        $address
+
+    ): EnumRoadEmployees
+    {
+        $item = new static();
+        $item->first_name = $first_name;
+        $item->last_name = $last_name;
+        $item->middle_name = $middle_name;
+        $item->birthday = $birthday;
+        $item->phone = $phone;
+        $item->email = $email;
+        $item->gender = $gender;
+        $item->status = $status;
+        $item->position_id = $position_id;
+        $item->region_id = $region_id;
+        $item->district_id = $district_id;
+        $item->address = $address;
+        return $item;
+    }
+
+    public function edit(
+        $first_name,
+        $last_name,
+        $middle_name,
+        $birthday,
+        $phone,
+        $email,
+        $gender,
+        $status,
+        $position_id,
+        $region_id,
+        $district_id,
+        $address
+    )
+    {
+        $this->first_name = $first_name;
+        $this->last_name = $last_name;
+        $this->middle_name = $middle_name;
+        $this->birthday = $birthday;
+        $this->phone = $phone;
+        $this->email = $email;
+        $this->gender = $gender;
+        $this->status = $status;
+        $this->position_id = $position_id;
+        $this->region_id = $region_id;
+        $this->district_id = $district_id;
+        $this->address = $address;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['first_name', 'last_name', 'phone', 'position_id', 'region_id', 'district_id', 'address', 'created_by'], 'required'],
+            [['first_name', 'last_name', 'birthday', 'phone', 'position_id', 'region_id', 'district_id', 'address'], 'required'],
+            [['birthday', 'created_at', 'updated_at'], 'safe'],
             [['status', 'position_id', 'region_id', 'district_id', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['status', 'position_id', 'region_id', 'district_id', 'created_by', 'updated_by'], 'integer'],
             [['address'], 'string'],
-            [['created_at', 'updated_at'], 'safe'],
             [['first_name', 'last_name', 'middle_name'], 'string', 'max' => 255],
             [['phone', 'email'], 'string', 'max' => 50],
             [['gender'], 'string', 'max' => 1],
+            [['email'], 'unique'],
+            [['phone'], 'unique'],
+            [['first_name', 'last_name', 'birthday'], 'unique', 'targetAttribute' => ['first_name', 'last_name', 'birthday']],
+            [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => EnumRegions::class, 'targetAttribute' => ['region_id' => 'id']],
+            [['district_id'], 'exist', 'skipOnError' => true, 'targetClass' => EnumRegions::class, 'targetAttribute' => ['district_id' => 'id']],
             [['position_id'], 'exist', 'skipOnError' => true, 'targetClass' => EnumRoadPosition::class, 'targetAttribute' => ['position_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
@@ -71,43 +166,48 @@ class EnumRoadEmployees extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID raqami'),
-            'first_name' => Yii::t('app', 'Familiya'),
-            'last_name' => Yii::t('app', 'Ism'),
-            'middle_name' => Yii::t('app', 'Otasining ismi'),
-            'email' => Yii::t('app', 'Elektron pochta'),
-            'phone' => Yii::t('app', 'Telefon'),
-            'gender' => Yii::t('app', 'Jinsi'),
-            'status' => Yii::t('app', 'Holati'),
-            'position_id' => Yii::t('app', 'Lavozimi'),
-            'region_id' => Yii::t('app', 'Region ID'),
-            'district_id' => Yii::t('app', 'District ID'),
-            'address' => Yii::t('app', 'Manzil'),
-            'created_by' => Yii::t('app', 'Yaratgan foydalanuvchi'),
-            'updated_by' => Yii::t('app', 'Tahrirlagan foydalanuvchi'),
-            'created_at' => Yii::t('app', 'Yaratilgan vaqti'),
-            'updated_at' => Yii::t('app', 'Yangilangan vaqti'),
+            'id'            => Yii::t('app', 'ID raqami'),
+            'first_name'    => Yii::t('app', 'Familiya'),
+            'last_name'     => Yii::t('app', 'Ism'),
+            'middle_name'   => Yii::t('app', 'Otasining ismi'),
+            'birthday'      => Yii::t('app', 'Tug\'ilgan kun'),
+            'email'         => Yii::t('app', 'Elektron pochta'),
+            'phone'         => Yii::t('app', 'Telefon'),
+            'gender'        => Yii::t('app', 'Jinsi'),
+            'status'        => Yii::t('app', 'Holati'),
+            'position_id'   => Yii::t('app', 'Lavozimi'),
+            'region_id'     => Yii::t('app', 'Viloyat'),
+            'district_id'   => Yii::t('app', 'Tuman'),
+            'address'       => Yii::t('app', 'Manzil'),
+            'created_by'    => Yii::t('app', 'Yaratgan foydalanuvchi'),
+            'updated_by'    => Yii::t('app', 'Tahrirlagan foydalanuvchi'),
+            'created_at'    => Yii::t('app', 'Yaratilgan vaqti'),
+            'updated_at'    => Yii::t('app', 'Yangilangan vaqti'),
         ];
     }
 
     /**
-     * Gets query for [[CreatedBy]].
-     *
-     * @return ActiveQuery
-     */
-    public function getCreatedBy()
-    {
-        return $this->hasOne(User::class, ['id' => 'created_by']);
-    }
-
-    /**
-     * Gets query for [[Position]].
-     *
      * @return ActiveQuery
      */
     public function getPosition()
     {
         return $this->hasOne(EnumRoadPosition::class, ['id' => 'position_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getDistrict()
+    {
+        return $this->hasOne(EnumRegions::class, ['id' => 'district_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getRegion()
+    {
+        return $this->hasOne(EnumRegions::class, ['id' => 'region_id']);
     }
 
     /**
@@ -135,8 +235,14 @@ class EnumRoadEmployees extends ActiveRecord
     }
 
     /**
-     * Gets query for [[UpdatedBy]].
-     *
+     * @return ActiveQuery
+     */
+    public function getCreatedBy()
+    {
+        return $this->hasOne(User::class, ['id' => 'created_by']);
+    }
+
+    /**
      * @return ActiveQuery
      */
     public function getUpdatedBy()
