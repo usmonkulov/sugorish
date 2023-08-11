@@ -1,7 +1,11 @@
 <?php
 
+use kartik\select2\Select2;
+use settings\entities\enums\EnumRegions;
+use settings\status\irrigation\RoadStatus;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -27,25 +31,96 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'id',
             [
-                'attribute' => 'road_name',
+                'attribute' => 'title_uz',
                 'format' => 'html',
                 'value' => function ($data) {
-                    return Html::a($data->road_name, ['irrigation/road/view/', 'id' => $data->id]);
+                    return Html::a($data->title_oz, ['enum-road-type/view/', 'id' => $data->id]);
                 }
             ],
-            'road_name',
-            'code_name',
-            'address:ntext',
-            'coordination:ntext',
-            //'enterprise_expert:ntext',
-            //'plot_chief:ntext',
-            //'water_employee:ntext',
-            //'status',
-            //'image_url:ntext',
-            //'created_by',
-            //'updated_by',
-            //'created_at',
-            //'updated_at',
+            'km',
+            [
+                'attribute' => 'district_id',
+                'format' => 'html',
+                'filter' => Select2::widget([
+                        'model' => $searchForm,
+                        'attribute' => 'district_id',
+                        'data' =>  ArrayHelper::map(EnumRegions::findAll(['parent_id' => 1718]),'id','title_oz'),
+                        'options' => [
+                            'id' => 'district_id',
+                            'prompt' => Yii::t('app', '...')],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]
+                ),
+                'value'     => function ($data) {
+                    if ($data->district_id) {
+                        return $data->district->title_oz;
+                    }
+                    return null;
+                },
+            ],
+            [
+                'attribute' => 'type_id',
+                'format'    => 'html',
+                'value'     => function ($data) {
+                    if ($data->type_id) {
+                        return $data->type->code_name . '(' . $data->type->title_oz .')';
+                    }
+                    return null;
+                },
+            ],
+            [
+                'attribute' => 'enterprise_expert_id',
+                'format'    => 'html',
+                'value'     => function ($data) {
+                    if ($data->enterpriseExpert) {
+                        return $data->enterpriseExpert->first_name . ' ' . $data->enterpriseExpert->last_name;
+                    }
+                    return null;
+                },
+            ],
+            [
+                'attribute' => 'plot_chief_id',
+                'format'    => 'html',
+                'value'     => function ($data) {
+                    if ($data->plotChief) {
+                        return $data->plotChief->first_name . ' ' . $data->plotChief->last_name;
+                    }
+                    return null;
+                },
+            ],
+            [
+                'attribute' => 'water_employee_id',
+                'format'    => 'html',
+                'value'     => function ($data) {
+                    if ($data->waterEmployee) {
+                        return $data->waterEmployee->first_name . ' ' . $data->waterEmployee->last_name;
+                    }
+                    return null;
+                },
+            ],
+            [
+                'attribute' => 'status',
+                'format' => 'html',
+                'filter' => Select2::widget([
+                        'model' => $searchForm,
+                        'attribute' => 'status',
+                        'data' =>  ArrayHelper::map(RoadStatus::getStatusForSelect(), 'id', 'value'),
+                        'options' => [
+                            'id' => 'status',
+                            'prompt' => Yii::t('app', '...')],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]
+                ),
+                'value'     => function ($data) {
+                    if ($data->id) {
+                        return RoadStatus::getStatusHtml($data, 'index');
+                    }
+                },
+            ],
             [
                 'class' => ActionColumn::class,
                 'buttons' => [

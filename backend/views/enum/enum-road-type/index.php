@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('<i class="fa fa-rotate-right"></i>', ['index'], ['class' => 'btn btn-info','title'=>Yii::t('app','Qayta yuklash')]) ?>
         <?= Html::a('<i class="fa fa-home"></i>', ['/'], ['class' => 'btn btn-default','title'=>Yii::t('yii','Home')]) ?>
     </p>
-    <div class="box">
+    <div class="box box-info">
         <div class="box-body">
         <?= GridView::widget([
         'options' => ['class' => 'panel table-responsive'],

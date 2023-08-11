@@ -26,6 +26,7 @@ use yii\db\Expression;
  * @property int $position_id
  * @property int $region_id
  * @property int $district_id
+ * @property string $code_position
  * @property string $address
  * @property int $created_by
  * @property int|null $updated_by
@@ -84,6 +85,7 @@ class EnumRoadEmployees extends ActiveRecord
         $gender,
         $status,
         $position_id,
+        $code_position,
         $region_id,
         $district_id,
         $address
@@ -100,6 +102,7 @@ class EnumRoadEmployees extends ActiveRecord
         $item->gender = $gender;
         $item->status = $status;
         $item->position_id = $position_id;
+        $item->code_position = $code_position;
         $item->region_id = $region_id;
         $item->district_id = $district_id;
         $item->address = $address;
@@ -116,6 +119,7 @@ class EnumRoadEmployees extends ActiveRecord
         $gender,
         $status,
         $position_id,
+        $code_position,
         $region_id,
         $district_id,
         $address
@@ -130,6 +134,7 @@ class EnumRoadEmployees extends ActiveRecord
         $this->gender = $gender;
         $this->status = $status;
         $this->position_id = $position_id;
+        $this->code_position = $code_position;
         $this->region_id = $region_id;
         $this->district_id = $district_id;
         $this->address = $address;
@@ -141,13 +146,14 @@ class EnumRoadEmployees extends ActiveRecord
     public function rules()
     {
         return [
-            [['first_name', 'last_name', 'birthday', 'phone', 'position_id', 'region_id', 'district_id', 'address'], 'required'],
+            [['first_name', 'last_name', 'birthday', 'phone', 'position_id', 'code_position', 'district_id', 'address'], 'required'],
             [['birthday', 'created_at', 'updated_at'], 'safe'],
-            [['status', 'position_id', 'region_id', 'district_id', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['status', 'position_id', 'district_id', 'created_by', 'updated_by'], 'default', 'value' => null],
+            [['region_id'], 'default', 'value' => 1718],
             [['status', 'position_id', 'region_id', 'district_id', 'created_by', 'updated_by'], 'integer'],
             [['address'], 'string'],
             [['first_name', 'last_name', 'middle_name'], 'string', 'max' => 255],
-            [['phone', 'email'], 'string', 'max' => 50],
+            [['phone', 'email', 'code_position'], 'string', 'max' => 50],
             [['gender'], 'string', 'max' => 1],
             [['email'], 'unique'],
             [['phone'], 'unique'],
@@ -176,6 +182,7 @@ class EnumRoadEmployees extends ActiveRecord
             'gender'        => Yii::t('app', 'Jinsi'),
             'status'        => Yii::t('app', 'Holati'),
             'position_id'   => Yii::t('app', 'Lavozimi'),
+            'code_position' => Yii::t('app', "Lavozim darajasi"),
             'region_id'     => Yii::t('app', 'Viloyat'),
             'district_id'   => Yii::t('app', 'Tuman'),
             'address'       => Yii::t('app', 'Manzil'),

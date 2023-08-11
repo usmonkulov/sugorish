@@ -32,6 +32,7 @@ class EnumRoadEmployeesReadRepository
             ->andFilterWhere(['ilike', 'middle_name', $form->middle_name])
             ->andFilterWhere(['ilike', 'birthday', $form->birthday])
             ->andFilterWhere(['ilike', 'phone', $form->phone])
+            ->andFilterWhere(['ilike', 'code_position', $form->code_position])
             ->andFilterWhere(['ilike', 'email', $form->email])
             ->andFilterWhere(['ilike', 'address', $form->address])
             ->andFilterWhere(['ilike', 'created_at', $form->created_at])

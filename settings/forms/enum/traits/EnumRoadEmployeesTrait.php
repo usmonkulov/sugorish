@@ -16,6 +16,7 @@ trait EnumRoadEmployeesTrait
     public $gender;
     public $status;
     public $position_id;
+    public $code_position;
     public $region_id;
     public $district_id;
     public $address;

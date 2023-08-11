@@ -39,6 +39,7 @@ class EnumRoadEmployeesService
             $form->gender,
             $form->status,
             $form->position_id,
+            $form->code_position,
             $form->region_id,
             $form->district_id,
             $form->address
@@ -64,6 +65,7 @@ class EnumRoadEmployeesService
             $form->gender,
             $form->status,
             $form->position_id,
+            $form->code_position,
             $form->region_id,
             $form->district_id,
             $form->address

@@ -33,7 +33,6 @@ class RoadRepository
             ->asArray()
             ->all();
     }
-
     /**
      * @param $fields
      * @return array|Road[]|ActiveRecord[]

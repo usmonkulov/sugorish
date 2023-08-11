@@ -36,6 +36,23 @@ class EnumRoadTypeRepository
     }
 
     /**
+     * @return array|EnumRoadType[]|ActiveRecord[]
+     */
+    public static function findCodeTitleAllForSelect()
+    {
+        $type = 't';
+        return EnumRoadType::find()
+            ->select([
+                "{$type}.id",
+                "CONCAT({$type}.code_name, '', '(',{$type}.title_oz ,')') as title",
+            ])
+            ->alias("{$type}")
+            ->andWhere(["{$type}.status"           => GeneralStatus::STATUS_ENABLED])
+            ->asArray()
+            ->all();
+    }
+
+    /**
      * @param $fields
      * @return array|EnumRoadType[]|ActiveRecord[]
      */

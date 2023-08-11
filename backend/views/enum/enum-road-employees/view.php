@@ -1,6 +1,7 @@
 <?php
 
 use settings\entities\enums\EnumRoadEmployees;
+use settings\helpers\EmployeesPositionHelper;
 use settings\helpers\GenderHelper;
 use settings\status\enum\EnumRoadEmployeesStatus;
 use yii\helpers\Html;
@@ -17,8 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="road-view">
-
-    <p>
+    <div class="box box-info">
+        <div class="box-body">
+         <p>
         <?= Html::a(
             '<i class="fa fa-pencil"></i>',
             ['update', 'id' => $model->id],
@@ -60,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </p>
 
-    <?= DetailView::widget([
+        <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
@@ -119,6 +121,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
+                'attribute' => 'code_position',
+                'format'    => 'html',
+                'value'     => function ($data) {
+                    if ($data->id) {
+                        return EmployeesPositionHelper::getLabel($data->code_position);
+                    }
+                },
+            ],
+            [
                 'attribute' => 'status',
                 'format'    => 'html',
                 'value'     => function ($data) {
@@ -150,6 +161,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'updated_at',
         ],
-    ]) ?>
-
+        ]) ?>
+        </div>
+    </div>
 </div>

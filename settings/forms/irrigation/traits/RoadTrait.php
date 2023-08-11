@@ -7,13 +7,19 @@ use settings\entities\irrigation\Road;
 trait RoadTrait
 {
     public $id;
-    public $road_name;
+    public $title_uz;
+    public $title_oz;
+    public $title_ru;
+    public $km;
     public $code_name;
     public $address;
     public $coordination;
-    public $enterprise_expert;
-    public $plot_chief;
-    public $water_employee;
+    public $region_id;
+    public $district_id;
+    public $type_id;
+    public $enterprise_expert_id;
+    public $plot_chief_id;
+    public $water_employee_id;
     public $status;
     public $image_url;
     public $created_by;

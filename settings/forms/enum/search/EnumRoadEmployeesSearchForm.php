@@ -18,13 +18,13 @@ class EnumRoadEmployeesSearchForm extends Model
     public function rules()
     {
         return [
-            [['id','first_name', 'last_name', 'birthday', 'phone', 'position_id', 'region_id', 'district_id', 'address'], 'required'],
+            [['id','first_name', 'last_name', 'birthday', 'phone', 'position_id', 'code_position', 'region_id', 'district_id', 'address'], 'required'],
             [['birthday', 'created_at', 'updated_at'], 'safe'],
             [['status', 'position_id', 'region_id', 'district_id', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['status', 'position_id', 'region_id', 'district_id', 'created_by', 'updated_by'], 'integer'],
             [['address'], 'string'],
             [['first_name', 'last_name', 'middle_name'], 'string', 'max' => 255],
-            [['phone', 'email'], 'string', 'max' => 50],
+            [['phone', 'email', 'code_position',], 'string', 'max' => 50],
             [['gender'], 'string', 'max' => 1],
             [['email'], 'unique'],
             [['phone'], 'unique'],

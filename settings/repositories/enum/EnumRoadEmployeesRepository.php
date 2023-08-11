@@ -6,6 +6,7 @@ namespace settings\repositories\enum;
 
 use settings\entities\enums\EnumRoadEmployees;
 use settings\entities\NotFoundException;
+use settings\helpers\EmployeesPositionHelper;
 use settings\status\GeneralStatus;
 use Yii;
 use yii\db\ActiveRecord;
@@ -35,6 +36,61 @@ class EnumRoadEmployeesRepository
             ->asArray()
             ->all();
     }
+
+    /**
+     * @return array|EnumRoadEmployees[]|ActiveRecord[]
+     */
+    public static function findEnterpriseExpertAllForSelect()
+    {
+        $employees = 'e';
+        return EnumRoadEmployees::find()
+            ->select([
+                "{$employees}.id",
+                "CONCAT({$employees}.first_name, ' ', {$employees}.last_name, ' ', {$employees}.middle_name) as title",
+            ])
+            ->alias("{$employees}")
+            ->andWhere(["{$employees}.status"           => GeneralStatus::STATUS_ENABLED])
+            ->andWhere(["{$employees}.code_position"    => EmployeesPositionHelper::POSITION_ENTERPRISE_EXPERT])
+            ->asArray()
+            ->all();
+    }
+
+    /**
+     * @return array|EnumRoadEmployees[]|ActiveRecord[]
+     */
+    public static function findPlotChiefAllForSelect()
+    {
+        $employees = 'e';
+        return EnumRoadEmployees::find()
+            ->select([
+                "e.id",
+                "CONCAT(e.first_name, ' ', e.last_name, ' ', e.middle_name) as title",
+            ])
+            ->alias("{$employees}")
+            ->andWhere(["{$employees}.status"           => GeneralStatus::STATUS_ENABLED])
+            ->andWhere(["{$employees}.code_position"    => EmployeesPositionHelper::POSITION_PLOT_CHIEF])
+            ->asArray()
+            ->all();
+    }
+
+    /**
+     * @return array|EnumRoadEmployees[]|ActiveRecord[]
+     */
+    public static function findWorkerAllForSelect()
+    {
+        $employees = 'e';
+        return EnumRoadEmployees::find()
+            ->select([
+                "e.id",
+                "CONCAT(e.first_name, ' ', e.last_name, ' ', e.middle_name) as title",
+            ])
+            ->alias("{$employees}")
+            ->andWhere(["{$employees}.status"           => GeneralStatus::STATUS_ENABLED])
+            ->andWhere(["{$employees}.code_position"    => EmployeesPositionHelper::POSITION_WORKER])
+            ->asArray()
+            ->all();
+    }
+
 
     /**
      * @param $fields

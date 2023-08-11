@@ -17,7 +17,7 @@ class m230808_070814_create_road_table extends Migration
             'title_uz'              => $this->string()->notNull(),
             'title_oz'              => $this->string()->notNull(),
             'title_ru'              => $this->string()->notNull(),
-            'km'                    => $this->string()->notNull()->unique(),
+            'km'                    => $this->string()->notNull(),
             'code_name'             => $this->string()->notNull()->unique(),
             'address'               => $this->text(),
             'coordination'          => $this->text(),

@@ -19,15 +19,21 @@ class RoadService
     public function create(RoadForm $form): Road
     {
         $roadRepository = Road::create(
-            $form->road_name,
+            $form->title_uz,
+            $form->title_oz,
+            $form->title_ru,
+            $form->km,
             $form->code_name,
             $form->address,
             $form->coordination,
-            $form->enterprise_expert,
-            $form->plot_chief,
-            $form->water_employee,
+            $form->region_id,
+            $form->district_id,
+            $form->type_id,
+            $form->enterprise_expert_id,
+            $form->plot_chief_id,
+            $form->water_employee_id,
             $form->status,
-            $form->image_url
+            $form->image_url,
         );
         $this->roadRepository->save($roadRepository);
         return $roadRepository;
@@ -38,15 +44,21 @@ class RoadService
     {
         $road = $this->roadRepository->get($id);
         $road->edit(
-            $form->road_name,
+            $form->title_uz,
+            $form->title_oz,
+            $form->title_ru,
+            $form->km,
             $form->code_name,
             $form->address,
             $form->coordination,
-            $form->enterprise_expert,
-            $form->plot_chief,
-            $form->water_employee,
+            $form->region_id,
+            $form->district_id,
+            $form->type_id,
+            $form->enterprise_expert_id,
+            $form->plot_chief_id,
+            $form->water_employee_id,
             $form->status,
-            $form->image_url
+            $form->image_url,
         );
         $this->roadRepository->save($road);
     }

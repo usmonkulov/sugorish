@@ -23,6 +23,7 @@ class m230808_043730_create_enum_road_employees_table extends Migration
             'gender'            => $this->string(1)->defaultValue('m')->notNull(),
             'status'            => $this->smallInteger()->defaultValue(1)->notNull(),
             'position_id'       => $this->integer()->notNull(),
+            'code_position'     => $this->string(50)->notNull(),
             'region_id'         => $this->integer()->notNull(),
             'district_id'       => $this->integer()->notNull(),
             'address'           => $this->text()->notNull(),

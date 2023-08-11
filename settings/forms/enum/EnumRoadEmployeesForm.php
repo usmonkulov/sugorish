@@ -16,12 +16,13 @@ class EnumRoadEmployeesForm extends Model
     public function rules()
     {
         return [
-            [['first_name', 'last_name', 'birthday', 'phone', 'position_id', 'region_id', 'district_id', 'address'], 'required'],
+            [['first_name', 'last_name', 'birthday', 'phone', 'position_id', 'code_position', 'district_id', 'address'], 'required'],
             [['birthday', 'created_at', 'updated_at'], 'safe'],
-            [['status', 'position_id', 'region_id', 'district_id', 'created_by', 'updated_by'], 'integer'],
+            [['status', 'position_id', 'district_id', 'created_by', 'updated_by'], 'integer'],
+            [['region_id'], 'default', 'value' => 1718],
             [['address'], 'string'],
             [['first_name', 'last_name', 'middle_name'], 'string', 'max' => 255],
-            [['phone', 'email'], 'string', 'max' => 50],
+            [['phone', 'email', 'code_position'], 'string', 'max' => 50],
             [['gender'], 'string', 'max' => 1],
             [['email'], 'unique', 'targetClass' => EnumRoadEmployees::class, 'filter' =>  $this->email ? ['<>', 'email', $this->email] : null, 'targetAttribute' => ['email']],
             [['phone'], 'unique', 'targetClass' => EnumRoadEmployees::class, 'filter' =>  $this->phone ? ['<>', 'phone', $this->phone] : null, 'targetAttribute' => ['phone']],

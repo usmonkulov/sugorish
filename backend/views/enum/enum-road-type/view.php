@@ -16,7 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="road-view">
-
+    <div class="box box-info">
+        <div class="box-body">
     <p>
         <?= Html::a(
             '<i class="fa fa-pencil"></i>',
@@ -100,5 +101,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'updated_at',
         ],
     ]) ?>
-
+        </div>
+    </div>
 </div>
