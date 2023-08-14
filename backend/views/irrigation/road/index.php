@@ -29,7 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchForm,
         'columns' => [
-            'id',
+            [
+                'attribute' => 'id',
+                'headerOptions' => ['width' => '5%'],
+                'filterOptions' => ['width' => '5%'],
+                'contentOptions' => ['width' => '5%'],
+            ],
             [
                 'attribute' => 'title_uz',
                 'format' => 'html',
@@ -59,6 +64,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     return null;
                 },
+                'headerOptions' => ['width' => '11%'],
+                'filterOptions' => ['width' => '11%'],
+                'contentOptions' => ['width' => '11%'],
             ],
             [
                 'attribute' => 'type_id',
@@ -69,6 +77,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     return null;
                 },
+                'headerOptions' => ['width' => '11%'],
+                'filterOptions' => ['width' => '11%'],
+                'contentOptions' => ['width' => '11%'],
             ],
             [
                 'attribute' => 'enterprise_expert_id',
@@ -79,6 +90,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     return null;
                 },
+                'headerOptions' => ['width' => '11%'],
+                'filterOptions' => ['width' => '11%'],
+                'contentOptions' => ['width' => '11%'],
             ],
             [
                 'attribute' => 'plot_chief_id',
@@ -89,6 +103,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     return null;
                 },
+                'headerOptions' => ['width' => '11%'],
+                'filterOptions' => ['width' => '11%'],
+                'contentOptions' => ['width' => '11%'],
             ],
             [
                 'attribute' => 'water_employee_id',
@@ -99,6 +116,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     return null;
                 },
+                'headerOptions' => ['width' => '11%'],
+                'filterOptions' => ['width' => '11%'],
+                'contentOptions' => ['width' => '11%'],
             ],
             [
                 'attribute' => 'status',
@@ -120,6 +140,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         return RoadStatus::getStatusHtml($data, 'index');
                     }
                 },
+                'headerOptions' => ['width' => '7%'],
+                'filterOptions' => ['width' => '7%'],
+                'contentOptions' => ['width' => '7%'],
             ],
             [
                 'class' => ActionColumn::class,

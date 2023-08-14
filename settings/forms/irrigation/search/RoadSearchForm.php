@@ -15,7 +15,7 @@ class RoadSearchForm extends Model
     public function rules()
     {
         return [
-            [['title_uz', 'title_oz', 'title_ru', 'km', 'code_name', 'region_id', 'district_id', 'type_id', 'enterprise_expert_id', 'plot_chief_id', 'water_employee_id', 'created_by'], 'required'],
+            [['id', 'title_uz', 'title_oz', 'title_ru', 'km', 'code_name', 'region_id', 'district_id', 'type_id', 'enterprise_expert_id', 'plot_chief_id', 'water_employee_id', 'created_by'], 'required'],
             [['address', 'coordination', 'image_url'], 'string'],
             [['region_id', 'district_id', 'type_id', 'enterprise_expert_id', 'plot_chief_id', 'water_employee_id', 'status', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['region_id', 'district_id', 'type_id', 'enterprise_expert_id', 'plot_chief_id', 'water_employee_id', 'status', 'created_by', 'updated_by'], 'integer'],

@@ -1,0 +1,16 @@
+<?php
+use yii\helpers\Html;
+use yii\helpers\HtmlPurifier;
+use yii\helpers\Url;
+
+?>
+
+<article class="item" data-key="<?= $model->id; ?>">
+    <h2 class="title">
+        <?= Html::a(Html::encode($model->title_uz), Url::toRoute(['post/show', 'id' => $model->id]), ['title' => $model->title_uz]) ?>
+    </h2>
+
+    <div class="item-excerpt">
+        <?= Html::encode($model->km); ?>
+    </div>
+</article>
