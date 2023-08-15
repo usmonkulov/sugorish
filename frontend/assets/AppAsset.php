@@ -12,38 +12,28 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-//        '/js/getApp.js',
-//        '/css/autocomplete.css',
-//        'assets/d8517caef8dd37d97df732690454e50b/css/bootstrap.min.css',
-//        '/css/new-design.css?89',
-//        'assets/6f03a141abe2f6097646edbe6a6d9993/themes/smoothness/jquery-ui.min.css',
-//        '/css/font-awesome.min.css',
-//        'css/main.css?132',
-//        '/css/media.css?v23',
-//        'css/new-design-media.css',
-//        '/css/owl.carousel.min.css',
-//        'css/actual_banner/banner.css',
-//        '/js/favorite_widgets/favoriteServices.4b693657.css',
-//        '/assets/41c862862f60bfcc60ddcef2dd62933c/jquery.min.js',
-//        'assets/55fefd705b8622f73bd17f2d3db07f87/yii.js',
-//        '/assets/d8517caef8dd37d97df732690454e50b/js/bootstrap.min.js',
-//        'js/jquery.cookie.min.js',
-//        '/js/mousetrap.min.js',
-//        'js/jquery-ui.js',
-//        '/js/specialView.js',
-//        'js/copy-clipboard-helper.js',
-//        '/js/owl.carousel.min.js',
-//        'js/lottie.js',
-//        '/js/flashcanvas.js',
-//        'js/jSignature.min.js',
-//        '/js/mindmap/mindmap.js',
-//        'js/main.js'
+        'assets/vendor/fonts/boxicons.css',
+        'assets/vendor/css/core.css',
+        'assets/vendor/css/theme-default.css',
+        'assets/css/demo.css',
+        'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css',
+        'assets/vendor/libs/apex-charts/apex-charts.css',
     ];
     public $js = [
-
+        'assets/vendor/js/helpers.js',
+        'assets/js/config.js',
+        'assets/vendor/libs/jquery/jquery.js',
+        'assets/vendor/libs/popper/popper.js',
+        'assets/vendor/js/bootstrap.js',
+        'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js',
+        'assets/vendor/js/menu.js',
+        'assets/vendor/libs/apex-charts/apexcharts.js',
+        'assets/js/main.js',
+        'assets/js/dashboards-analytics.js',
+        'https://buttons.github.io/buttons.js'
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+//        'yii\web\YiiAsset',
+//        'yii\bootstrap\BootstrapAsset',
     ];
 }

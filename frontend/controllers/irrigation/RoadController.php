@@ -27,6 +27,9 @@ class RoadController extends Controller
         $this->roadRepository = $roadRepository;
     }
 
+    /**
+     * @return string
+     */
     public function actionIndex(): string
     {
         $queryParams = Yii::$app->request->queryParams;
@@ -38,6 +41,18 @@ class RoadController extends Controller
         return $this->render('index', [
             'searchForm' => $searchForm,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @return string
+     */
+    public function actionView($id): string
+    {
+        $road = $this->roadRepository->get($id);
+        return $this->render('view', [
+            'model' => $road
         ]);
     }
 }

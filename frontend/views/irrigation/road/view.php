@@ -14,162 +14,122 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="road-view">
-    <div class="box box-info">
-        <div class="box-body">
-    <p>
-        <?= Html::a(
-            '<i class="fa fa-pencil"></i>',
-            ['update', 'id' => $model->id],
-            ['title' => Yii::t('yii','Tahrirlash'),'class' => 'btn btn-primary'])
-        ?>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><?=Yii::t('app',"Yo'llar")?> /</span> <?=$this->title?></h4>
+    <div class="card">
+        <h5 class="card-header"><?=$this->title?></h5>
+        <div class="table-responsive text-nowrap">
+            <?= DetailView::widget([
+                    'model' => $model,
+                    'attributes' => [
+                        'id',
+                        'title_uz',
+                        'title_oz',
+                        'title_ru',
+                        'km',
+                        'code_name',
+                        'address',
+                        'coordination',
+                        [
+                            'attribute' => 'region_id',
+                            'format'    => 'html',
+                            'value'     => function ($data) {
+                                if ($data->region_id) {
+                                    return $data->region->title_oz;
+                                }
+                                return null;
+                            },
+                        ],
 
-        <?= Html::a(
-            '<i class="fa fa-home"></i>',
-            ['/'],
-            ['class' => 'btn btn-default', 'title' => Yii::t('yii','Home')])
-        ?>
-
-        <?= Html::a(
-            '<i class="fa fa-rotate-right"></i>',
-            ['view', 'id' => $model->id],
-            ['title' => Yii::t('yii','Qayta yuklash'), 'class' => 'btn btn-info'])
-        ?>
-
-        <?= Html::a(
-            '<i class="fa fa-share-square-o"></i>',
-            ['index'], ['title' => Yii::t('yii', 'Orqaga'), 'class' => 'btn btn-success'])
-        ?>
-
-        <?php
-            echo Html::a(
-                '<i class="fa fa-trash-o"></i> ',
-                ['delete', 'id' => $model->id],
-                [
-                    'title' => Yii::t('yii', 'O\'chirish'),
-                    'class' => 'btn btn-danger',
-                    'data' => [
-                        'confirm' => Yii::t('yii', 'Siz rostdan ham ushbu elementni o\'chirmoqchimisiz?'),
-                        'method' => 'post',
+                        [
+                            'attribute' => 'district_id',
+                            'format'    => 'html',
+                            'value'     => function ($data) {
+                                if ($data->district_id) {
+                                    return $data->district->title_oz;
+                                }
+                                return null;
+                            },
+                        ],
+                        [
+                            'attribute' => 'type_id',
+                            'format'    => 'html',
+                            'value'     => function ($data) {
+                                if ($data->type_id) {
+                                    return $data->type->code_name . '(' . $data->type->title_oz .')';
+                                }
+                                return null;
+                            },
+                        ],
+                        [
+                            'attribute' => 'enterprise_expert_id',
+                            'format'    => 'html',
+                            'value'     => function ($data) {
+                                if ($data->enterpriseExpert) {
+                                    return $data->enterpriseExpert->first_name . ' ' . $data->enterpriseExpert->last_name;
+                                }
+                                return null;
+                            },
+                        ],
+                        [
+                            'attribute' => 'plot_chief_id',
+                            'format'    => 'html',
+                            'value'     => function ($data) {
+                                if ($data->plotChief) {
+                                    return $data->plotChief->first_name . ' ' . $data->plotChief->last_name;
+                                }
+                                return null;
+                            },
+                        ],
+                        [
+                            'attribute' => 'water_employee_id',
+                            'format'    => 'html',
+                            'value'     => function ($data) {
+                                if ($data->waterEmployee) {
+                                    return $data->waterEmployee->first_name . ' ' . $data->waterEmployee->last_name;
+                                }
+                                return null;
+                            },
+                        ],
+                        [
+                            'attribute' => 'status',
+                            'format'    => 'html',
+                            'value'     => function ($data) {
+                                if ($data->id) {
+                                    return RoadStatus::getStatusHtml($data, 'view');
+                                }
+                            },
+                        ],
+                        [
+                            'attribute' => 'image_url',
+                            'value' => function ($model) {
+                                return Html::img(Url::to($model->image_url), ['alt' => $model->title_oz]);
+                            },
+                            'format' => 'html',
+                        ],
+                        [
+                            'attribute' => 'created_by',
+                            'format'    => 'html',
+                            'value'     => function ($data) {
+                                if ($data->created_by) {
+                                    return $data->createdBy->username;
+                                }
+                                return null;
+                            },
+                        ],
+                        'created_at',
+                        [
+                            'attribute' => 'updated_by',
+                            'format'    => 'html',
+                            'value'     => function ($data) {
+                                if ($data->updated_by) {
+                                    return $data->updatedBy->username;
+                                }
+                                return null;
+                            },
+                        ],
+                        'updated_at',
                     ],
-                ]
-            )
-        ?>
-        <?= Html::a('<i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success','title'=>Yii::t('yii','Create')]) ?>
-
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'title_uz',
-            'title_oz',
-            'title_ru',
-            'km',
-            'code_name',
-            'address',
-            'coordination',
-            [
-                'attribute' => 'region_id',
-                'format'    => 'html',
-                'value'     => function ($data) {
-                    if ($data->region_id) {
-                        return $data->region->title_oz;
-                    }
-                    return null;
-                },
-            ],
-
-            [
-                'attribute' => 'district_id',
-                'format'    => 'html',
-                'value'     => function ($data) {
-                    if ($data->district_id) {
-                        return $data->district->title_oz;
-                    }
-                    return null;
-                },
-            ],
-            [
-                'attribute' => 'type_id',
-                'format'    => 'html',
-                'value'     => function ($data) {
-                    if ($data->type_id) {
-                        return $data->type->code_name . '(' . $data->type->title_oz .')';
-                    }
-                    return null;
-                },
-            ],
-            [
-                'attribute' => 'enterprise_expert_id',
-                'format'    => 'html',
-                'value'     => function ($data) {
-                    if ($data->enterpriseExpert) {
-                        return $data->enterpriseExpert->first_name . ' ' . $data->enterpriseExpert->last_name;
-                    }
-                    return null;
-                },
-            ],
-            [
-                'attribute' => 'plot_chief_id',
-                'format'    => 'html',
-                'value'     => function ($data) {
-                    if ($data->plotChief) {
-                        return $data->plotChief->first_name . ' ' . $data->plotChief->last_name;
-                    }
-                    return null;
-                },
-            ],
-            [
-                'attribute' => 'water_employee_id',
-                'format'    => 'html',
-                'value'     => function ($data) {
-                    if ($data->waterEmployee) {
-                        return $data->waterEmployee->first_name . ' ' . $data->waterEmployee->last_name;
-                    }
-                    return null;
-                },
-            ],
-            [
-                'attribute' => 'status',
-                'format'    => 'html',
-                'value'     => function ($data) {
-                    if ($data->id) {
-                        return RoadStatus::getStatusHtml($data, 'view');
-                    }
-                },
-            ],
-            [
-                'attribute' => 'image_url',
-                'value' => function ($model) {
-                    return Html::img(Url::to($model->image_url), ['alt' => $model->title_oz]);
-                },
-                'format' => 'html',
-            ],
-            [
-                'attribute' => 'created_by',
-                'format'    => 'html',
-                'value'     => function ($data) {
-                    if ($data->created_by) {
-                        return $data->createdBy->username;
-                    }
-                    return null;
-                },
-            ],
-            'created_at',
-            [
-                'attribute' => 'updated_by',
-                'format'    => 'html',
-                'value'     => function ($data) {
-                    if ($data->updated_by) {
-                        return $data->updatedBy->username;
-                    }
-                    return null;
-                },
-            ],
-            'updated_at',
-        ],
-    ]) ?>
+                ]) ?>
         </div>
     </div>
 </div>

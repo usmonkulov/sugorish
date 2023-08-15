@@ -17,13 +17,22 @@ $this->title = Yii::t('app', "Yo'llar");
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="road-index">
+    <h5 class="pb-1 mb-4"><?=Yii::t('app',"Samarqandyo'lko'kalam UK")?><br><?=Yii::t('app',"sug'orish grafigi")?></h5>
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
         'itemView' => function ($model, $key, $index, $widget) {
-            return $this->render('_list',['model' => $model]);
-
-            // or just do some echo
-            // return $model->title . ' posted by ' . $model->author;
+            return $this->render('_list',[
+                    'model' => $model,
+                    'key' => $key
+            ]);
         },
+        'itemOptions' => [
+            'tag' => false,
+        ],
+        'options' => [
+            'id' => false,
+            'tag' => 'div',
+            'class' => 'row'
+        ],
     ]); ?>
 </div>
