@@ -2,6 +2,10 @@
 
 use kartik\select2\Select2;
 use settings\entities\enums\EnumRegions;
+use settings\entities\enums\EnumRoadType;
+use settings\forms\irrigation\search\RoadSearchForm;
+use settings\repositories\enum\EnumRoadTypeRepository;
+use settings\status\GeneralStatus;
 use settings\status\irrigation\RoadStatus;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
@@ -9,7 +13,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $searchForm backend\forms\irrigation\RoadSearch */
+/* @var $searchForm RoadSearchForm */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', "Yo'llar");
@@ -39,10 +43,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'title_uz',
                 'format' => 'html',
                 'value' => function ($data) {
-                    return Html::a($data->title_oz, ['enum-road-type/view/', 'id' => $data->id]);
+                    return Html::a($data->type->code_name . $data->code_name .' '. $data->title_oz .' '. $data->start_km . '-' . $data->end_km, ['enum-road-type/view/', 'id' => $data->id]);
                 }
             ],
-            'km',
             [
                 'attribute' => 'district_id',
                 'format' => 'html',
@@ -71,6 +74,18 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'type_id',
                 'format'    => 'html',
+                'filter' => Select2::widget([
+                        'model' => $searchForm,
+                        'attribute' => 'type_id',
+                        'data' =>  ArrayHelper::map(EnumRoadTypeRepository::findCodeTitleAllForSelect(),'id','title'),
+                        'options' => [
+                            'id' => 'type_id',
+                            'prompt' => Yii::t('app', '...')],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]
+                ),
                 'value'     => function ($data) {
                     if ($data->type_id) {
                         return $data->type->code_name . '(' . $data->type->title_oz .')';

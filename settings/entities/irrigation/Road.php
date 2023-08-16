@@ -20,10 +20,12 @@ use yii\db\Expression;
  * @property string $title_uz
  * @property string $title_oz
  * @property string $title_ru
- * @property string $km
  * @property string $code_name
+ * @property string $field_number
  * @property string|null $address
  * @property string|null $coordination
+ * @property int $start_km
+ * @property int $end_km
  * @property int $region_id
  * @property int $district_id
  * @property int $type_id
@@ -83,8 +85,10 @@ class Road extends ActiveRecord
        $title_uz,
        $title_oz,
        $title_ru,
-       $km,
+       $start_km,
+       $end_km,
        $code_name,
+       $field_number,
        $address,
        $coordination,
        $region_id,
@@ -101,8 +105,10 @@ class Road extends ActiveRecord
         $item->title_uz = $title_uz;
         $item->title_oz = $title_oz;
         $item->title_ru = $title_ru;
-        $item->km = $km;
+        $item->start_km = $start_km;
+        $item->end_km = $end_km;
         $item->code_name = $code_name;
+        $item->field_number = $field_number;
         $item->address = $address;
         $item->coordination = $coordination;
         $item->region_id = $region_id;
@@ -120,8 +126,10 @@ class Road extends ActiveRecord
         $title_uz,
         $title_oz,
         $title_ru,
-        $km,
+        $start_km,
+        $end_km,
         $code_name,
+        $field_number,
         $address,
         $coordination,
         $region_id,
@@ -137,8 +145,10 @@ class Road extends ActiveRecord
         $this->title_uz = $title_uz;
         $this->title_oz = $title_oz;
         $this->title_ru = $title_ru;
-        $this->km = $km;
+        $this->start_km = $start_km;
+        $this->end_km = $end_km;
         $this->code_name = $code_name;
+        $this->field_number = $field_number;
         $this->address = $address;
         $this->coordination = $coordination;
         $this->region_id = $region_id;
@@ -158,14 +168,14 @@ class Road extends ActiveRecord
     public function rules()
     {
         return [
-            [['title_uz', 'title_oz', 'title_ru', 'km', 'code_name', 'district_id', 'type_id', 'enterprise_expert_id', 'plot_chief_id', 'water_employee_id'], 'required'],
+            [['title_uz', 'title_oz', 'title_ru', 'start_km', 'end_km', 'code_name', 'field_number', 'district_id', 'type_id', 'enterprise_expert_id', 'plot_chief_id', 'water_employee_id'], 'required'],
             [['address', 'coordination', 'image_url'], 'string'],
             [['region_id', 'district_id', 'type_id', 'enterprise_expert_id', 'plot_chief_id', 'water_employee_id', 'status', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['region_id'], 'default', 'value' => 1718],
-            [['region_id', 'district_id', 'type_id', 'enterprise_expert_id', 'plot_chief_id', 'water_employee_id', 'status', 'created_by', 'updated_by'], 'integer'],
+            [['region_id', 'district_id', 'type_id', 'enterprise_expert_id', 'plot_chief_id', 'water_employee_id', 'status', 'created_by', 'updated_by', 'start_km', 'end_km'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['title_uz', 'title_oz', 'title_ru', 'km', 'code_name'], 'string', 'max' => 255],
-            [['code_name'], 'unique'],
+            [['title_uz', 'title_oz', 'title_ru', 'code_name', 'field_number'], 'string', 'max' => 255],
+            [['field_number'], 'unique'],
             [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => EnumRegions::class, 'targetAttribute' => ['region_id' => 'id']],
             [['district_id'], 'exist', 'skipOnError' => true, 'targetClass' => EnumRegions::class, 'targetAttribute' => ['district_id' => 'id']],
             [['enterprise_expert_id'], 'exist', 'skipOnError' => true, 'targetClass' => EnumRoadEmployees::class, 'targetAttribute' => ['enterprise_expert_id' => 'id']],
@@ -187,16 +197,18 @@ class Road extends ActiveRecord
             'title_uz' =>               Yii::t('app', "Yo'l nomi Krilcha"),
             'title_oz' =>               Yii::t('app', "Yo'l nomi Lotincha"),
             'title_ru' =>               Yii::t('app', "Yo'l nomi Ruscha"),
-            'km' =>                     Yii::t('app', 'Km'),
+            'start_km' =>               Yii::t('app', 'Boshlanish km'),
+            'end_km' =>                 Yii::t('app', 'Tugash km'),
             'code_name' =>              Yii::t('app', "Yo'l kodi"),
+            'field_number' =>           Yii::t('app', 'Maydon raqami'),
             'address' =>                Yii::t('app', "Yo'l manzili"),
             'coordination' =>           Yii::t('app', 'Kordinatasi'),
             'region_id' =>              Yii::t('app', 'Viloyat'),
             'district_id' =>            Yii::t('app', 'Tuman'),
             'type_id' =>                Yii::t('app', "Yo'l toifasi"),
-            'enterprise_expert_id' =>   Yii::t('app', 'Korxonadan biriktirilgan hodim (F.I.O)'),
-            'plot_chief_id' =>          Yii::t('app', "Yo'lga biriktirilgan uchastka boshlig'i (F.I.O)"),
-            'water_employee_id' =>      Yii::t('app', "Yo'lga biriktirilgan suvchi (F.I.O)"),
+            'enterprise_expert_id' =>   Yii::t('app', 'Korxona hodimi'),
+            'plot_chief_id' =>          Yii::t('app', "Uchastka boshlig'i"),
+            'water_employee_id' =>      Yii::t('app', "Masul ishchi"),
             'status' =>                 Yii::t('app', 'Holati'),
             'image_url' =>              Yii::t('app', 'Rasim Url'),
             'created_by' =>             Yii::t('app', 'Yaratgan foydalanuvchi'),

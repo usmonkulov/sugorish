@@ -31,11 +31,27 @@ use yii\widgets\ActiveForm;
             <?= $activeForm->field($form, 'title_uz')->textInput(['maxlength' => true]) ?>
             <?= $activeForm->field($form, 'title_oz')->textInput(['maxlength' => true]) ?>
             <?= $activeForm->field($form, 'title_ru')->textInput(['maxlength' => true]) ?>
-            <?= $activeForm->field($form, 'km')->textInput(['maxlength' => true]) ?>
+            <?= $activeForm->field($form, 'type_id')->widget(Select2::class, [
+                'data' => ArrayHelper::map(EnumRoadTypeRepository::findCodeTitleAllForSelect(),'id','title'),
+                'options' => ['placeholder' => '-- ' . Yii::t('app',"Yo'l toifasini tanlang") . ' --'],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ]) ?>
             <?= $activeForm->field($form, 'code_name')->textInput(['maxlength' => true]) ?>
+           <div class="row">
+               <div class="col-md-6">
+                   <?= $activeForm->field($form, 'start_km')->textInput(['maxlength' => true, 'type'=>'number', 'min' => 0]) ?>
+               </div>
+               <div class="col-md-6">
+                   <?= $activeForm->field($form, 'end_km')->textInput(['maxlength' => true, 'type'=>'number', 'min' => 0]) ?>
+               </div>
+           </div>
             </div>
 
             <div class="col-md-4">
+                <?= $activeForm->field($form, 'field_number')->textInput(['maxlength' => true]) ?>
+
                 <?= $activeForm->field($form, 'coordination')->textInput(['maxlength' => true]) ?>
 
                 <?= $activeForm->field($form, 'region_id')->widget(Select2::class, [
@@ -62,14 +78,6 @@ use yii\widgets\ActiveForm;
                         'inline' => false, //по умолчанию false
                     ],
                 ]);?>
-
-                <?= $activeForm->field($form, 'type_id')->widget(Select2::class, [
-                    'data' => ArrayHelper::map(EnumRoadTypeRepository::findCodeTitleAllForSelect(),'id','title'),
-                    'options' => ['placeholder' => '-- ' . Yii::t('app',"Yo'l toifasini tanlang") . ' --'],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                    ],
-                ]) ?>
 
             </div>
 

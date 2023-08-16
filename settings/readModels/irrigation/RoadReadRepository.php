@@ -24,14 +24,13 @@ class RoadReadRepository
             'enterprise_expert_id' =>   $form->enterprise_expert_id,
             'water_employee_id' =>      $form->water_employee_id,
             'created_by' =>             $form->created_by,
-            'updated_by' =>             $form->updated_by,
+            'updated_by' =>             $form->updated_by
         ]);
 
         $query
             ->andFilterWhere(['ilike', 'title_uz', $form->title_uz])
             ->andFilterWhere(['ilike', 'title_oz', $form->title_oz])
             ->andFilterWhere(['ilike', 'title_ru', $form->title_ru])
-            ->andFilterWhere(['ilike', 'km', $form->km])
             ->andFilterWhere(['ilike', 'code_name', $form->code_name])
             ->andFilterWhere(['ilike', 'address', $form->address])
             ->andFilterWhere(['ilike', 'coordination', $form->coordination])

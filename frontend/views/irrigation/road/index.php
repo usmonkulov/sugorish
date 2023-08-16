@@ -2,6 +2,7 @@
 
 use kartik\select2\Select2;
 use settings\entities\enums\EnumRegions;
+use settings\forms\irrigation\search\RoadSearchForm;
 use settings\status\irrigation\RoadStatus;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
@@ -10,7 +11,7 @@ use yii\helpers\Html;
 use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
-/* @var $searchForm backend\forms\irrigation\RoadSearch */
+/* @var $searchForm RoadSearchForm */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', "Yo'llar");

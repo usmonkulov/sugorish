@@ -62,23 +62,30 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'title_uz',
             'title_oz',
-            'title_ru',
-            'km',
-            'code_name',
-            'address',
-            'coordination',
             [
-                'attribute' => 'region_id',
+                'attribute' => 'type_id',
                 'format'    => 'html',
                 'value'     => function ($data) {
-                    if ($data->region_id) {
-                        return $data->region->title_oz;
+                    if ($data->type_id) {
+                        return $data->type->code_name . $data->code_name;
                     }
                     return null;
                 },
             ],
+            [
+                'label' => Yii::t('app', "Km oralig'ida"),
+                'format'    => 'html',
+                'value'     => function ($data) {
+                    if ($data->start_km && $data->end_km) {
+                        return $data->start_km . '-' . $data->end_km;
+                    }
+                    return null;
+                },
+            ],
+            'field_number',
+            'address:html',
+            'coordination',
 
             [
                 'attribute' => 'district_id',
@@ -86,16 +93,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value'     => function ($data) {
                     if ($data->district_id) {
                         return $data->district->title_oz;
-                    }
-                    return null;
-                },
-            ],
-            [
-                'attribute' => 'type_id',
-                'format'    => 'html',
-                'value'     => function ($data) {
-                    if ($data->type_id) {
-                        return $data->type->code_name . '(' . $data->type->title_oz .')';
                     }
                     return null;
                 },

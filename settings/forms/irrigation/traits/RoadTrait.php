@@ -10,8 +10,10 @@ trait RoadTrait
     public $title_uz;
     public $title_oz;
     public $title_ru;
-    public $km;
+    public $start_km;
+    public $end_km;
     public $code_name;
+    public $field_number;
     public $address;
     public $coordination;
     public $region_id;
