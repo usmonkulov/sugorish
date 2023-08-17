@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * RoadTaskController implements the CRUD actions for RoadTask model.
+ * RoadTaskController implements the CRUD actions for RoadIrrigationTaskRepository model.
  */
 class RoadTaskController extends Controller
 {
@@ -30,7 +30,7 @@ class RoadTaskController extends Controller
     }
 
     /**
-     * Lists all RoadTask models.
+     * Lists all RoadIrrigationTaskRepository models.
      * @return mixed
      */
     public function actionIndex()
@@ -45,7 +45,7 @@ class RoadTaskController extends Controller
     }
 
     /**
-     * Displays a single RoadTask model.
+     * Displays a single RoadIrrigationTaskRepository model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,7 +58,7 @@ class RoadTaskController extends Controller
     }
 
     /**
-     * Creates a new RoadTask model.
+     * Creates a new RoadIrrigationTaskRepository model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
@@ -76,7 +76,7 @@ class RoadTaskController extends Controller
     }
 
     /**
-     * Updates an existing RoadTask model.
+     * Updates an existing RoadIrrigationTaskRepository model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +96,7 @@ class RoadTaskController extends Controller
     }
 
     /**
-     * Deletes an existing RoadTask model.
+     * Deletes an existing RoadIrrigationTaskRepository model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,10 +110,10 @@ class RoadTaskController extends Controller
     }
 
     /**
-     * Finds the RoadTask model based on its primary key value.
+     * Finds the RoadIrrigationTaskRepository model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return RoadTask the loaded model
+     * @return RoadIrrigationTaskRepository the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

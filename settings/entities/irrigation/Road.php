@@ -44,7 +44,7 @@ use yii\db\Expression;
  * @property EnumRoadEmployees $enterpriseExpert
  * @property EnumRoadEmployees $plotChief
  * @property EnumRegions $region
- * @property RoadIrrigationTasks[] $roadIrrigationTasks
+ * @property RoadIrrigationTask[] $roadIrrigationTask
  * @property EnumRoadType $type
  * @property User $updatedBy
  * @property EnumRoadEmployees $waterEmployee
@@ -283,9 +283,9 @@ class Road extends ActiveRecord
      *
      * @return ActiveQuery
      */
-    public function getRoadIrrigationTasks()
+    public function getRoadIrrigationTask()
     {
-        return $this->hasMany(RoadIrrigationTasks::class, ['road_id' => 'id']);
+        return $this->hasMany(RoadIrrigationTask::class, ['road_id' => 'id']);
     }
 
     /**

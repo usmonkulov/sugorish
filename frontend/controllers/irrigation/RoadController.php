@@ -2,9 +2,11 @@
 namespace frontend\controllers\irrigation;
 
 
+use settings\forms\irrigation\RoadIrrigationTaskForm;
 use settings\forms\irrigation\search\RoadSearchForm;
 use settings\readModels\irrigation\RoadReadRepository;
 use settings\repositories\irrigation\RoadRepository;
+use settings\services\irrigation\RoadIrrigationTaskService;
 use settings\services\irrigation\RoadService;
 use Yii;
 use yii\web\Controller;
@@ -14,17 +16,20 @@ class RoadController extends Controller
     private $roadService;
     private $roadReadRepository;
     private $roadRepository;
+    private $irrigationTaskService;
 
     public function __construct($id, $module,
         RoadService $roadService,
         RoadReadRepository $roadReadRepository,
         RoadRepository $roadRepository,
+        RoadIrrigationTaskService $irrigationTaskService,
         $config = []) {
 
         parent::__construct($id, $module, $config);
         $this->roadService = $roadService;
         $this->roadReadRepository = $roadReadRepository;
         $this->roadRepository = $roadRepository;
+        $this->irrigationTaskService = $irrigationTaskService;
     }
 
     /**
@@ -53,6 +58,26 @@ class RoadController extends Controller
         $road = $this->roadRepository->get($id);
         return $this->render('view', [
             'model' => $road
+        ]);
+    }
+
+    public function actionRoadListIrrigationTaskCreate($id): string
+    {
+        $road = $this->roadRepository->get($id);
+        $form = new RoadIrrigationTaskForm();
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $model = $this->irrigationTaskService->create($form);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Suv quyish saqlandi'));
+                return $this->redirect(['view', 'id' => $model->id]);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+        return $this->render('road-list-irrigation-task-create', [
+            'model' => $road,
+            'form' => $form
         ]);
     }
 }

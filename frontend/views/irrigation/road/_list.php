@@ -8,7 +8,7 @@ use yii\helpers\Url;
 ?>
 
 <div class="col-md-6 col-xl-4" data-key="<?=$key?>">
-    <a href="<?= Url::to(['irrigation/road/view', 'id' => $model->id])?>">
+    <a href="<?= Url::to(['irrigation/road/road-list-irrigation-task-create', 'id' => $model->id])?>">
         <div class="card bg-primary text-white mb-3">
             <div class="card-header"><b><?=$model->type->code_name . $model->code_name?></b> "<?=$model->title_oz;?>" <?=$model->start_km . '-' . $model->end_km?> km</div>
             <div class="card-body">

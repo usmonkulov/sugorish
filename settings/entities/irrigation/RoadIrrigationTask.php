@@ -2,13 +2,16 @@
 
 namespace settings\entities\irrigation;
 
+use settings\behaviors\AuthorBehavior;
 use settings\entities\user\User;
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
- * This is the model class for table "{{%road_task}}".
+ * This is the model class for table "{{%road_irrigation_tasks}}".
  *
  * @property int $id
  * @property int|null $road_id
@@ -27,14 +30,97 @@ use yii\db\ActiveRecord;
  * @property Road $road
  * @property User $updatedBy
  */
-class RoadTask extends ActiveRecord
+class RoadIrrigationTask extends ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return '{{%road_task}}';
+        return '{{%road_irrigation_tasks}}';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+
+    public function behaviors(): array
+    {
+        $behaviors = parent::behaviors();
+
+        $behaviors['timestamp'] = [
+            'class' => TimestampBehavior::class,
+            'attributes' => [
+                ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
+                ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+            ],
+            'value' => new Expression('NOW()'),
+        ];
+        $behaviors['author'] = [
+            'class' => AuthorBehavior::class,
+        ];
+
+        return $behaviors;
+    }
+
+    /**
+     * @param $road_id
+     * @param $start_time
+     * @param $end_time
+     * @param $status
+     * @param $status_color
+     * @param $description
+     * @param $content
+     * @return RoadIrrigationTask
+     */
+    public static function create
+    (
+        $road_id,
+        $start_time,
+        $end_time,
+        $status,
+        $status_color,
+        $description,
+        $content
+    ): RoadIrrigationTask
+    {
+        $item = new static();
+        $item->road_id = $road_id;
+        $item->start_time = $start_time;
+        $item->end_time = $end_time;
+        $item->status = $status;
+        $item->status_color = $status_color;
+        $item->description = $description;
+        $item->content = $content;
+        return $item;
+    }
+
+    /**
+     * @param $road_id
+     * @param $start_time
+     * @param $end_time
+     * @param $status
+     * @param $status_color
+     * @param $description
+     * @param $content
+     */
+    public function edit(
+        $road_id,
+        $start_time,
+        $end_time,
+        $status,
+        $status_color,
+        $description,
+        $content
+    )
+    {
+        $this->road_id = $road_id;
+        $this->start_time = $start_time;
+        $this->end_time = $end_time;
+        $this->status = $status;
+        $this->status_color = $status_color;
+        $this->description = $description;
+        $this->content = $content;
     }
 
     /**
@@ -62,7 +148,7 @@ class RoadTask extends ActiveRecord
         return [
             'id' =>                 Yii::t('app', 'ID raqami'),
             'road_id' =>            Yii::t('app', 'Yo\'l id raqami'),
-            'start_time' =>         Yii::t('app', 'boshlanish vaqti'),
+            'start_time' =>         Yii::t('app', 'Boshlanish vaqti'),
             'end_time' =>           Yii::t('app', 'Tugash vaqti'),
             'status' =>             Yii::t('app', 'Holati'),
             'status_color' =>       Yii::t('app', 'Holat rangi'),

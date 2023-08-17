@@ -17,7 +17,7 @@ AppAsset::register($this);
     <!DOCTYPE html>
     <html lang="<?= Yii::$app->language ?>" class="h-100">
 <head>
-    <meta charset=""<?= Yii::$app->charset ?>" />
+    <meta charset="<?= Yii::$app->charset ?>" />
     <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
@@ -35,7 +35,7 @@ AppAsset::register($this);
     />
     <?php $this->head() ?>
 </head>
-    <body class="d-flex flex-column h-100">
+    <body>
     <?php $this->beginBody() ?>
 
 <div class="layout-wrapper layout-content-navbar">

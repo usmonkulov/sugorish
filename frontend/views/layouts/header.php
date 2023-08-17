@@ -1,3 +1,8 @@
+<?php
+
+use yii\helpers\Html;
+
+?>
 <nav
     class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
     id="layout-navbar"
@@ -68,10 +73,11 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="auth-login-basic.html">
-                            <i class="bx bx-power-off me-2"></i>
-                            <span class="align-middle">Chiqish</span>
-                        </a>
+                        <?= Html::a(
+                            '<i class="bx bx-power-off me-2"></i> <span class="align-middle">' . Yii::t('app', ' Chiqish') .'</span>',
+                            ['/auth/auth/logout'],
+                            ['data-method' => 'post', 'class' => 'dropdown-item']
+                        ) ?>
                     </li>
                 </ul>
             </li>

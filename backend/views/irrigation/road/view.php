@@ -1,5 +1,6 @@
 <?php
 
+use andrewdanilov\yandexmap\YandexMap;
 use settings\status\irrigation\RoadStatus;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -85,8 +86,42 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'field_number',
             'address:html',
-            'coordination',
-
+            [
+                'attribute' => 'coordination',
+                'format'    => 'raw',
+                'value'     => function ($data) {
+                    if ($data->coordination) {
+                         return YandexMap::widget([
+                            'id'  => 'some-unique-dom-id', // optional, an ID applied to widget wrapper
+                            'apikey' => '', // optional, yandex map api key
+                            'center' => [
+                                'latitude' => explode (",", $data->coordination)[0],
+                                'longitude' => explode (",", $data->coordination)[1],
+                            ],
+                            'zoom' => 19, // optional, default 12
+                            'points' => [
+                                [
+                                    'id' => $data->id,
+                                    'title' => $data->type->code_name . $data->code_name . ' ' . $data->title_oz .' '. $data->coordination,
+                                    'text' => $data->address,
+                                    'color' => '#0000ff',
+                                    'latitude' => explode (",", $data->coordination)[0],
+                                    'longitude' => explode (",", $data->coordination)[1],
+                                ],
+                            ],
+                            //'pointsUrl' => '/points.json', // url used to get an array of points instead of manual setting the 'points' param
+                            'scroll' => true, // optional, zoom map by scrolling, default false
+                            'wrapperTag' => 'div', // optional, html tag to wrap the map, default 'div'
+                            'wrapperOptions' => [ // optional, attributes passed to \yii\helpers\Html::tag() method for constructing map wrapper
+                                'class' => 'map-wrapper',
+                                'style' => 'width:35%;height:200px;',
+                            ],
+                            'jsPointsClickCallback' => 'myCallback',
+                        ]);
+                    }
+                    return null;
+                },
+            ],
             [
                 'attribute' => 'district_id',
                 'format'    => 'html',
@@ -135,13 +170,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         return RoadStatus::getStatusHtml($data, 'view');
                     }
                 },
-            ],
-            [
-                'attribute' => 'image_url',
-                'value' => function ($model) {
-                    return Html::img(Url::to($model->image_url), ['alt' => $model->title_oz]);
-                },
-                'format' => 'html',
             ],
             [
                 'attribute' => 'created_by',
