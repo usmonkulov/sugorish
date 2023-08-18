@@ -1,6 +1,7 @@
 <?php
 
 use andrewdanilov\yandexmap\YandexMap;
+use mihaildev\ckeditor\CKEditor;
 use settings\forms\irrigation\RoadIrrigationTaskForm;
 use settings\status\irrigation\RoadStatus;
 use yii\helpers\Html;
@@ -23,26 +24,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-md-6 col-xl-4">
             <div class="card">
-                <!--                <div class="card-header d-flex justify-content-between align-items-center">-->
-                <!--                    <h5 class="mb-0">Basic with Icons</h5>-->
-                <!--                    <small class="text-muted float-end">Merged input group</small>-->
-                <!--                </div>-->
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Sug'orish vaqtini kiritish</h5>
+                        <small class="text-muted float-end">Sug'orish</small>
+                    </div>
                 <div class="card-body">
                     <?php $activeForm = ActiveForm::begin(); ?>
-                    <div class="mb-3">
-                        <label class="form-label" for="basic-icon-default-start-time">Boshlanish vaqti</label>
-                        <div class="input-group input-group-merge">
-                            <span id="basic-icon-default-phone2" class="input-group-text"
-                            ><i class="bx bxs-hourglass-top"></i
-                                ></span>
-                            <input
-                                    type="time"
-                                    value="12:30:00"
-                                    id="html5-time-input"
-                                    class="form-control"
-                            />
-                        </div>
-                    </div>
                     <?= $activeForm->field($form, 'start_time', [
                         'options' => [
                             'tag' => 'div',
@@ -52,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'template' => '
                                 {label}
                                 <div class="input-group input-group-merge">
-                                    <span id="basic-icon-default-phone2" class="input-group-text">
+                                    <span id="basic-icon-default-start_time" class="input-group-text">
                                         <i class="bx bxs-hourglass-top"></i>
                                     </span>
                                 {input}
@@ -63,16 +50,45 @@ $this->params['breadcrumbs'][] = $this->title;
                         )->textInput(
                             [
                                 'class' => 'form-control',
-                                'value' => '9:00:00',
-                                'type' => 'time'
+                                'value' => '12:30:00',
+                                'type' => 'time',
+                                'maxlength' => true
                             ]
                     ) ?>
-                    <?= $activeForm->field($form, 'start_time')->textInput(['maxlength' => true]) ?>
-                    <?= $activeForm->field($form, 'end_time')->textInput(['maxlength' => true]) ?>
-                    <?= $activeForm->field($form, 'status_color')->textInput(['maxlength' => true]) ?>
-                    <?= $activeForm->field($form, 'description')->textInput(['maxlength' => true]) ?>
-                    <?= $activeForm->field($form, 'content')->textInput(['maxlength' => true]) ?>
-                    <?= Html::submitButton(Yii::t('app', "Qo'shish"), ['class' => 'btn btn-primary']) ?>
+
+                    <?= $activeForm->field($form, 'end_time', [
+                            'options' => [
+                                'tag' => 'div',
+                                'class' => 'mb-3'
+                            ],
+                            'labelOptions' => [ 'class' => 'form-label' ],
+                            'template' => '
+                                {label}
+                                <div class="input-group input-group-merge">
+                                    <span id="basic-icon-default-end_time" class="input-group-text">
+                                        <i class="bx bxs-hourglass-top"></i>
+                                    </span>
+                                {input}
+                                </div>
+                                {error}{hint}
+                        '
+                        ]
+                    )->textInput(
+                        [
+                            'class' => 'form-control',
+                            'value' => '12:30:00',
+                            'type' => 'time',
+                            'maxlength' => true
+                        ]
+                    ) ?>
+                    <?= $activeForm->field($form, 'content')->widget(CKEditor::class,[
+                        'editorOptions' => [
+                            'preset' => 'basic', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                            'inline' => false, //по умолчанию false
+                        ],
+                    ]);?>
+
+                    <?= Html::submitButton(Yii::t('app', "Sug'orish"), ['class' => 'btn btn-primary']) ?>
                     <?php ActiveForm::end(); ?>
 <!--                    <form>-->
 <!--                        <div class="mb-3">-->

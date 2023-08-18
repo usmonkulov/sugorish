@@ -153,7 +153,7 @@ class RoadIrrigationTask extends ActiveRecord
             'status' =>             Yii::t('app', 'Holati'),
             'status_color' =>       Yii::t('app', 'Holat rangi'),
             'description' =>        Yii::t('app', 'Description'),
-            'content' =>            Yii::t('app', 'Content'),
+            'content' =>            Yii::t('app', 'Qisqacha izoh'),
             'created_by' =>         Yii::t('app', 'Yaratgan foydalanuvchi'),
             'updated_by' =>         Yii::t('app', 'Tahrirlagan foydalanuvchi'),
             'created_at' =>         Yii::t('app', 'Yaratilgan vaqti'),
