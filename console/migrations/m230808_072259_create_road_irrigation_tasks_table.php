@@ -18,7 +18,7 @@ class m230808_072259_create_road_irrigation_tasks_table extends Migration
             'start_time'     => $this->timestamp()->notNull(),
             'end_time'       => $this->timestamp()->notNull(),
             'watering_time'  => $this->timestamp()->notNull(),
-            'how_long'       => $this->string(10)->notNull(),
+            'how_long'       => $this->string()->notNull(),
             'status'         => $this->smallInteger()->defaultValue(1)->notNull(),
             'content'        => $this->string()->notNull(),
             'created_by'     => $this->integer()->notNull(),

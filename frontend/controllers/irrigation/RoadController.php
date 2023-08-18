@@ -69,7 +69,7 @@ class RoadController extends Controller
             try {
                 $this->irrigationTaskService->create($model->id, $form);
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Yo\'l yangilandi').' (id: '.$model->id.')');
-                return 'Saqlandi';
+//                return 'Saqlandi';
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());

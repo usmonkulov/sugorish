@@ -6,6 +6,7 @@ use settings\entities\irrigation\RoadIrrigationTask;
 use settings\forms\irrigation\RoadIrrigationTaskForm;
 use settings\repositories\irrigation\RoadIrrigationTaskRepository;
 use settings\repositories\irrigation\RoadRepository;
+use Yii;
 use yii\db\StaleObjectException;
 
 class RoadIrrigationTaskService
@@ -43,10 +44,11 @@ class RoadIrrigationTaskService
             $form->how_long = $hours . ' soat ' . $minuts . ' minut ' . $seconds . ' sekund ',
             $form->content,
         );
+
         $this->roadIrrigationTaskRepository->save($roadIrrigationTask);
         return $roadIrrigationTask;
 //        echo "<pre>";
-//        print_r($roadIrrigationTask);
+        print_r($roadIrrigationTask);
     }
 
     /**

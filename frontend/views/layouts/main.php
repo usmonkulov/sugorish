@@ -55,6 +55,7 @@ AppAsset::register($this);
                 <!--Content  -->
                 <div class="container-xxl flex-grow-1 container-p-y">
                      <?=$content?>
+                     <?= Alert::widget() ?>
                 </div>
                 <!-- / Content -->
 
