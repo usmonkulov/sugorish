@@ -5,39 +5,48 @@ namespace settings\services\irrigation;
 use settings\entities\irrigation\RoadIrrigationTask;
 use settings\forms\irrigation\RoadIrrigationTaskForm;
 use settings\repositories\irrigation\RoadIrrigationTaskRepository;
+use settings\repositories\irrigation\RoadRepository;
 use yii\db\StaleObjectException;
 
 class RoadIrrigationTaskService
 {
     private $roadIrrigationTaskRepository;
+    private $roadRepository;
 
-    /**
-     * RoadService constructor.
-     * @param RoadIrrigationTaskRepository $roadIrrigationTaskRepository
-     */
     public function __construct(
-        RoadIrrigationTaskRepository $roadIrrigationTaskRepository
+        RoadIrrigationTaskRepository $roadIrrigationTaskRepository,
+        RoadRepository $roadRepository
     ){
         $this->roadIrrigationTaskRepository = $roadIrrigationTaskRepository;
+        $this->roadRepository = $roadRepository;
     }
 
-    /**
-     * @param RoadIrrigationTaskForm $form
-     * @return RoadIrrigationTask
-     */
-    public function create(RoadIrrigationTaskForm $form): RoadIrrigationTask
+    public function create($road_id, RoadIrrigationTaskForm $form)
     {
+        $diff = abs(strtotime($form->end_time) - strtotime($form->start_time));
+
+        $years   = floor($diff / (365*60*60*24));
+        $months  = floor(($diff - $years * 365*60*60*24) / (30*60*60*24));
+        $days    = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24)/ (60*60*24));
+
+        $hours   = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24)/ (60*60));
+
+        $minuts  = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60)/ 60);
+
+        $seconds = floor(($diff - $years * 365*60*60*24 - $months*30*60*60*24 - $days*60*60*24 - $hours*60*60 - $minuts*60));
+
         $roadIrrigationTask = RoadIrrigationTask::create(
-            $form->road_id,
+            $road_id,
             $form->start_time,
             $form->end_time,
-            $form->status,
-            $form->status_color,
-            $form->description,
+            $form->watering_time = date('Y-m-d H:i:s', strtotime( date('Y-m-d H:i:s') . ' +48 hour')),
+            $form->how_long = $hours . ' soat ' . $minuts . ' minut ' . $seconds . ' sekund ',
             $form->content,
         );
         $this->roadIrrigationTaskRepository->save($roadIrrigationTask);
         return $roadIrrigationTask;
+//        echo "<pre>";
+//        print_r($roadIrrigationTask);
     }
 
     /**
@@ -51,9 +60,8 @@ class RoadIrrigationTaskService
             $form->road_id,
             $form->start_time,
             $form->end_time,
-            $form->status,
-            $form->status_color,
-            $form->description,
+            $form->watering_time,
+            $form->how_long,
             $form->content,
         );
         $this->roadIrrigationTaskRepository->save($roadIrrigationTask);

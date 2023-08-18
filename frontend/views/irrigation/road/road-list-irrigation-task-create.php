@@ -1,9 +1,9 @@
 <?php
 
 use andrewdanilov\yandexmap\YandexMap;
-use mihaildev\ckeditor\CKEditor;
+use kartik\widgets\DateTimePicker;
+use kartik\widgets\TimePicker;
 use settings\forms\irrigation\RoadIrrigationTaskForm;
-use settings\status\irrigation\RoadStatus;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -18,6 +18,7 @@ $this->title = $model->title_oz;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', "Yo'llar"), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+
 ?>
 <div class="road-view">
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><?=Yii::t('app',"Yo'llar")?> /</span> <?=$this->title?></h4>
@@ -30,63 +31,60 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 <div class="card-body">
                     <?php $activeForm = ActiveForm::begin(); ?>
+
                     <?= $activeForm->field($form, 'start_time', [
                         'options' => [
                             'tag' => 'div',
                             'class' => 'mb-3'
                         ],
                         'labelOptions' => [ 'class' => 'form-label' ],
-                        'template' => '
-                                {label}
-                                <div class="input-group input-group-merge">
-                                    <span id="basic-icon-default-start_time" class="input-group-text">
-                                        <i class="bx bxs-hourglass-top"></i>
-                                    </span>
-                                {input}
-                                </div>
-                                {error}{hint}
-                        '
-                        ]
-                        )->textInput(
-                            [
-                                'class' => 'form-control',
-                                'value' => '12:30:00',
-                                'type' => 'time',
-                                'maxlength' => true
-                            ]
-                    ) ?>
+                        'inputOptions' => ['value' => date('Y-m-d H:i:s', strtotime( date('Y-m-d H:i:s') . ' -30 minutes')),],
+                    ])->widget(DateTimePicker::class, [
+                        'options' => ['placeholder' => Yii::t('app', "Boshlanish vaqtini kiriting")],
+                        'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
+                        'pluginOptions' => [
+                            'autoclose' => true,
+                            'format' => 'yyyy-mm-dd hh:ii',
+                            'startDate' =>  date('Y-m-d H:i:s', strtotime( date('Y-m-d H:i:s') . ' -4 hour')),
+                            'endDate' =>  date('Y-m-d H:i:s', strtotime( date('Y-m-d H:i:s') . ' +4 hour')),
+                        ],
+                        'removeIcon' => Html::tag('i', '', ['class' => 'bx bxs-calendar-x', 'style' => 'margin-left: -8px;']),
+                        'pickerIcon' =>  Html::tag('i', '', ['class' => 'bx bxs-calendar', 'style' => 'margin-left: -8px;']),
+                    ]);?>
 
                     <?= $activeForm->field($form, 'end_time', [
-                            'options' => [
-                                'tag' => 'div',
-                                'class' => 'mb-3'
-                            ],
-                            'labelOptions' => [ 'class' => 'form-label' ],
-                            'template' => '
-                                {label}
-                                <div class="input-group input-group-merge">
-                                    <span id="basic-icon-default-end_time" class="input-group-text">
-                                        <i class="bx bxs-hourglass-top"></i>
-                                    </span>
-                                {input}
-                                </div>
-                                {error}{hint}
-                        '
-                        ]
-                    )->textInput(
+                        'options' => [
+                            'tag' => 'div',
+                            'class' => 'mb-3'
+                        ],
+                        'labelOptions' => [ 'class' => 'form-label' ],
+                        'inputOptions' => ['value' => date('Y-m-d H:i:s', strtotime( date('Y-m-d H:i:s') . '30 minutes')),],
+                    ])->widget(DateTimePicker::class, [
+                        'options' => ['placeholder' => Yii::t('app', "Boshlanish vaqtini kiriting")],
+                        'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
+                        'pluginOptions' => [
+                            'autoclose' => true,
+                            'format' => 'yyyy-mm-dd hh:ii',
+                            'startDate' =>  date('Y-m-d H:i:s', strtotime( date('Y-m-d H:i:s') . ' -4 hour')),
+                            'endDate' =>  date('Y-m-d H:i:s', strtotime( date('Y-m-d H:i:s') . ' +4 hour')),
+                        ],
+                        'removeIcon' => Html::tag('i', '', ['class' => 'bx bxs-calendar-x', 'style' => 'margin-left: -8px;']),
+                        'pickerIcon' =>  Html::tag('i', '', ['class' => 'bx bxs-calendar', 'style' => 'margin-left: -8px;']),
+                    ]);?>
+
+                    <?= $activeForm->field($form, 'content', [
+                        'options' => [
+                            'tag' => 'div',
+                            'class' => 'mb-3'
+                        ],
+                        'labelOptions' => [ 'class' => 'form-label' ],
+                    ])->textarea(
                         [
                             'class' => 'form-control',
-                            'value' => '12:30:00',
-                            'type' => 'time',
-                            'maxlength' => true
+                            'maxlength' => true,
+                            'rows' => '2'
                         ]
                     ) ?>
-                    <?= $activeForm->field($form, 'content')->widget(CKEditor::class,[
-                        'editorOptions' => [
-                            'preset' => 'basic', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
-                            'inline' => false, //по умолчанию false
-                        ],
-                    ]);?>
 
                     <?= Html::submitButton(Yii::t('app', "Sug'orish"), ['class' => 'btn btn-primary']) ?>
                     <?php ActiveForm::end(); ?>

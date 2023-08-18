@@ -30,8 +30,8 @@ class RoadIrrigationTaskReadRepository
             ->andFilterWhere(['ilike', 'start_time', $form->start_time])
             ->andFilterWhere(['ilike', 'end_time', $form->end_time])
             ->andFilterWhere(['ilike', 'content', $form->content])
-            ->andFilterWhere(['ilike', 'description', $form->description])
-            ->andFilterWhere(['ilike', 'created_at', $form->created_at])
+            ->andFilterWhere(['ilike', 'watering_time', $form->watering_time])
+            ->andFilterWhere(['ilike', 'how_long', $form->how_long])
         ;
 
         return new ActiveDataProvider([

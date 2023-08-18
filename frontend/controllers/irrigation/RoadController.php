@@ -61,23 +61,23 @@ class RoadController extends Controller
         ]);
     }
 
-    public function actionRoadListIrrigationTaskCreate($id): string
+    public function actionRoadListIrrigationTaskCreate($id)
     {
-        $road = $this->roadRepository->get($id);
+        $model = $this->roadRepository->get($id);
         $form = new RoadIrrigationTaskForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
-                $model = $this->irrigationTaskService->create($form);
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Suv quyish saqlandi'));
-                return $this->redirect(['view', 'id' => $model->id]);
+                $this->irrigationTaskService->create($model->id, $form);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Yo\'l yangilandi').' (id: '.$model->id.')');
+                return 'Saqlandi';
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }
         return $this->render('road-list-irrigation-task-create', [
-            'model' => $road,
-            'form' => $form
+            'form' => $form,
+            'model' => $model,
         ]);
     }
 }

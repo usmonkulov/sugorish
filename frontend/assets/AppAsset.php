@@ -22,7 +22,7 @@ class AppAsset extends AssetBundle
     public $js = [
         'assets/vendor/js/helpers.js',
         'assets/js/config.js',
-        'assets/vendor/libs/jquery/jquery.js',
+//        'assets/vendor/libs/jquery/jquery.js',
         'assets/vendor/libs/popper/popper.js',
         'assets/vendor/js/bootstrap.js',
         'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js',
@@ -33,7 +33,7 @@ class AppAsset extends AssetBundle
         'https://buttons.github.io/buttons.js'
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+//        'yii\web\YiiAsset',
+//        'yii\bootstrap\BootstrapAsset',
     ];
 }
