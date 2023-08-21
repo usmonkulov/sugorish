@@ -14,38 +14,50 @@ class RoadReadRepository
     public function search(RoadSearchForm $form): ActiveDataProvider
     {
         $roadAlias = 'r';
-        $roadIrrigationTaskAlias = 'rit';
         $query = Road::find()
-            ->from(["{$roadAlias}" => Road::tableName()])
-            ->select([
-                "{$roadAlias}.id",
-                "{$roadAlias}.title_uz",
-                "{$roadAlias}.title_oz",
-                "{$roadAlias}.title_ru",
-                "{$roadAlias}.start_km",
-                "{$roadAlias}.end_km",
-                "{$roadAlias}.code_name",
-                "{$roadAlias}.field_number",
-                "{$roadAlias}.address",
-                "{$roadAlias}.coordination",
-                "{$roadAlias}.region_id",
-                "{$roadAlias}.district_id",
-                "{$roadAlias}.type_id",
-                "{$roadAlias}.enterprise_expert_id",
-                "{$roadAlias}.plot_chief_id",
-                "{$roadAlias}.water_employee_id",
-                "{$roadAlias}.status",
-                "{$roadAlias}.image_url",
-                "{$roadAlias}.created_by",
-                "{$roadAlias}.updated_by",
-                "{$roadAlias}.created_at",
-                "{$roadAlias}.updated_at",
-                "{$roadIrrigationTaskAlias}.watering_time",
-            ])
-            ->innerJoin(["{$roadIrrigationTaskAlias}" => RoadIrrigationTask::tableName()], "{$roadIrrigationTaskAlias}.road_id={$roadAlias}.id")
-            ->andWhere(["{$roadIrrigationTaskAlias}.color_status" => RoadIrrigationTaskStatus::COLOR_STATUS_PROCESS])
-            ->andWhere(["{$roadAlias}.status" => GeneralStatus::STATUS_ENABLED])
-            ->orderBy("{$roadIrrigationTaskAlias}.watering_time asc");
+            ->joinWith(['roadIrrigationTask'])
+            ->alias("{$roadAlias}")
+            ->andWhere(["{$roadAlias}.status" => GeneralStatus::STATUS_ENABLED]);
+//            ->andWhere(["{$roadIrrigationTaskAlias}.color_status" => RoadIrrigationTaskStatus::COLOR_STATUS_PROCESS])
+//            ->orderBy("{$roadIrrigationTaskAlias}.watering_time asc");
+//        $roadAlias = 'r';
+//        $roadIrrigationTaskAlias = 'rit';
+//        $query = Road::find()
+//            ->from(["{$roadAlias}" => Road::tableName()])
+//            ->select([
+//                "{$roadAlias}.id",
+//                "{$roadAlias}.title_uz",
+//                "{$roadAlias}.title_oz",
+//                "{$roadAlias}.title_ru",
+//                "{$roadAlias}.start_km",
+//                "{$roadAlias}.end_km",
+//                "{$roadAlias}.code_name",
+//                "{$roadAlias}.field_number",
+//                "{$roadAlias}.address",
+//                "{$roadAlias}.coordination",
+//                "{$roadAlias}.region_id",
+//                "{$roadAlias}.district_id",
+//                "{$roadAlias}.type_id",
+//                "{$roadAlias}.enterprise_expert_id",
+//                "{$roadAlias}.plot_chief_id",
+//                "{$roadAlias}.water_employee_id",
+//                "{$roadAlias}.status",
+//                "{$roadAlias}.image_url",
+//                "{$roadAlias}.created_by",
+//                "{$roadAlias}.updated_by",
+//                "{$roadAlias}.created_at",
+//                "{$roadAlias}.updated_at",
+//                "{$roadIrrigationTaskAlias}.start_time",
+//                "{$roadIrrigationTaskAlias}.end_time",
+//                "{$roadIrrigationTaskAlias}.watering_time",
+//                "{$roadIrrigationTaskAlias}.how_long",
+//                "{$roadIrrigationTaskAlias}.color_status",
+//                "{$roadIrrigationTaskAlias}.content",
+//            ])
+//            ->innerJoin(["{$roadIrrigationTaskAlias}" => RoadIrrigationTask::tableName()], "{$roadIrrigationTaskAlias}.road_id={$roadAlias}.id")
+//            ->andWhere(["{$roadIrrigationTaskAlias}.color_status" => RoadIrrigationTaskStatus::COLOR_STATUS_PROCESS])
+//            ->andWhere(["{$roadAlias}.status" => GeneralStatus::STATUS_ENABLED])
+//            ->orderBy("{$roadIrrigationTaskAlias}.watering_time asc");
 
         if ($form->hasErrors()) {
             $query->andWhere('1=0');
