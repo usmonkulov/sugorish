@@ -2,6 +2,8 @@
 
 use kartik\select2\Select2;
 use settings\entities\enums\EnumRegions;
+use settings\entities\irrigation\Road;
+use settings\entities\irrigation\RoadIrrigationTask;
 use settings\forms\irrigation\search\RoadSearchForm;
 use settings\status\irrigation\RoadStatus;
 use yii\grid\ActionColumn;

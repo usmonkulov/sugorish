@@ -7,6 +7,7 @@ namespace settings\repositories\irrigation;
 use settings\entities\irrigation\RoadIrrigationTask;
 use settings\entities\NotFoundException;
 use settings\status\GeneralStatus;
+use settings\status\irrigation\RoadIrrigationTaskStatus;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\db\StaleObjectException;
@@ -35,6 +36,17 @@ class RoadIrrigationTaskRepository
             ->asArray()
             ->all();
     }
+
+    /**
+     * @param $id
+     * @return RoadIrrigationTask|null
+     */
+    public function findOneColorStatus($id){
+        return RoadIrrigationTask::findOne([
+            'road_id' => $id,
+            'color_status' => RoadIrrigationTaskStatus::COLOR_STATUS_PROCESS]);
+    }
+
     /**
      * @param $fields
      * @return array|RoadIrrigationTask[]|ActiveRecord[]

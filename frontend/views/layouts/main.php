@@ -4,7 +4,6 @@
 /* @var $content string */
 
 use settings\repositories\UserNameRepository;
-use common\widgets\Alert;
 use frontend\assets\AppAsset;
 use yii\widgets\Breadcrumbs;
 use yii\bootstrap\Html;
@@ -55,7 +54,6 @@ AppAsset::register($this);
                 <!--Content  -->
                 <div class="container-xxl flex-grow-1 container-p-y">
                      <?=$content?>
-                     <?= Alert::widget() ?>
                 </div>
                 <!-- / Content -->
 

@@ -20,7 +20,7 @@ use yii\db\Expression;
  * @property string $end_time
  * @property string $watering_time
  * @property string $how_long
- * @property int $status
+ * @property string $color_status
  * @property string $content
  * @property int $created_by
  * @property int|null $updated_by
@@ -113,10 +113,10 @@ class RoadIrrigationTask extends ActiveRecord
 //            [['created_by'], 'default', 'value' => 1],
 //            [['status'], 'default', 'value' => 1],
 //            [['created_at'], 'default', 'value' => date('Y-m-d H:i:s')],
-            [['road_id', 'status', 'created_by', 'updated_by'], 'integer'],
+            [['road_id', 'created_by', 'updated_by'], 'integer'],
             [['start_time', 'end_time', 'content'], 'required'],
             [['start_time', 'end_time', 'watering_time', 'created_at', 'updated_at'], 'safe'],
-            [['content','how_long'], 'string', 'max' => 255],
+            [['content','how_long', 'color_status'], 'string', 'max' => 255],
             [['road_id'], 'exist', 'skipOnError' => true, 'targetClass' => Road::class, 'targetAttribute' => ['road_id' => 'id']],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['updated_by' => 'id']],
@@ -136,7 +136,7 @@ class RoadIrrigationTask extends ActiveRecord
             'end_time' =>           Yii::t('app', 'Tugash vaqti'),
             'watering_time' =>      Yii::t('app', 'Qachon quyiladi'),
             'how_long' =>           Yii::t('app', 'Qancha vaqt quyildi'),
-            'status' =>             Yii::t('app', 'Holati'),
+            'color_status' =>       Yii::t('app', 'Holati'),
             'content' =>            Yii::t('app', 'Qisqacha izoh'),
             'created_by' =>         Yii::t('app', 'Yaratgan foydalanuvchi'),
             'updated_by' =>         Yii::t('app', 'Tahrirlagan foydalanuvchi'),

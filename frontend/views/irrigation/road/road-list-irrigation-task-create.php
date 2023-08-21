@@ -4,6 +4,7 @@ use andrewdanilov\yandexmap\YandexMap;
 use kartik\widgets\DateTimePicker;
 use kartik\widgets\TimePicker;
 use settings\forms\irrigation\RoadIrrigationTaskForm;
+use settings\repositories\irrigation\RoadIrrigationTaskRepository;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -18,8 +19,16 @@ $this->title = $model->title_oz;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', "Yo'llar"), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
-
+$roadIrrigationDate = (new RoadIrrigationTaskRepository())->findOneColorStatus($model->id);
 ?>
+<!-- START ALERTS AND CALLOUTS -->
+<?php //if(Yii::$app->session->hasFlash('success') ): ?>
+<!--    <div class="alert alert-primary alert-dismissible">-->
+<!--        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>-->
+<!--        --><?php //echo Yii::$app->session->getFlash('success'); ?>
+<!--    </div>-->
+<?php //endif;?>
+<!-- END ALERTS AND CALLOUTS -->
 <div class="road-view">
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><?=Yii::t('app',"Yo'llar")?> /</span> <?=$this->title?></h4>
     <div class="row">
@@ -30,6 +39,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         <small class="text-muted float-end">Sug'orish</small>
                     </div>
                 <div class="card-body">
+                    <!-- START ALERTS AND CALLOUTS -->
+                    <?php if(Yii::$app->session->hasFlash('success') ): ?>
+                        <div class="alert alert-primary alert-dismissible" role="alert">
+                            <?php echo Yii::$app->session->getFlash('success'); ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    <?php endif;?>
+                    <!-- END ALERTS AND CALLOUTS -->
                     <?php $activeForm = ActiveForm::begin(); ?>
 
                     <?= $activeForm->field($form, 'start_time', [
@@ -156,8 +173,8 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
         <div class="col-md-6 col-xl-4">
-            <div class="card bg-primary text-white mb-3">
-                <div class="card-header"><b><?=$model->type->code_name . $model->code_name?></b> "<?=$model->title_oz;?>" <?=$model->start_km . '-' . $model->end_km?> km</div>
+            <div class="card bg-<?= $roadIrrigationDate->watering_time <= date('Y-m-d H:i:s') ? 'danger' : 'primary'?> text-white mb-3">
+            <div class="card-header"><b><?=$model->type->code_name . $model->code_name?></b> "<?=$model->title_oz;?>" <?=$model->start_km . '-' . $model->end_km?> km</div>
                 <div class="card-body">
                     <h6 class="card-title text-white"><b><?=$model->getAttributeLabel('district_id')?>:</b> <?=$model->district->title_oz;?></h6>
                     <h6 class="card-title text-white"><b><?=$model->getAttributeLabel('address')?>:</b> <?=strip_tags($model->address);?></h6>
@@ -166,6 +183,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h6 class="card-title text-white"><b><?=$model->getAttributeLabel('enterprise_expert_id')?>:</b> <?=$model->enterpriseExpert->first_name . ' ' . $model->enterpriseExpert->last_name?></h6>
                     <h6 class="card-title text-white"><b><?=$model->getAttributeLabel('plot_chief_id')?>:</b> <?=$model->plotChief->first_name . ' ' . $model->plotChief->last_name?></h6>
                     <h6 class="card-title text-white"><b><?=$model->getAttributeLabel('water_employee_id')?>:</b> <?=$model->waterEmployee->first_name . ' ' . $model->waterEmployee->last_name?></h6>
+                    <h6 class="card-title text-white"><b><?=$roadIrrigationDate->start_time?></b> dan <b><?=$roadIrrigationDate->end_time?></b> gacha </h6>
+                    <h6 class="card-title text-white"><b><?=$roadIrrigationDate->how_long?></b></h6>
+                    <h6 class="card-title text-white"><b>Suv quyish vaqti:</b> <?=$roadIrrigationDate->watering_time?></h6>
                 </div>
             </div>
         </div>

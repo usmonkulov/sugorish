@@ -68,8 +68,8 @@ class RoadController extends Controller
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $this->irrigationTaskService->create($model->id, $form);
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Yo\'l yangilandi').' (id: '.$model->id.')');
-//                return 'Saqlandi';
+                Yii::$app->session->setFlash('success', Yii::t('app', $model->type->code_name . $model->code_name . ' ' . $model->title_oz .' '.  $model->coordination . " sug'orilidi"));
+                return $this->redirect(Yii::$app->request->referrer);
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());

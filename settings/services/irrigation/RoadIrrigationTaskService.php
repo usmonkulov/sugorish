@@ -6,6 +6,7 @@ use settings\entities\irrigation\RoadIrrigationTask;
 use settings\forms\irrigation\RoadIrrigationTaskForm;
 use settings\repositories\irrigation\RoadIrrigationTaskRepository;
 use settings\repositories\irrigation\RoadRepository;
+use settings\status\irrigation\RoadIrrigationTaskStatus;
 use Yii;
 use yii\db\StaleObjectException;
 
@@ -24,6 +25,12 @@ class RoadIrrigationTaskService
 
     public function create($road_id, RoadIrrigationTaskForm $form)
     {
+        $roadIrrigationTask = $this->roadIrrigationTaskRepository->findOneColorStatus($road_id);
+        if(!empty($roadIrrigationTask->color_status)){
+            $roadIrrigationTask->color_status = RoadIrrigationTaskStatus::COLOR_STATUS_PASSED_THE_PROCESS;
+            $this->roadIrrigationTaskRepository->save($roadIrrigationTask);
+        }
+
         $diff = abs(strtotime($form->end_time) - strtotime($form->start_time));
 
         $years   = floor($diff / (365*60*60*24));
@@ -41,14 +48,12 @@ class RoadIrrigationTaskService
             $form->start_time,
             $form->end_time,
             $form->watering_time = date('Y-m-d H:i:s', strtotime( date('Y-m-d H:i:s') . ' +48 hour')),
-            $form->how_long = $hours . ' soat ' . $minuts . ' minut ' . $seconds . ' sekund ',
+            $form->how_long = $hours . ' soat ' . $minuts . ' minut ' . $seconds . ' sekund suv quyildi',
             $form->content,
         );
 
         $this->roadIrrigationTaskRepository->save($roadIrrigationTask);
         return $roadIrrigationTask;
-//        echo "<pre>";
-        print_r($roadIrrigationTask);
     }
 
     /**
