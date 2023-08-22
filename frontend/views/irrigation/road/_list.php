@@ -1,6 +1,7 @@
 <?php
 
 use settings\repositories\irrigation\RoadIrrigationTaskRepository;
+use settings\status\irrigation\RoadIrrigationTaskStatus;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 use yii\helpers\Url;
@@ -8,8 +9,6 @@ use yii\helpers\Url;
 /* @var $model settings\entities\irrigation\Road */
 /* @var $key int*/
 $roadIrrigationDate = (new RoadIrrigationTaskRepository())->findOneColorStatus($model->id);
-echo "<pre>";
-print_r($model);
 ?>
 
 <div class="col-md-6 col-xl-4" data-key="<?=$key?>">

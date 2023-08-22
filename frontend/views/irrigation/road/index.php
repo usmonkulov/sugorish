@@ -5,6 +5,8 @@ use settings\entities\enums\EnumRegions;
 use settings\entities\irrigation\Road;
 use settings\entities\irrigation\RoadIrrigationTask;
 use settings\forms\irrigation\search\RoadSearchForm;
+use settings\status\GeneralStatus;
+use settings\status\irrigation\RoadIrrigationTaskStatus;
 use settings\status\irrigation\RoadStatus;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
@@ -25,8 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'itemView' => function ($model, $key, $index, $widget) {
             return $this->render('_list',[
-                    'model' => $model,
-                    'key' => $key
+                'model' => $model,
+                'key' => $key
             ]);
         },
         'itemOptions' => [
