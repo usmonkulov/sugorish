@@ -1,17 +1,14 @@
 <?php
 
-use kartik\select2\Select2;
 use settings\entities\enums\EnumRegions;
+use settings\entities\enums\EnumRoadEmployees;
+use settings\entities\enums\EnumRoadPosition;
+use settings\entities\enums\EnumRoadType;
 use settings\entities\irrigation\Road;
 use settings\entities\irrigation\RoadIrrigationTask;
 use settings\forms\irrigation\search\RoadSearchForm;
 use settings\status\GeneralStatus;
 use settings\status\irrigation\RoadIrrigationTaskStatus;
-use settings\status\irrigation\RoadStatus;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
 use yii\widgets\ListView;
 
 /* @var $this yii\web\View */

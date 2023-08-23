@@ -21,14 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 $roadIrrigationDate = (new RoadIrrigationTaskRepository())->findOneColorStatus($model->id);
 ?>
-<!-- START ALERTS AND CALLOUTS -->
-<?php //if(Yii::$app->session->hasFlash('success') ): ?>
-<!--    <div class="alert alert-primary alert-dismissible">-->
-<!--        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>-->
-<!--        --><?php //echo Yii::$app->session->getFlash('success'); ?>
-<!--    </div>-->
-<?php //endif;?>
-<!-- END ALERTS AND CALLOUTS -->
 <div class="road-view">
     <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><?=Yii::t('app',"Yo'llar")?> /</span> <?=$this->title?></h4>
     <div class="row">

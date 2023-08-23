@@ -2,19 +2,65 @@
 
 namespace settings\readModels\irrigation;
 
+use settings\entities\enums\EnumRegions;
+use settings\entities\enums\EnumRoadEmployees;
+use settings\entities\enums\EnumRoadType;
 use settings\entities\irrigation\Road;
 use settings\entities\irrigation\RoadIrrigationTask;
 use settings\forms\irrigation\search\RoadSearchForm;
 use settings\status\GeneralStatus;
 use settings\status\irrigation\RoadIrrigationTaskStatus;
+use Yii;
 use yii\data\ActiveDataProvider;
 
 class RoadReadRepository
 {
     public function search(RoadSearchForm $form): ActiveDataProvider
     {
+//        $roadAlias = 'road';
+//        $taskAlias = 'road_irrigation_tasks';
+//        $query = Road::find()
+//            ->joinWith('roadIrrigationTask', true)
+//            ->alias("{$roadAlias}")
+//            ->andWhere(["{$roadAlias}.status" => GeneralStatus::STATUS_ENABLED])
+//            ->andWhere(["{$taskAlias}.color_status" => RoadIrrigationTaskStatus::COLOR_STATUS_PROCESS])
+//            ->orderBy("{$taskAlias}.watering_time asc")
+//        ;
+
+        $roadAlias = 'r';
+        $taskAlias = 'rit';
+        $districtAlias = 'd';
+        $enterpriseExpertAlias = 'eea';
+        $plotChiefAlias = 'pch';
+        $waterEmployeeAlias = 'we';
+        $typeAlias = 't';
         $query = Road::find()
-            ->andWhere(["status" => GeneralStatus::STATUS_ENABLED])
+            ->select([
+                "{$roadAlias}.id",
+                "CONCAT('<b>', $typeAlias.code_name, {$roadAlias}.code_name, '</b> ', {$roadAlias}.title_oz, ' ', {$roadAlias}.start_km, '-', {$roadAlias}.end_km, ' " .Yii::t('app', 'km'). " ') as road_full_name",
+                "{$districtAlias}.title_oz as district_title",
+                "{$roadAlias}.address",
+                "{$roadAlias}.field_number",
+                "{$roadAlias}.coordination",
+                "CONCAT({$enterpriseExpertAlias}.first_name, ' ', {$enterpriseExpertAlias}.last_name) as enterprise_expert_full_name",
+                "CONCAT({$plotChiefAlias}.first_name, ' ', {$plotChiefAlias}.last_name) as plot_chief_full_name",
+                "CONCAT({$waterEmployeeAlias}.first_name, ' ', {$waterEmployeeAlias}.last_name) as water_employee_full_name",
+                "CONCAT('<b>', {$taskAlias}.start_time, '</b>', ' " . Yii::t('app', 'dan') . " ', ' <b>', {$taskAlias}.end_time, '</b>', ' ', ' " . Yii::t('app', 'gacha') . " ') as start_end_time",
+                "{$taskAlias}.how_long",
+                "{$taskAlias}.watering_time",
+                "{$taskAlias}.content",
+            ])
+            ->from(["{$roadAlias}" =>                   Road::tableName()])
+            ->innerJoin(["{$typeAlias}" =>              EnumRoadType::tableName()], "{$typeAlias}.id = {$roadAlias}.type_id")
+            ->innerJoin(["{$enterpriseExpertAlias}" =>  EnumRoadEmployees::tableName()], "{$enterpriseExpertAlias}.id = {$roadAlias}.enterprise_expert_id")
+            ->innerJoin(["{$plotChiefAlias}" =>         EnumRoadEmployees::tableName()], "{$plotChiefAlias}.id = {$roadAlias}.plot_chief_id")
+            ->innerJoin(["{$waterEmployeeAlias}" =>     EnumRoadEmployees::tableName()], "{$waterEmployeeAlias}.id = {$roadAlias}.water_employee_id")
+            ->innerJoin(["{$taskAlias}" =>              RoadIrrigationTask::tableName()], "{$roadAlias}.id = {$taskAlias}.road_id")
+            ->innerJoin(["{$districtAlias}" =>          EnumRegions::tableName()], "{$districtAlias}.id = {$roadAlias}.district_id")
+            ->andWhere(["{$roadAlias}.status" =>        GeneralStatus::STATUS_ENABLED])
+            ->andWhere(["{$taskAlias}.color_status" =>  RoadIrrigationTaskStatus::COLOR_STATUS_PROCESS])
+            ->asArray()
+            ->orderBy("{$taskAlias}.watering_time asc")
         ;
 
         if ($form->hasErrors()) {

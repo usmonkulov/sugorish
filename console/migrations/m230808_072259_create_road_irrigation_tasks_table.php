@@ -41,7 +41,7 @@ class m230808_072259_create_road_irrigation_tasks_table extends Migration
             'road_id',
             '{{%road}}',
             'id',
-            'RESTRICT',
+            'CASCADE',
             'CASCADE'
         );
 

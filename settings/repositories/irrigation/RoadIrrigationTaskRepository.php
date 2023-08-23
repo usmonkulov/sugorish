@@ -47,6 +47,13 @@ class RoadIrrigationTaskRepository
             'color_status' => RoadIrrigationTaskStatus::COLOR_STATUS_PROCESS]);
     }
 
+    public function findOneDate(){
+        return RoadIrrigationTask::find()
+            ->where(['color_status' => RoadIrrigationTaskStatus::COLOR_STATUS_PROCESS])
+            ->orderBy('watering_time asc')
+            ->one();
+    }
+
     /**
      * @param $fields
      * @return array|RoadIrrigationTask[]|ActiveRecord[]

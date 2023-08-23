@@ -42,13 +42,6 @@ use yii\widgets\ActiveForm;
             <?= $activeForm->field($form, 'code_name')->textInput(['maxlength' => true]) ?>
            <div class="row">
                <div class="col-md-6">
-                   <?= $activeForm->field($form, 'start_km')->widget(TimePicker::class, [
-                   'pluginOptions' => [
-                       'showSeconds' => false,
-                       'showMeridian' => false,
-                       'minuteStep' => 1,
-                       'secondStep' => 5,
-                   ]]);?>
 
                    <?= $activeForm->field($form, 'start_km')->textInput(['maxlength' => true, 'type'=>'number', 'min' => 0]) ?>
                </div>
