@@ -19,8 +19,10 @@ class m230801_093238_create_user_profile_table extends Migration
             'middle_name'       => $this->string(),
             'birthday'          => $this->date()->notNull(),
             'gender'            => $this->string(1)->defaultValue('m')->notNull(),
-            'status'            => $this->smallInteger()->defaultValue(1)->notNull(),
+            'region_id'         => $this->integer()->notNull(),
+            'district_id'       => $this->integer()->notNull(),
             'address'           => $this->text()->notNull(),
+            'avatar'            => $this->string(),
             'created_by'        => $this->integer()->notNull(),
             'updated_by'        => $this->integer(),
             'created_at'        => $this->timestamp()->notNull()->defaultValue('NOW()'),
@@ -41,7 +43,8 @@ class m230801_093238_create_user_profile_table extends Migration
             'user_id',
             '{{%user}}',
             'id',
-            'CASCADE'
+            'CASCADE',
+            'CASCADE',
         );
         // creates index for column `created_by`
         $this->createIndex(
@@ -77,6 +80,42 @@ class m230801_093238_create_user_profile_table extends Migration
             'id',
             'RESTRICT',
             'CASCADE'
+        );
+
+        // creates index for column `region_id`
+        $this->createIndex(
+            '{{%idx-user_profile-region_id_index}}',
+            '{{%user_profile}}',
+            'region_id'
+        );
+
+        // add foreign key for table `{{%enum_regions}}`
+        $this->addForeignKey(
+            '{{%fk-user_profile-region_id}}',
+            '{{%user_profile}}',
+            'region_id',
+            '{{%enum_regions}}',
+            'id',
+            'RESTRICT',
+            'CASCADE',
+        );
+
+        // creates index for column `district_id`
+        $this->createIndex(
+            '{{%idx-user_profile-district_id}}',
+            '{{%user_profile}}',
+            'district_id'
+        );
+
+        // add foreign key for table `{{%enum_regions}}`
+        $this->addForeignKey(
+            '{{%fk-user_profile-district_id}}',
+            '{{%user_profile}}',
+            'district_id',
+            '{{%enum_regions}}',
+            'id',
+            'RESTRICT',
+            'CASCADE',
         );
     }
 
@@ -118,6 +157,30 @@ class m230801_093238_create_user_profile_table extends Migration
         // drops index for column `updated_by`
         $this->dropIndex(
             '{{%idx-user_profile-updated_by}}',
+            '{{%user_profile}}'
+        );
+
+        // drops foreign key for table `{{%enum_regions}}`
+        $this->dropForeignKey(
+            '{{%fk-user_profile-region_id}}',
+            '{{%user_profile}}'
+        );
+
+        // drops index for column `region_id`
+        $this->dropIndex(
+            '{{%idx-user_profile-region_id_index}}',
+            '{{%user_profile}}'
+        );
+
+        // drops foreign key for table `{{%enum_regions}}`
+        $this->dropForeignKey(
+            '{{%fk-user_profile-district_id}}',
+            '{{%user_profile}}'
+        );
+
+        // drops index for column `district_id`
+        $this->dropIndex(
+            '{{%idx-user_profile-district_id}}',
             '{{%user_profile}}'
         );
 

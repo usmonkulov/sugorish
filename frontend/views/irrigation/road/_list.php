@@ -25,8 +25,9 @@ $roadIrrigationDate = (new RoadIrrigationTaskRepository())->findOneColorStatus($
                 <h6 class="card-title text-white"><b><?=Yii::t('app', "Ma'sul ishchi");?>:</b> <?=$model['water_employee_full_name'];?></h6>
                 <h6 class="card-title text-white"><?=$model['start_end_time']; ?></h6>
                 <h6 class="card-title text-white"><b><?=$model['how_long'];?></b></h6>
-                <h6 class="card-title text-white"><b><?=Yii::t('app', "Izoh bildirilgan");?>:</b> <?=$model['content'];?></h6>
                 <h6 class="card-title text-white"><b><?=Yii::t('app', "Suv quyish vaqti");?>:</b> <?=date('Y-m-d H:i', strtotime($model['watering_time']))?></h6>
+                <h6 class="card-title text-white"><b><?=Yii::t('app', "Izoh bildirilgan");?>:</b> <?=$model['content'];?></h6>
+                <h6 class="card-title text-white"><b><?=Yii::t('app', "Grafikni yaratdi");?>:</b> <?= $model['username']?></h6>
             </div>
         </div>
     </a>

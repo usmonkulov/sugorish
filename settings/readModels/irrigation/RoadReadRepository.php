@@ -7,6 +7,7 @@ use settings\entities\enums\EnumRoadEmployees;
 use settings\entities\enums\EnumRoadType;
 use settings\entities\irrigation\Road;
 use settings\entities\irrigation\RoadIrrigationTask;
+use settings\entities\user\User;
 use settings\forms\irrigation\search\RoadSearchForm;
 use settings\status\GeneralStatus;
 use settings\status\irrigation\RoadIrrigationTaskStatus;
@@ -34,6 +35,7 @@ class RoadReadRepository
         $plotChiefAlias = 'pch';
         $waterEmployeeAlias = 'we';
         $typeAlias = 't';
+        $userAlias = 'u';
         $query = Road::find()
             ->select([
                 "{$roadAlias}.id",
@@ -49,6 +51,7 @@ class RoadReadRepository
                 "{$taskAlias}.how_long",
                 "{$taskAlias}.watering_time",
                 "{$taskAlias}.content",
+                "{$userAlias}.username"
             ])
             ->from(["{$roadAlias}" =>                   Road::tableName()])
             ->innerJoin(["{$typeAlias}" =>              EnumRoadType::tableName()], "{$typeAlias}.id = {$roadAlias}.type_id")
@@ -57,6 +60,7 @@ class RoadReadRepository
             ->innerJoin(["{$waterEmployeeAlias}" =>     EnumRoadEmployees::tableName()], "{$waterEmployeeAlias}.id = {$roadAlias}.water_employee_id")
             ->innerJoin(["{$taskAlias}" =>              RoadIrrigationTask::tableName()], "{$roadAlias}.id = {$taskAlias}.road_id")
             ->innerJoin(["{$districtAlias}" =>          EnumRegions::tableName()], "{$districtAlias}.id = {$roadAlias}.district_id")
+            ->innerJoin(["{$userAlias}" =>              User::tableName()], "{$userAlias}.id = {$roadAlias}.created_by")
             ->andWhere(["{$roadAlias}.status" =>        GeneralStatus::STATUS_ENABLED])
             ->andWhere(["{$taskAlias}.color_status" =>  RoadIrrigationTaskStatus::COLOR_STATUS_PROCESS])
             ->asArray()

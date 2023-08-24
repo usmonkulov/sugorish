@@ -1,45 +1,63 @@
 <?php
 
+use kartik\depdrop\DepDrop;
+use kartik\widgets\Select2;
+use settings\entities\enums\EnumRegions;
+use settings\helpers\CommonHelper;
+use settings\helpers\GenderHelper;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model settings\entities\user\UserProfile */
-/* @var $form yii\widgets\ActiveForm */
+/* @var $form settings\forms\user\UserProfileForm */
+/* @var $activeForm yii\widgets\ActiveForm */
 ?>
 
 <div class="user-profile-form">
+    <div class="box-body">
+        <div class="row">
+            <?php $activeForm = ActiveForm::begin(); ?>
+            <div class="col-md-4">
 
-    <?php $form = ActiveForm::begin(); ?>
+                <?= $activeForm->field($form, 'first_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+                <?= $activeForm->field($form, 'last_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
+                <?= $activeForm->field($form, 'middle_name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
+                <?= $activeForm->field($form, 'birthday')->textInput() ?>
 
-    <?= $form->field($model, 'middle_name')->textInput(['maxlength' => true]) ?>
+                <?= $activeForm->field($form, 'gender')->radioList(ArrayHelper::map(GenderHelper::getGenderForSelect(), 'id', 'value')) ?>
 
-    <?= $form->field($model, 'birthday')->textInput() ?>
+                <?= $activeForm->field($form, 'region_id')->widget(Select2::class, [
+                    'data' => CommonHelper::getList(EnumRegions::find()->where(['parent_id' => null])->orderBy('order')->all()),
+                    'options' => ['placeholder' => '-- ' . Yii::t('app',"Viloyatni tanlang") . ' --', 'value' => 1718, 'disabled' => 'disabled'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                    ],
+                ]) ?>
 
-    <?= $form->field($model, 'gender')->textInput(['maxlength' => true]) ?>
+                <?= $activeForm->field($form, 'district_id')->widget(DepDrop::class, [
+                    'data' => ArrayHelper::map(EnumRegions::findAll(['parent_id' => 1718]),'id','title_oz'),
+                    'options' => ['placeholder' => '-- ' . Yii::t('app',"Tuman yoki shaharni tanlang") . ' --'],
+                    'pluginOptions' => [
+                        'depends' => [Html::getInputId($form, 'region_id')],
+                        'placeholder' => Yii::t('app',"Tuman yoki shaharni tanlang"),
+                        'url' => Url::to(['/api/districts'])
+                    ]
+                ]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+                <?= $activeForm->field($form, 'address')->textarea(['rows' => 3]) ?>
 
-    <?= $form->field($model, 'address')->textarea(['rows' => 6]) ?>
+                <?= $activeForm->field($form, 'avatar')->fileInput() ?>
 
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+                <div class="form-group">
+                    <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+                </div>
+            </div>
+            <?php ActiveForm::end(); ?>
+        </div>
     </div>
-
-    <?php ActiveForm::end(); ?>
-
 </div>
