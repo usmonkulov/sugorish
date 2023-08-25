@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model settings\entities\user\UserProfile */
 
-$this->title = 'Create User Profile';
+$this->title = Yii::t('app', "Profil yaratish");
 $this->params['breadcrumbs'][] = ['label' => 'User Profiles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

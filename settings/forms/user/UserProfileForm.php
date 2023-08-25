@@ -15,7 +15,7 @@ class UserProfileForm extends Model
     public function rules()
     {
         return [
-            [['first_name', 'last_name', 'birthday', 'region_id', 'district_id', 'address', 'created_by'], 'required'],
+            [['first_name', 'last_name', 'birthday', 'district_id', 'address'], 'required'],
             [['birthday', 'created_at', 'updated_at'], 'safe'],
             [['region_id', 'district_id', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['region_id', 'district_id', 'created_by', 'updated_by'], 'integer'],

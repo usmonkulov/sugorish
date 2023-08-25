@@ -40,14 +40,16 @@ class UserProfileController extends Controller
     {
         $form = new UserProfileForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
-            try {
-                $this->userProfileService->create($form);
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Profil saqlandi'));
-                return $this->redirect(['view', 'id' => Yii::$app->user->id]);
-            } catch (\DomainException $e) {
-                Yii::$app->errorHandler->logException($e);
-                Yii::$app->session->setFlash('error', $e->getMessage());
-            }
+            echo "<pre>";
+            print_r(Yii::$app->request->post());
+//            try {
+//                $this->userProfileService->create($form);
+//                Yii::$app->session->setFlash('success', Yii::t('app', 'Profil saqlandi'));
+//                return $this->redirect(['view', 'id' => Yii::$app->user->id]);
+//            } catch (\DomainException $e) {
+//                Yii::$app->errorHandler->logException($e);
+//                Yii::$app->session->setFlash('error', $e->getMessage());
+//            }
         }
         return $this->render('create', [
             'form' => $form,

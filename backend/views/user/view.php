@@ -55,6 +55,12 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
     <?= Html::a('<i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success','title'=>Yii::t('yii','Create')]) ?>
 
+    <?= Html::a(
+        '<i class="fa fa-user-o"></i>',
+        ['user-profile/create', 'id' => $model->id],
+        ['title' => Yii::t('yii',"Profil ma'lumoti"), 'class' => 'btn btn-info'])
+    ?>
+
     </p>
 
     <div class="box">
