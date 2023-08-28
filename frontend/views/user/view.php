@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'btn btn-default', 'title' => Yii::t('yii','Bosh sahifa')])
                 ?>
 
+
                 <?= Html::a(
                     '<i class="bx bx-rotate-right"></i>',
                     ['view', 'id' => $model->id],
