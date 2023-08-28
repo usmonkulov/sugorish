@@ -1,4 +1,6 @@
 <?php
+
+use settings\helpers\GenderHelper;
 use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
@@ -229,8 +231,16 @@ use yii\helpers\Html;
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
-                        <span class="hidden-xs">Bobur Usmonkulov</span>
+                        <?php
+                            if ($user->userProfile->gender == GenderHelper::GENDER_MALE) {
+                                echo Html::img('@web/avatar/m.png', ['class' => 'user-image', 'alt' => GenderHelper::GENDER_FEMALE]);
+                            } elseif ($user->userProfile->gender == GenderHelper::GENDER_FEMALE) {
+                                echo Html::img('@web/avatar/f.png', ['class' => 'user-image', 'alt' => GenderHelper::GENDER_FEMALE]);
+                            } else {
+                                echo Html::img('@web/avatar/user.png', ['class' => 'user-image', 'alt' => 'User Image']);
+                            }
+                        ?>
+                        <?= Html::tag('span', !empty($user->userProfile->user_id) ? $user->userProfile->first_name . ' ' . $user->userProfile->last_name : $user->username, ['class' => 'hidden-xs'])?>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- Menu Footer-->

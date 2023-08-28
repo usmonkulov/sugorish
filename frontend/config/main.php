@@ -7,6 +7,7 @@ $params = array_merge(
 );
 
 return [
+    'defaultRoute' => 'irrigation/road/index',
     'name' => Yii::t('app', 'Nomzodlar'),
     'id' => 'app-frontend',
     'language' => 'uz',

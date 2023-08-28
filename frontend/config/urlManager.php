@@ -10,7 +10,7 @@ return [
     'showScriptName' => false,
     'cache' => false,
     'rules' => [
-        '' => 'site/index',
+        '' => 'irrigation/road/index',
         'create' => 'candidate/create',
         'check' => 'candidate/check',
         'signup' => 'auth/signup/request',

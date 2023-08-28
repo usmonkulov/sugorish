@@ -1,5 +1,6 @@
 <?php
 
+use settings\helpers\GenderHelper;
 use settings\helpers\UserHelper;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -55,10 +56,14 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
     <?= Html::a('<i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success','title'=>Yii::t('yii','Create')]) ?>
 
-    <?= Html::a(
-        '<i class="fa fa-user-o"></i>',
-        ['user-profile/create', 'id' => $model->id],
-        ['title' => Yii::t('yii',"Profil ma'lumoti"), 'class' => 'btn btn-info'])
+    <?php
+        if (empty($model->userProfile->user_id)) {
+            echo Html::a('<i class="fa fa-user-md"></i>', ['user-profile/create', 'id' => $model->id],
+                ['title' => Yii::t('yii',"Profil ma'lumoti"), 'class' => 'btn btn-info']);
+        } else {
+            echo Html::a('<i class="fa fa-user-md"></i>', ['user-profile/update', 'id' => $model->id],
+                ['title' => Yii::t('yii',"Profil ma'lumoti"), 'class' => 'btn btn-info']);
+        }
     ?>
 
     </p>
@@ -82,6 +87,29 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => implode(', ', ArrayHelper::getColumn(Yii::$app->authManager->getRolesByUser($model->id), 'description')),
                         'format' => 'raw',
                     ],
+                    'userProfile.first_name:html',
+                    'userProfile.last_name:html',
+                    'userProfile.middle_name:html',
+                    'userProfile.birthday:html',
+                    [
+                        'attribute' => 'userProfile.gender',
+                        'format' => 'html',
+                        'value'     => function ($data) {
+                            if ($data->userProfile)
+                                return GenderHelper::getGenderHtml($data->userProfile);
+                        },
+                    ],
+                    [
+                        'label' => Yii::t('app',"Viloyat"),
+                        'attribute' => 'userProfile.region.title_oz',
+                        'format' => 'html',
+                    ],
+                    [
+                        'label' => Yii::t('app',"Tuman yoki Shahar"),
+                        'attribute' => 'userProfile.district.title_oz',
+                        'format' => 'html',
+                    ],
+                    'userProfile.address:html',
                     'created_at:datetime',
                     'updated_at:datetime',
                 ],

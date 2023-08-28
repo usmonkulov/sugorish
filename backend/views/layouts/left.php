@@ -1,3 +1,8 @@
+<?php
+
+use settings\helpers\GenderHelper;
+use yii\helpers\Html;
+?>
 <aside class="main-sidebar">
 
     <section class="sidebar">
@@ -5,12 +10,22 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+
+                <?php
+                    if ($user->userProfile->gender == GenderHelper::GENDER_MALE) {
+                        echo Html::img('@web/avatar/m.png', ['class' => 'img-circle', 'alt' => GenderHelper::GENDER_FEMALE]);
+                    } elseif ($user->userProfile->gender == GenderHelper::GENDER_FEMALE) {
+                        echo Html::img('@web/avatar/f.png', ['class' => 'img-circle', 'alt' => GenderHelper::GENDER_FEMALE]);
+                    } else {
+                        echo Html::img('@web/avatar/user.png', ['class' => 'img-circle', 'alt' => 'User Image']);
+                    }
+                ?>
+
             </div>
             <div class="pull-left info">
-                <p>Alexander Pierce</p>
+                <?= Html::tag('p', !empty($user->userProfile->user_id) ? $user->userProfile->first_name . ' ' . $user->userProfile->last_name : $user->username);?>
 
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                <a href="#"><i class="fa fa-circle text-success"></i> <?=Yii::t('app', 'Onlayn')?></a>
             </div>
         </div>
 

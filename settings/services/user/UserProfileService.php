@@ -22,13 +22,14 @@ class UserProfileService
     }
 
     /**
+     * @param $id
      * @param UserProfileForm $form
      * @return UserProfile
      */
-    public function create(UserProfileForm $form): UserProfile
+    public function create($id, UserProfileForm $form): UserProfile
     {
         $userProfileRepository = UserProfile::create(
-            $form->user_id,
+            $form->user_id = $id,
             $form->first_name,
             $form->last_name,
             $form->middle_name,

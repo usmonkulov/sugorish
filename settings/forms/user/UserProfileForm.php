@@ -16,8 +16,8 @@ class UserProfileForm extends Model
     {
         return [
             [['first_name', 'last_name', 'birthday', 'district_id', 'address'], 'required'],
+            [['region_id'], 'default', 'value' => 1718],
             [['birthday', 'created_at', 'updated_at'], 'safe'],
-            [['region_id', 'district_id', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['region_id', 'district_id', 'created_by', 'updated_by'], 'integer'],
             [['address'], 'string'],
             [['first_name', 'last_name', 'middle_name', 'avatar'], 'string', 'max' => 255],

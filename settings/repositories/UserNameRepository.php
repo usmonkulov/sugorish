@@ -1,8 +1,6 @@
 <?php
 
-
 namespace settings\repositories;
-
 
 use settings\entities\NotFoundException;
 use settings\entities\user\User;

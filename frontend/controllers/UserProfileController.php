@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\controllers;
+namespace frontend\controllers;
 
 use settings\forms\user\UserProfileForm;
 use settings\repositories\UserProfileRepository;

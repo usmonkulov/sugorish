@@ -76,25 +76,25 @@
         </li>
 
         <!-- Layouts -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">Yo'llar</div>
-            </a>
-
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <div data-i18n="Without menu">M-39</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
-                        <div data-i18n="Without navbar">M-37</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+<!--        <li class="menu-item">-->
+<!--            <a href="javascript:void(0);" class="menu-link menu-toggle">-->
+<!--                <i class="menu-icon tf-icons bx bx-layout"></i>-->
+<!--                <div data-i18n="Layouts">Yo'llar</div>-->
+<!--            </a>-->
+<!---->
+<!--            <ul class="menu-sub">-->
+<!--                <li class="menu-item">-->
+<!--                    <a href="#" class="menu-link">-->
+<!--                        <div data-i18n="Without menu">M-39</div>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--                <li class="menu-item">-->
+<!--                    <a href="#" class="menu-link">-->
+<!--                        <div data-i18n="Without navbar">M-37</div>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </li>-->
 
         <!-- Admin -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text"><?=Yii::t('app','Admin')?></span></li>

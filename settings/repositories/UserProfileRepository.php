@@ -16,7 +16,7 @@ class UserProfileRepository
      */
     public function get($id)
     {
-        return $this->getBy(['id' => $id]);
+        return $this->getBy(['user_id' => $id]);
     }
 
     /**

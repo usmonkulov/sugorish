@@ -10,6 +10,7 @@ use yii\bootstrap\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 
+$user = (new UserNameRepository())->get(Yii::$app->user->id);
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -46,7 +47,7 @@ AppAsset::register($this);
         <!-- Layout container -->
         <div class="layout-page">
             <!-- Navbar -->
-            <?= $this->render('header.php'); ?>
+            <?= $this->render('header.php', ['user' => $user]); ?>
             <!-- / Navbar -->
 
             <!-- Content wrapper -->

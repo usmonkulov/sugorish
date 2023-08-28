@@ -1,5 +1,7 @@
 <?php
 
+use settings\helpers\GenderHelper;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 ?>
@@ -30,23 +32,19 @@ use yii\helpers\Html;
 
         <ul class="navbar-nav flex-row align-items-center ms-auto">
             <!-- Place this tag where you want the button to render. -->
-            <li class="nav-item lh-1 me-3">
-                <a
-                    class="github-button"
-                    href="https://github.com/themeselection/sneat-html-admin-template-free"
-                    data-icon="octicon-star"
-                    data-size="large"
-                    data-show-count="true"
-                    aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
-                ><?=Yii::t('app',"Yo'llar")?></a
-                >
-            </li>
-
             <!-- User -->
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                        <img src="/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                        <?php
+                            if ($user->userProfile->gender == GenderHelper::GENDER_MALE) {
+                                echo Html::img('@web/avatar/m.png', ['class' => 'w-px-40 h-auto rounded-circle', 'alt' => GenderHelper::GENDER_FEMALE]);
+                            } elseif ($user->userProfile->gender == GenderHelper::GENDER_FEMALE) {
+                                echo Html::img('@web/avatar/f.png', ['class' => 'w-px-40 h-auto rounded-circle', 'alt' => GenderHelper::GENDER_FEMALE]);
+                            } else {
+                                echo Html::img('@web/avatar/user.png', ['class' => 'w-px-40 h-auto rounded-circle', 'alt' => 'User Image']);
+                            }
+                        ?>
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -54,8 +52,8 @@ use yii\helpers\Html;
                         <a class="dropdown-item" href="#">
                             <div class="d-flex">
                                 <div class="flex-grow-1">
-                                    <span class="fw-semibold d-block">Usmonkulov Bobur</span>
-                                    <small class="text-muted">user</small>
+                                    <?= Html::tag('span', !empty($user->userProfile->user_id) ? $user->userProfile->first_name . ' ' . $user->userProfile->last_name : $user->username, ['class' => 'fw-semibold d-block']);?>
+                                    <?= Html::tag('small', implode(', ', ArrayHelper::getColumn(Yii::$app->authManager->getRolesByUser($user->id), 'description')), ['class' => 'text-muted'])?>
                                 </div>
                             </div>
                         </a>
@@ -64,10 +62,17 @@ use yii\helpers\Html;
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">
-                            <i class="bx bx-user me-2"></i>
-                            <span class="align-middle">Mening profilim</span>
-                        </a>
+                        <?php
+                            echo Html::a(Html::tag('i','', ['class' => 'bx bx-user me-2']).Html::tag('span', Yii::t('app', "Mening profilim"),['class' => 'align-middle']), ['user-profile/view', 'id' => $user->id],
+                            ['class' => 'dropdown-item']);
+//                            if (empty($user->id)) {
+//                                echo Html::a(Html::tag('i','', ['class' => 'bx bx-user me-2']).Html::tag('span', Yii::t('app', "Mening profilim"),['class' => 'align-middle']), ['user-profile/view', 'id' => $user->id],
+//                                    ['class' => 'dropdown-item']);
+//                            } else {
+//                                echo Html::a(Html::tag('i','', ['class' => 'bx bx-user me-2']).Html::tag('span', Yii::t('app', "Mening profilim"),['class' => 'align-middle']), ['user-profile/update', 'id' => $user->id],
+//                                    ['class' => 'dropdown-item']);
+//                            }
+                        ?>
                     </li>
                     <li>
                         <div class="dropdown-divider"></div>

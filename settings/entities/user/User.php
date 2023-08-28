@@ -2,9 +2,14 @@
 
 namespace settings\entities\user;
 
+use settings\entities\enums\EnumRoadEmployees;
+use settings\entities\enums\EnumRoadPosition;
+use settings\entities\enums\EnumRoadType;
 use settings\entities\EventTrait;
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use settings\entities\AggregateRoot;
+use settings\entities\irrigation\Road;
+use settings\entities\irrigation\RoadIrrigationTask;
 use settings\entities\user\events\UserSignUpConfirmed;
 use settings\entities\user\events\UserSignUpRequested;
 use Yii;
@@ -13,22 +18,36 @@ use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
- * User model
+ * This is the model class for table "{{%user}}".
  *
- * @property integer $id
+ * @property int $id
  * @property string $username
- * @property string $password_hash
- * @property string $password_reset_token
- * @property string $email
- * @property string $email_confirm_token
- * @property string $phone
  * @property string $auth_key
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
+ * @property string $password_hash
+ * @property string|null $password_reset_token
+ * @property string $email
+ * @property string|null $email_confirm_token
+ * @property string $phone
+ * @property int $status
+ * @property int $created_at
+ * @property int $updated_at
  *
+ * @property EnumRoadEmployees[] $enumRoadEmployeesCreatedBy
+ * @property EnumRoadEmployees[] $enumRoadEmployeesUpdatedBy
+ * @property EnumRoadPosition[] $enumRoadPositionCreatedBy
+ * @property EnumRoadPosition[] $enumRoadPositionsUpdatedBy
+ * @property EnumRoadType[] $enumRoadTypesCreatedBy
+ * @property EnumRoadType[] $enumRoadTypesUpdatedBy
+ * @property RoadIrrigationTask[] $roadIrrigationTasksCreatedBy
+ * @property RoadIrrigationTask[] $roadIrrigationTasksUpdatedBy
+ * @property Road[] $roadsCreatedBy
+ * @property Road[] $roadsUpdatedBy
+ * @property UserProfile $userProfile
+ * @property UserProfile[] $userProfilesCreatedBy
+ * @property UserProfile[] $userProfilesUpdatedBy
+ * @property UserRefreshToken[] $userRefreshTokens
  */
+
 class User extends ActiveRecord implements AggregateRoot
 {
     use EventTrait;
@@ -231,5 +250,145 @@ class User extends ActiveRecord implements AggregateRoot
     private function generateAuthKey()
     {
         $this->auth_key = Yii::$app->security->generateRandomString();
+    }
+
+    /**
+     * Gets query for [[EnumRoadEmployeesCreatedBy]].
+     *
+     * @return ActiveQuery
+     */
+    public function getEnumRoadEmployeesCreatedBy()
+    {
+        return $this->hasMany(EnumRoadEmployees::class, ['created_by' => 'id']);
+    }
+
+    /**
+     * Gets query for [[EnumRoadEmployeesUpdatedBy]].
+     *
+     * @return ActiveQuery
+     */
+    public function getEnumRoadEmployeesUpdatedBy()
+    {
+        return $this->hasMany(EnumRoadEmployees::class, ['updated_by' => 'id']);
+    }
+
+    /**
+     * Gets query for [[EnumRoadPositionsCreatedBy]].
+     *
+     * @return ActiveQuery
+     */
+    public function getEnumRoadPositionCreatedBy()
+    {
+        return $this->hasMany(EnumRoadPosition::class, ['created_by' => 'id']);
+    }
+
+    /**
+     * Gets query for [[EnumRoadPositionsUpdatedBy]].
+     *
+     * @return ActiveQuery
+     */
+    public function getEnumRoadPositionsUpdatedBy()
+    {
+        return $this->hasMany(EnumRoadPosition::class, ['updated_by' => 'id']);
+    }
+
+    /**
+     * Gets query for [[EnumRoadTypesCreatedBy]].
+     *
+     * @return ActiveQuery
+     */
+    public function getEnumRoadTypesCreatedBy()
+    {
+        return $this->hasMany(EnumRoadType::class, ['created_by' => 'id']);
+    }
+
+    /**
+     * Gets query for [[EnumRoadTypesUpdatedBy]].
+     *
+     * @return ActiveQuery
+     */
+    public function getEnumRoadTypesUpdatedBy()
+    {
+        return $this->hasMany(EnumRoadType::class, ['updated_by' => 'id']);
+    }
+
+    /**
+     * Gets query for [[RoadIrrigationTasks]].
+     *
+     * @return ActiveQuery
+     */
+    public function getRoadIrrigationTasksCreatedBy()
+    {
+        return $this->hasMany(RoadIrrigationTask::class, ['created_by' => 'id']);
+    }
+
+    /**
+     * Gets query for [[RoadIrrigationTasksUpdatedBy]].
+     *
+     * @return ActiveQuery
+     */
+    public function getRoadIrrigationTasksUpdatedBy()
+    {
+        return $this->hasMany(RoadIrrigationTask::class, ['updated_by' => 'id']);
+    }
+
+    /**
+     * Gets query for [[RoadsCreatedBy]].
+     *
+     * @return ActiveQuery
+     */
+    public function getRoadsCreatedBy()
+    {
+        return $this->hasMany(Road::class, ['created_by' => 'id']);
+    }
+
+    /**
+     * Gets query for [[RoadsUpdatedBy]].
+     *
+     * @return ActiveQuery
+     */
+    public function getRoadsUpdatedBy()
+    {
+        return $this->hasMany(Road::class, ['updated_by' => 'id']);
+    }
+
+    /**
+     * Gets query for [[UserProfile]].
+     *
+     * @return ActiveQuery
+     */
+    public function getUserProfile()
+    {
+        return $this->hasOne(UserProfile::class, ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[UserProfilesCreatedBy]].
+     *
+     * @return ActiveQuery
+     */
+    public function getUserProfilesCreatedBy()
+    {
+        return $this->hasMany(UserProfile::class, ['created_by' => 'id']);
+    }
+
+    /**
+     * Gets query for [[UserProfilesUpdatedBy]].
+     *
+     * @return ActiveQuery
+     */
+    public function getUserProfilesUpdatedBy()
+    {
+        return $this->hasMany(UserProfile::class, ['updated_by' => 'id']);
+    }
+
+    /**
+     * Gets query for [[UserRefreshTokens]].
+     *
+     * @return ActiveQuery
+     */
+    public function getUserRefreshTokens()
+    {
+        return $this->hasMany(UserRefreshToken::class, ['user_id' => 'id']);
     }
 }
