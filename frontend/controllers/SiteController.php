@@ -14,6 +14,7 @@ class SiteController extends Controller
      */
     public function actions(): array
     {
+        $this->layout = 'main-error';
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -23,15 +24,5 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
-    }
-
-    /**
-     * Displays homepage.
-     *
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        return $this->render('index');
     }
 }

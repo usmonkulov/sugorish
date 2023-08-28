@@ -63,7 +63,7 @@ use yii\helpers\Html;
                     </li>
                     <li>
                         <?php
-                            echo Html::a(Html::tag('i','', ['class' => 'bx bx-user me-2']).Html::tag('span', Yii::t('app', "Mening profilim"),['class' => 'align-middle']), ['user-profile/view', 'id' => $user->id],
+                            echo Html::a(Html::tag('i','', ['class' => 'bx bx-user me-2']).Html::tag('span', Yii::t('app', "Mening profilim"),['class' => 'align-middle']), ['user/view', 'id' => $user->id],
                             ['class' => 'dropdown-item']);
 //                            if (empty($user->id)) {
 //                                echo Html::a(Html::tag('i','', ['class' => 'bx bx-user me-2']).Html::tag('span', Yii::t('app', "Mening profilim"),['class' => 'align-middle']), ['user-profile/view', 'id' => $user->id],
