@@ -53,7 +53,7 @@ class UserProfileController extends Controller
             try {
                 $this->userProfileService->create($user->id, $form);
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Profil saqlandi'));
-                return $this->redirect(Yii::$app->request->referrer);
+                return $this->redirect(['user-profile/update', 'id' => $user->id]);
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());
@@ -76,7 +76,7 @@ class UserProfileController extends Controller
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $this->userProfileService->edit($model->user_id, $form);
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Profil yangilandi').' (id: '.$model->user_id.')');
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Profil yangilandi'));
                 return $this->redirect(Yii::$app->request->referrer);
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);

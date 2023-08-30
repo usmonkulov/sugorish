@@ -2,7 +2,6 @@
 
 use kartik\date\DatePicker;
 use kartik\depdrop\DepDrop;
-use kartik\widgets\DateTimePicker;
 use kartik\widgets\Select2;
 use mihaildev\ckeditor\CKEditor;
 use settings\entities\enums\EnumRegions;
@@ -31,7 +30,7 @@ use yii\widgets\ActiveForm;
             />
             <div class="button-wrapper">
                 <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-                    <span class="d-none d-sm-block">Upload new photo</span>
+                    <span class="d-none d-sm-block">Yangi rasm yuklang</span>
                     <i class="bx bx-upload d-block d-sm-none"></i>
                     <input
                             type="file"
@@ -41,12 +40,11 @@ use yii\widgets\ActiveForm;
                             accept="image/png, image/jpeg"
                     />
                 </label>
-                <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
-                    <i class="bx bx-reset d-block d-sm-none"></i>
-                    <span class="d-none d-sm-block">Reset</span>
-                </button>
 
-                <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+                <?= Html::a(Html::tag('i', '', ['class' => 'bx bx-reset d-block d-sm-none']) . Html::tag('span', Yii::t('app', "Bekor qilish"), ['class' => 'd-none d-sm-block']), ['/'], ['class' => 'btn btn-outline-secondary account-image-reset mb-4','title' => Yii::t('yii','Bosh sahifa')]) ?>
+
+
+                <p class="text-muted mb-0">JPG, GIF, PNG Max size 800K</p>
             </div>
         </div>
     </div>
@@ -146,7 +144,7 @@ use yii\widgets\ActiveForm;
             </div>
             <div class="mt-2">
                 <?= Html::submitButton(!isset($model->isNewRecord) ? Yii::t('app', "Qo'shish") : Yii::t('app','Tahrirlash'), ['class' => !isset($model->isNewRecord) ? 'btn btn-success me-2' : 'btn btn-primary me-2']) ?>
-                <button type="reset" class="btn btn-outline-secondary"><?= Yii::t('app', "Bekor qilish")?></button>
+                <?= Html::a(Yii::t('app', "Bekor qilish"), ['/'], ['class' => 'btn btn-outline-secondary','title' => Yii::t('yii','Bosh sahifa')]) ?>
             </div>
         </form>
         <?php ActiveForm::end(); ?>

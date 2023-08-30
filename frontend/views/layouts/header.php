@@ -63,15 +63,13 @@ use yii\helpers\Html;
                     </li>
                     <li>
                         <?php
-                            echo Html::a(Html::tag('i','', ['class' => 'bx bxs-user-account me-2']).Html::tag('span', Yii::t('app', "Mening profilim"),['class' => 'align-middle']), ['user-profile/update', 'id' => $user->id],
-                            ['class' => 'dropdown-item']);
-//                            if (empty($user->id)) {
-//                                echo Html::a(Html::tag('i','', ['class' => 'bx bx-user me-2']).Html::tag('span', Yii::t('app', "Mening profilim"),['class' => 'align-middle']), ['user-profile/view', 'id' => $user->id],
-//                                    ['class' => 'dropdown-item']);
-//                            } else {
-//                                echo Html::a(Html::tag('i','', ['class' => 'bx bx-user me-2']).Html::tag('span', Yii::t('app', "Mening profilim"),['class' => 'align-middle']), ['user-profile/update', 'id' => $user->id],
-//                                    ['class' => 'dropdown-item']);
-//                            }
+                           if (empty($user->userProfile->user_id)) {
+                               echo Html::a(Html::tag('i','', ['class' => 'bx bxs-user-account me-2']).Html::tag('span', Yii::t('app', "Mening profilim"),['class' => 'align-middle']), ['user-profile/create', 'id' => $user->id],
+                                   ['class' => 'dropdown-item']);
+                           } else {
+                               echo Html::a(Html::tag('i','', ['class' => 'bx bxs-user-account me-2']).Html::tag('span', Yii::t('app', "Mening profilim"),['class' => 'align-middle']), ['user-profile/update', 'id' => $user->id],
+                                   ['class' => 'dropdown-item']);
+                           }
                         ?>
                     </li>
                     <li>
