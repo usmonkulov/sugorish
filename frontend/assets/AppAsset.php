@@ -32,8 +32,8 @@ class AppAsset extends AssetBundle
         'assets/js/dashboards-analytics.js',
         'https://buttons.github.io/buttons.js'
     ];
-    public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
-    ];
+//    public $depends = [
+//        'yii\web\YiiAsset',
+//        'yii\bootstrap\BootstrapAsset',
+//    ];
 }
