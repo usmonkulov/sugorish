@@ -103,7 +103,8 @@ class UserController extends Controller
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $this->service->edit($user->id, $form);
-                return $this->redirect(['view', 'id' => $user->id]);
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Login yangilandi'));
+                return $this->redirect(Yii::$app->request->referrer);
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', $e->getMessage());

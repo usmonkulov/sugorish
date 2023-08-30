@@ -52,6 +52,14 @@ use yii\widgets\ActiveForm;
     </div>
     <hr class="my-0" />
     <div class="card-body">
+        <!-- START ALERTS AND CALLOUTS -->
+        <?php if(Yii::$app->session->hasFlash('success') ): ?>
+            <div class="alert alert-primary alert-dismissible" role="alert">
+                <?php echo Yii::$app->session->getFlash('success'); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif;?>
+        <!-- END ALERTS AND CALLOUTS -->
         <?php $activeForm = ActiveForm::begin(); ?>
             <form id="formAccountSettings" method="POST" onsubmit="return false">
             <div class="row">
