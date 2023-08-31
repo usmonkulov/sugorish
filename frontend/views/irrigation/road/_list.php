@@ -5,6 +5,7 @@ use settings\status\irrigation\RoadIrrigationTaskStatus;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
 
 /* @var $model settings\entities\irrigation\Road */
 /* @var $key int*/

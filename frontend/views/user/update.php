@@ -4,6 +4,7 @@
 /* @var $model settings\forms\manage\user\UserEditForm */
 /* @var $user settings\entities\user\User */
 
+use kartik\password\PasswordInput;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -19,7 +20,7 @@ $this->title = Yii::t('app', "Login parolni tahrirlash");
             <ul class="nav nav-pills flex-column flex-md-row mb-3">
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
-                        <a class="nav-link <?= (Yii::$app->controller->id == 'user') ? '' : 'active' ?>" href="<?= Url::to(['user-profile/update', 'id' => $user->id])?>"><i class="bx bxs-user-account me-1"></i> <?=Yii::t('app', "Mening profilim")?></a>
+                        <a class="nav-link <?= (Yii::$app->controller->id == 'user') ? '' : 'active' ?>" href="<?= Url::to([empty($user->userProfile->user_id) ? 'user-profile/create' : 'user-profile/update', 'id' => $user->id])?>"><i class="bx bxs-user-account me-1"></i> <?=Yii::t('app', "Mening profilim")?></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?= (Yii::$app->controller->id == 'user-profile') ? '' : 'active' ?>" href="<?= Url::to(['user/update', 'id' => $user->id])?>"><i class="bx bxs-user me-1"></i> <?=$this->title?></a>
@@ -38,11 +39,61 @@ $this->title = Yii::t('app', "Login parolni tahrirlash");
                         <?php endif;?>
                         <!-- END ALERTS AND CALLOUTS -->
                         <?php $form = ActiveForm::begin(); ?>
+                        <div class="row">
+                            <div class="mb-3 col-md-6">
 
-                        <?= $form->field($model, 'username')->textInput(['maxLength' => true]) ?>
-                        <?= $form->field($model, 'email')->textInput(['maxLength' => true]) ?>
-                        <?= $form->field($model, 'phone')->textInput(['maxLength' => true]) ?>
+                                <?= $form->field($model, 'username', [
+                                    'labelOptions' => [ 'class' => 'form-label' ]
+                                ])->textInput([
+                                    'autofocus' => 'autofocus',
+                                    'class' => 'form-control'
+                                ]) ?>
 
+                                <?= $form->field($model, 'password', [
+                                    'labelOptions' => [ 'class' => 'form-label' ]
+                                ])->widget(PasswordInput::class, [
+                                        'options' => ['placeholder' => Yii::t('app', "Parolni yangilash")],
+                                         'pluginOptions' => [
+                                             'showMeter' => true,
+                                             'toggleClass' =>  'kv-toggle',
+                                             'toggleTitle' => Yii::t('app', "Parolni ko'rsatish/yashirish"),
+                                             'verdictTitles' => [
+                                                 0 => Yii::t('app', "Kiritilmadi"),
+                                                 1 => Yii::t('app', "Juda zaif"),
+                                                 2 => Yii::t('app', "Zaif"),
+                                                 3 => Yii::t('app', "Yaxshi"),
+                                                 4 => Yii::t('app', "Kuchli"),
+                                                 5 => Yii::t('app', "Juda kuchli")
+                                             ],
+                                             'verdictClasses' => [
+                                                 0 => 'label label-default badge-secondary',
+                                                 1 => 'label label-danger badge-dange',
+                                                 2 => 'label label-warning badge-warning',
+                                                 3 => 'label label-info badge-info',
+                                                 4 => 'label label-primary badge-primary',
+                                                 5 => 'label label-success badge-success'
+                                             ],
+                                         ],
+                                ])->label(Yii::t('app', 'Parol')) ?>
+                            </div>
+                            <div class="mb-3 col-md-6">
+
+                                <?= $form->field($model, 'email', [
+                                    'labelOptions' => [ 'class' => 'form-label' ]
+                                ])->textInput([
+                                    'autofocus' => 'autofocus',
+                                    'class' => 'form-control'
+                                ]) ?>
+
+                                <?= $form->field($model, 'phone', [
+                                    'labelOptions' => [ 'class' => 'form-label' ]
+                                ])->textInput([
+                                    'autofocus' => 'autofocus',
+                                    'class' => 'form-control'
+                                ]) ?>
+
+                            </div>
+                            </div>
                         <div class="form-group">
                             <?= Html::submitButton(Yii::t('app', "Tahrirlash"), ['class' => 'btn btn-primary']) ?>
                         </div>

@@ -96,9 +96,11 @@ class RoadReadRepository
 
         return new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                'pageSizeLimit' => [1, 100]
-            ]
+
+//            'pagination' => [
+//                'pageSizeLimit' => [1, $query->count()],
+//                'pageSize' => 1,
+//            ]
         ]);
     }
 }

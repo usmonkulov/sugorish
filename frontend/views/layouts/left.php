@@ -97,10 +97,10 @@
 <!--        </li>-->
 
         <!-- Admin -->
-        <li class="menu-header small text-uppercase"><span class="menu-header-text"><?=Yii::t('app','Admin')?></span></li>
+        <li class="menu-header small text-uppercase"><span class="menu-header-text"><?=Yii::t('app',"Dasturda xatolik bo'lsa admin bilan bog'laning")?></span></li>
         <li class="menu-item">
             <a
-                href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
+                href="#"
                 target="_blank"
                 class="menu-link"
             >
@@ -110,7 +110,7 @@
         </li>
         <li class="menu-item">
             <a
-                href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
+                href="#"
                 target="_blank"
                 class="menu-link"
             >

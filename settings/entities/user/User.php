@@ -68,11 +68,12 @@ class User extends ActiveRecord implements AggregateRoot
         return $user;
     }
 
-    public function edit(string $username, string $email, string $phone): void
+    public function edit(string $username, string $email, string $phone, string $password): void
     {
         $this->username = $username;
         $this->email = $email;
         $this->phone = $phone;
+        $this->setPassword(!empty($password) ? $password : Yii::$app->security->generateRandomString());
         $this->updated_at = time();
     }
 

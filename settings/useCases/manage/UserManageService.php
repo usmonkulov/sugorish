@@ -55,7 +55,8 @@ class UserManageService
         $user->edit(
             $form->username,
             $form->email,
-            $form->phone
+            $form->phone,
+            $form->password
         );
         $this->transaction->wrap(function () use ($user, $form) {
             $this->repository->save($user);

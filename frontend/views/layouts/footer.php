@@ -7,14 +7,14 @@
         </div>
         <div>
             <a
-                href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
+                href="#"
                 target="_blank"
                 class="footer-link me-4"
             ><?=Yii::t('app',"Qo'llanama")?></a
             >
 
             <a
-                href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
+                href="#"
                 target="_blank"
                 class="footer-link me-4"
             ><?=Yii::t('app',"Texnik yordam")?></a

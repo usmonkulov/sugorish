@@ -59,7 +59,6 @@ use yii\widgets\ActiveForm;
         <?php endif;?>
         <!-- END ALERTS AND CALLOUTS -->
         <?php $activeForm = ActiveForm::begin(); ?>
-            <form id="formAccountSettings" method="POST" onsubmit="return false">
             <div class="row">
                 <div class="mb-3 col-md-6">
                     <?= $activeForm->field($form, 'first_name', [
@@ -144,7 +143,7 @@ use yii\widgets\ActiveForm;
             </div>
             <div class="mt-2">
                 <?= Html::submitButton(!isset($model->isNewRecord) ? Yii::t('app', "Qo'shish") : Yii::t('app','Tahrirlash'), ['class' => !isset($model->isNewRecord) ? 'btn btn-success me-2' : 'btn btn-primary me-2']) ?>
-                <?= Html::a(Yii::t('app', "Bekor qilish"), ['/'], ['class' => 'btn btn-outline-secondary','title' => Yii::t('yii','Bosh sahifa')]) ?>
+                <?= Html::a(Yii::t('app', "Bekor qilish"), ['/'], ['class' => 'btn btn-outline-secondary me-2','title' => Yii::t('yii','Bosh sahifa')]) ?>
             </div>
         </form>
         <?php ActiveForm::end(); ?>

@@ -12,6 +12,7 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+        'form/upload.css',
         'assets/vendor/fonts/boxicons.css',
         'assets/vendor/css/core.css',
         'assets/vendor/css/theme-default.css',
@@ -20,6 +21,7 @@ class AppAsset extends AssetBundle
         'assets/vendor/libs/apex-charts/apex-charts.css',
     ];
     public $js = [
+        'form/upload.js',
         'assets/vendor/js/helpers.js',
         'assets/js/config.js',
 //        'assets/vendor/libs/jquery/jquery.js',
@@ -32,8 +34,8 @@ class AppAsset extends AssetBundle
         'assets/js/dashboards-analytics.js',
         'https://buttons.github.io/buttons.js'
     ];
-//    public $depends = [
+    public $depends = [
 //        'yii\web\YiiAsset',
-//        'yii\bootstrap\BootstrapAsset',
-//    ];
+        'yii\bootstrap\BootstrapAsset',
+    ];
 }

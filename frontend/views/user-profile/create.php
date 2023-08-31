@@ -18,10 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-12">
             <ul class="nav nav-pills flex-column flex-md-row mb-3">
                 <li class="nav-item">
-                    <a class="nav-link <?= (Yii::$app->controller->id == 'user') ? '' : 'active' ?>" href="<?= Url::to(['user-profile/update', 'id' => $model->user_id])?>"><i class="bx bxs-user-account me-1"></i> <?= $this->title?></a>
+                    <a class="nav-link <?= (Yii::$app->controller->id == 'user') ? '' : 'active' ?>" href="<?= Url::to(['user-profile/update', 'id' => Yii::$app->user->id])?>"><i class="bx bxs-user-account me-1"></i> <?= $this->title?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?= (Yii::$app->controller->id == 'user-profile') ? '' : 'active' ?>" href="<?= Url::to(['user/update', 'id' => $model->user_id])?>"><i class="bx bxs-user me-1"></i> <?=Yii::t('app', "Login parolni o'zgartirish")?></a>
+                    <a class="nav-link <?= (Yii::$app->controller->id == 'user-profile') ? '' : 'active' ?>" href="<?= Url::to(['user/update', 'id' => Yii::$app->user->id])?>"><i class="bx bxs-user me-1"></i> <?=Yii::t('app', "Login parolni o'zgartirish")?></a>
                 </li>
             </ul>
             <div class="card mb-4">

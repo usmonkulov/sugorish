@@ -12,6 +12,7 @@ class UserEditForm extends Model
     public $username;
     public $email;
     public $phone;
+    public $password;
     public $role;
 
     public $_user;
@@ -35,6 +36,7 @@ class UserEditForm extends Model
             ['email', 'string', 'max' => 255],
             ['phone', 'integer'],
             [['username', 'email', 'phone'], 'unique', 'targetClass' => User::class, 'filter' => ['<>', 'id', $this->_user->id]],
+            ['password', 'string', 'min' => 6],
         ];
     }
 
