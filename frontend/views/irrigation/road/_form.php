@@ -1,118 +1,82 @@
 <?php
 
-use kartik\depdrop\DepDrop;
-use kartik\select2\Select2;
-use mihaildev\ckeditor\CKEditor;
-use settings\entities\enums\EnumRegions;
-use settings\entities\enums\EnumRoadEmployees;
-use settings\entities\enums\EnumRoadType;
-use settings\forms\irrigation\RoadForm;
-use settings\helpers\CommonHelper;
-use settings\repositories\enum\EnumRoadEmployeesRepository;
-use settings\repositories\enum\EnumRoadTypeRepository;
-use settings\status\GeneralStatus;
-use settings\status\irrigation\RoadStatus;
-use yii\helpers\ArrayHelper;
+use kartik\widgets\DateTimePicker;
+use settings\forms\irrigation\RoadIrrigationTaskForm;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $form RoadForm */
+/* @var $form RoadIrrigationTaskForm */
 /* @var $activeForm ActiveForm */
 ?>
 
 <div class="road-form">
 
+    <!-- START ALERTS AND CALLOUTS -->
+    <?php if(Yii::$app->session->hasFlash('success') ): ?>
+        <div class="alert alert-primary alert-dismissible" role="alert">
+            <?php echo Yii::$app->session->getFlash('success'); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif;?>
+    <!-- END ALERTS AND CALLOUTS -->
     <?php $activeForm = ActiveForm::begin(); ?>
-    <div class="box-body">
-        <div class="row">
-            <div class="col-md-4">
-            <?= $activeForm->field($form, 'title_uz')->textInput(['maxlength' => true]) ?>
-            <?= $activeForm->field($form, 'title_oz')->textInput(['maxlength' => true]) ?>
-            <?= $activeForm->field($form, 'title_ru')->textInput(['maxlength' => true]) ?>
-            <?= $activeForm->field($form, 'km')->textInput(['maxlength' => true]) ?>
-            <?= $activeForm->field($form, 'code_name')->textInput(['maxlength' => true]) ?>
-            </div>
 
-            <div class="col-md-4">
-                <?= $activeForm->field($form, 'coordination')->textInput(['maxlength' => true]) ?>
+    <?= $activeForm->field($form, 'start_time', [
+        'options' => [
+            'tag' => 'div',
+            'class' => 'mb-3'
+        ],
+        'labelOptions' => [ 'class' => 'form-label' ],
+        'inputOptions' => ['value' => date('Y-m-d H:i:s', strtotime( date('Y-m-d H:i:s') . ' -30 minutes')),],
+    ])->widget(DateTimePicker::class, [
+        'options' => ['placeholder' => Yii::t('app', "Boshlanish vaqtini kiriting")],
+        'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'yyyy-mm-dd hh:ii',
+            'startDate' =>  date('Y-m-d H:i:s', strtotime( date('Y-m-d H:i:s') . ' -4 hour')),
+            'endDate' =>  date('Y-m-d H:i:s', strtotime( date('Y-m-d H:i:s') . ' +4 hour')),
+        ],
+        'removeIcon' => Html::tag('i', '', ['class' => 'bx bxs-calendar-x', 'style' => 'margin-left: -8px;']),
+        'pickerIcon' =>  Html::tag('i', '', ['class' => 'bx bxs-calendar', 'style' => 'margin-left: -8px;']),
+    ]);?>
 
-                <?= $activeForm->field($form, 'region_id')->widget(Select2::class, [
-                    'data' => CommonHelper::getList(EnumRegions::find()->where(['parent_id' => null])->orderBy('order')->all()),
-                    'options' => ['placeholder' => '-- ' . Yii::t('app',"Viloyatni tanlang") . ' --', 'value' => 1718, 'disabled' => 'disabled'],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                    ],
-                ]) ?>
+    <?= $activeForm->field($form, 'end_time', [
+        'options' => [
+            'tag' => 'div',
+            'class' => 'mb-3'
+        ],
+        'labelOptions' => [ 'class' => 'form-label' ],
+        'inputOptions' => ['value' => date('Y-m-d H:i:s', strtotime( date('Y-m-d H:i:s') . '30 minutes')),],
+    ])->widget(DateTimePicker::class, [
+        'options' => ['placeholder' => Yii::t('app', "Boshlanish vaqtini kiriting")],
+        'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'yyyy-mm-dd hh:ii',
+            'startDate' =>  date('Y-m-d H:i:s', strtotime( date('Y-m-d H:i:s') . ' -4 hour')),
+            'endDate' =>  date('Y-m-d H:i:s', strtotime( date('Y-m-d H:i:s') . ' +4 hour')),
+        ],
+        'removeIcon' => Html::tag('i', '', ['class' => 'bx bxs-calendar-x', 'style' => 'margin-left: -8px;']),
+        'pickerIcon' =>  Html::tag('i', '', ['class' => 'bx bxs-calendar', 'style' => 'margin-left: -8px;']),
+    ]);?>
 
-                <?= $activeForm->field($form, 'district_id')->widget(DepDrop::class, [
-                    'data' => ArrayHelper::map(EnumRegions::findAll(['parent_id' => 1718]),'id','title_oz'),
-                    'options' => ['placeholder' => '-- ' . Yii::t('app',"Tuman yoki shaharni tanlang") . ' --'],
-                    'pluginOptions' => [
-                        'depends' => [Html::getInputId($form, 'region_id')],
-                        'placeholder' => Yii::t('app',"Tuman yoki shaharni tanlang"),
-                        'url' => Url::to(['/api/districts'])
-                    ]
-                ]) ?>
+    <?= $activeForm->field($form, 'content', [
+        'options' => [
+            'tag' => 'div',
+            'class' => 'mb-3'
+        ],
+        'labelOptions' => [ 'class' => 'form-label' ],
+    ])->textarea(
+        [
+            'class' => 'form-control',
+            'maxlength' => true,
+            'rows' => '2'
+        ]
+    ) ?>
 
-                <?= $activeForm->field($form, 'address')->widget(CKEditor::class,[
-                    'editorOptions' => [
-                        'preset' => 'basic', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
-                        'inline' => false, //по умолчанию false
-                    ],
-                ]);?>
-
-                <?= $activeForm->field($form, 'type_id')->widget(Select2::class, [
-                    'data' => ArrayHelper::map(EnumRoadTypeRepository::findCodeTitleAllForSelect(),'id','title'),
-                    'options' => ['placeholder' => '-- ' . Yii::t('app',"Yo'l toifasini tanlang") . ' --'],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                    ],
-                ]) ?>
-
-            </div>
-
-            <div class="col-md-4">
-                <?= $activeForm->field($form, 'enterprise_expert_id')->widget(Select2::class, [
-                    'data' => ArrayHelper::map(EnumRoadEmployeesRepository::findEnterpriseExpertAllForSelect(),'id','title'),
-                    'options' => ['placeholder' => '-- ' . Yii::t('app',"Korxonadan biriktirilgan hodimni tanlang") . ' --'],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                    ],
-                ]) ?>
-
-                <?= $activeForm->field($form, 'plot_chief_id')->widget(Select2::class, [
-                    'data' => ArrayHelper::map(EnumRoadEmployeesRepository::findPlotChiefAllForSelect(),'id','title'),
-                    'options' => ['placeholder' => '-- ' . Yii::t('app',"Uchastka boshlig'ini tanlang") . ' --'],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                    ],
-                ]) ?>
-
-                <?= $activeForm->field($form, 'water_employee_id')->widget(Select2::class, [
-                    'data' => ArrayHelper::map(EnumRoadEmployeesRepository::findWorkerAllForSelect(),'id','title'),
-                    'options' => ['placeholder' => '-- ' . Yii::t('app',"Yo'lga biriktirilgan suvchini tanlang") . ' --'],
-                    'pluginOptions' => [
-                        'allowClear' => true,
-                    ],
-                ]) ?>
-                <?= $activeForm->field($form, 'image_url')->widget(CKEditor::class,[
-                    'editorOptions' => [
-                        'preset' => 'basic', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
-                        'inline' => false, //по умолчанию false
-                    ],
-                ]);?>
-
-                <?= $activeForm->field($form, 'status')->checkbox(!isset($model->isNewRecord) ? ['value' => RoadStatus::STATUS_ACTIVE, 'checked' => true] : []); ?>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="form-group">
-                <?= Html::submitButton(!isset($model->isNewRecord) ? Yii::t('app', "Qo'shish") : Yii::t('app','Tahrirlash'), ['class' => !isset($model->isNewRecord) ? 'btn btn-success' : 'btn btn-primary']) ?>
-            </div>
-        </div>
-    </div>
+    <?= Html::submitButton(Yii::t('app', "Sug'orish"), ['class' => 'btn btn-primary']) ?>
     <?php ActiveForm::end(); ?>
 
 </div>

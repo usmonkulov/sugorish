@@ -17,7 +17,7 @@ class RoadSearchForm extends Model
     {
         return [
             [['id', 'title_uz', 'title_oz', 'title_ru', 'code_name', 'field_number', 'region_id', 'district_id', 'type_id', 'enterprise_expert_id', 'plot_chief_id', 'water_employee_id', 'created_by'], 'required'],
-            [['address', 'coordination', 'image_url'], 'string'],
+            [['address', 'coordination', 'image_url', 'all'], 'string'],
             [['region_id', 'district_id', 'type_id', 'enterprise_expert_id', 'plot_chief_id', 'water_employee_id', 'status', 'created_by', 'updated_by'], 'default', 'value' => null],
             [['region_id', 'district_id', 'type_id', 'enterprise_expert_id', 'plot_chief_id', 'water_employee_id', 'status', 'created_by', 'updated_by', 'start_km', 'end_km', ], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
