@@ -62,11 +62,11 @@ class m230808_070325_create_enum_road_type_table extends Migration
             'CASCADE'
         );
 
-        $this->insert('{{%enum_road_type}}', ['title_uz' => 'Маҳаллий','title_oz' => 'Mahalliy', 'title_ru' => 'Местный', 'code_name' => '4K-', 'created_by' => 1]);
-        $this->insert('{{%enum_road_type}}', ['title_uz' => 'Маҳаллий','title_oz' => 'Mahalliy', 'title_ru' => 'Местный', 'code_name' => '4H-', 'created_by' => 1]);
-        $this->insert('{{%enum_road_type}}', ['title_uz' => 'Давлат','title_oz' => 'Davlat', 'title_ru' => 'Состояние', 'code_name' => '4p-', 'created_by' => 1]);
-        $this->insert('{{%enum_road_type}}', ['title_uz' => 'Халқаро','title_oz' => 'Xalqaro', 'title_ru' => 'Международный', 'code_name' => 'M-', 'created_by' => 1]);
-        $this->insert('{{%enum_road_type}}', ['title_uz' => 'Халқаро','title_oz' => 'Xalqaro', 'title_ru' => 'Международный', 'code_name' => 'A-', 'created_by' => 1]);
+//        $this->insert('{{%enum_road_type}}', ['title_uz' => 'Маҳаллий','title_oz' => 'Mahalliy', 'title_ru' => 'Местный', 'code_name' => '4K-', 'created_by' => 1]);
+//        $this->insert('{{%enum_road_type}}', ['title_uz' => 'Маҳаллий','title_oz' => 'Mahalliy', 'title_ru' => 'Местный', 'code_name' => '4H-', 'created_by' => 1]);
+//        $this->insert('{{%enum_road_type}}', ['title_uz' => 'Давлат','title_oz' => 'Davlat', 'title_ru' => 'Состояние', 'code_name' => '4p-', 'created_by' => 1]);
+//        $this->insert('{{%enum_road_type}}', ['title_uz' => 'Халқаро','title_oz' => 'Xalqaro', 'title_ru' => 'Международный', 'code_name' => 'M-', 'created_by' => 1]);
+//        $this->insert('{{%enum_road_type}}', ['title_uz' => 'Халқаро','title_oz' => 'Xalqaro', 'title_ru' => 'Международный', 'code_name' => 'A-', 'created_by' => 1]);
 
     }
 

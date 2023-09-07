@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%enum_regions}}`.
  */
-class m230808_042210_create_enum_regions_table extends Migration
+class m230801_080840_create_enum_regions_table extends Migration
 {
     /**
      * {@inheritdoc}
