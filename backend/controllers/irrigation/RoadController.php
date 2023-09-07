@@ -58,7 +58,7 @@ class RoadController extends Controller
         $searchForm = new RoadSearchForm();
 
         $searchForm->load($queryParams);
-        $dataProvider = $this->roadReadRepository->search($searchForm);
+        $dataProvider = $this->roadReadRepository->backendSearch($searchForm);
 
         return $this->render('index', [
             'searchForm' => $searchForm,

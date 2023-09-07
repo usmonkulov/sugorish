@@ -1,6 +1,6 @@
 <?php
-namespace frontend\controllers\irrigation;
 
+namespace frontend\controllers\irrigation;
 
 use settings\forms\irrigation\RoadIrrigationTaskForm;
 use settings\forms\irrigation\search\RoadSearchForm;
@@ -10,6 +10,7 @@ use settings\services\irrigation\RoadIrrigationTaskService;
 use settings\services\irrigation\RoadService;
 use Yii;
 use yii\web\Controller;
+use yii\web\Response;
 
 class RoadController extends Controller
 {
@@ -41,7 +42,7 @@ class RoadController extends Controller
         $searchForm = new RoadSearchForm();
 
         $searchForm->load($queryParams);
-        $dataProvider = $this->roadReadRepository->search($searchForm);
+        $dataProvider = $this->roadReadRepository->frontendSearch($searchForm);
 
         return $this->render('index', [
             'searchForm' => $searchForm,
@@ -51,16 +52,8 @@ class RoadController extends Controller
 
     /**
      * @param $id
-     * @return string
+     * @return string|Response
      */
-    public function actionView($id): string
-    {
-        $road = $this->roadRepository->get($id);
-        return $this->render('view', [
-            'model' => $road
-        ]);
-    }
-
     public function actionRoadListIrrigationTaskCreate($id)
     {
         $model = $this->roadRepository->get($id);

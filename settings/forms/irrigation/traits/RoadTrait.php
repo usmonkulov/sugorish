@@ -6,6 +6,8 @@ use settings\entities\irrigation\Road;
 
 trait RoadTrait
 {
+    public $all;
+
     public $id;
     public $title_uz;
     public $title_oz;

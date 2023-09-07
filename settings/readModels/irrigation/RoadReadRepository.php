@@ -16,18 +16,8 @@ use yii\data\ActiveDataProvider;
 
 class RoadReadRepository
 {
-    public function search(RoadSearchForm $form): ActiveDataProvider
+    public function frontendSearch(RoadSearchForm $form): ActiveDataProvider
     {
-//        $roadAlias = 'road';
-//        $taskAlias = 'road_irrigation_tasks';
-//        $query = Road::find()
-//            ->joinWith('roadIrrigationTask', true)
-//            ->alias("{$roadAlias}")
-//            ->andWhere(["{$roadAlias}.status" => GeneralStatus::STATUS_ENABLED])
-//            ->andWhere(["{$taskAlias}.color_status" => RoadIrrigationTaskStatus::COLOR_STATUS_PROCESS])
-//            ->orderBy("{$taskAlias}.watering_time asc")
-//        ;
-
         $roadAlias = 'r';
         $taskAlias = 'rit';
         $districtAlias = 'd';
@@ -65,6 +55,47 @@ class RoadReadRepository
             ->andWhere(["{$taskAlias}.color_status" =>  RoadIrrigationTaskStatus::COLOR_STATUS_PROCESS])
             ->asArray()
             ->orderBy("{$taskAlias}.watering_time asc")
+        ;
+
+        if ($form->hasErrors()) {
+            $query->andWhere('1=0');
+        }
+
+//        $query->andFilterWhere([
+//            'id' =>                     $form->id,
+//            'region_id' =>              $form->region_id,
+//            'district_id' =>            $form->district_id,
+//            'type_id' =>                $form->type_id,
+//            'enterprise_expert_id' =>   $form->enterprise_expert_id,
+//            'water_employee_id' =>      $form->water_employee_id,
+//            'created_by' =>             $form->created_by,
+//            'updated_by' =>             $form->updated_by
+//        ]);
+
+        $query
+            ->orFilterWhere(['ilike', "{$roadAlias}.title_oz", $form->all])
+            ->orFilterWhere(['ilike', "{$roadAlias}.title_oz", $form->all])
+            ->orFilterWhere(['ilike', "{$roadAlias}.title_ru", $form->all])
+
+            ->orFilterWhere(['ilike', "{$typeAlias}.code_name", $form->all])
+            ->orFilterWhere(['ilike', "{$roadAlias}.code_name", $form->all])
+        ;
+
+        return new ActiveDataProvider([
+            'query' => $query,
+
+//            'pagination' => [
+//                'pageSizeLimit' => [1, $query->count()],
+//                'pageSize' => 1,
+//            ]
+        ]);
+    }
+
+    public function backendSearch(RoadSearchForm $form): ActiveDataProvider
+    {
+        $query = Road::find()
+            ->andWhere(["status" => GeneralStatus::STATUS_ENABLED])
+            ->orderBy("id desc")
         ;
 
         if ($form->hasErrors()) {
