@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <?php  echo $this->render('_search', ['model' => $searchForm]); ?>
+<!--    --><?php // echo $this->render('_search', ['model' => $searchForm]); ?>
 
     <?= ListView::widget([
         'pager' => [
