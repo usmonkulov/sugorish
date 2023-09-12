@@ -135,4 +135,14 @@ class EnumRoadEmployeesRepository
             throw new \RuntimeException(Yii::t('app', 'Removing error.'));
         }
     }
+
+    /**
+     * @return bool|int|string|null
+     */
+    public function employeesAllCount(){
+        $employees = EnumRoadEmployees::find()->count();
+        if(!empty($employees))
+            return $employees;
+        return 0;
+    }
 }

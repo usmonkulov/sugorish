@@ -76,4 +76,14 @@ class RoadRepository
             throw new \RuntimeException(Yii::t('app', 'Removing error.'));
         }
     }
+
+    /**
+     * @return bool|int|string|null
+     */
+    public function roadAllCount(){
+        $road = Road::find()->count();
+        if(!empty($road))
+            return $road;
+        return 0;
+    }
 }

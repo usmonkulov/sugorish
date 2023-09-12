@@ -28,4 +28,15 @@ class UserNameRepository
         }
         return $user;
     }
+
+    /**
+     * @return bool|int|string|null
+     */
+
+    public function userAllCount(){
+        $user = User::find()->count();
+        if(!empty($user))
+            return $user;
+        return 0;
+    }
 }

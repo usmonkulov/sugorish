@@ -7,6 +7,7 @@ use settings\forms\irrigation\search\RoadSearchForm;
 use settings\readModels\irrigation\RoadReadRepository;
 use settings\repositories\irrigation\RoadRepository;
 use settings\services\irrigation\RoadService;
+use settings\status\irrigation\RoadStatus;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -125,6 +126,27 @@ class RoadController extends Controller
         ]);
     }
 
+    /**
+     * @param $id
+     * @param $status
+     * @return Response
+     */
+    public function actionActivate($id, $status)
+    {
+        try {
+            $road = $this->roadRepository->get($id);
+            $this->roadService->activate($road->id);
+            Yii::$app->session->setFlash('success', RoadStatus::getLabel(!$road->status).' (id: '.$road->id.') (title: '.$road->title_oz.')');
+            if($status == 'index'){
+                return $this->redirect('index');
+            } elseif ($status == 'view') {
+                return $this->redirect(['view', 'id' => $road->id]);
+            }
+        } catch (\DomainException $e) {
+            Yii::$app->errorHandler->logException($e);
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+    }
 
     /**
      * @param $id

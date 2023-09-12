@@ -8,6 +8,7 @@ use settings\forms\irrigation\RoadForm;
 use settings\helpers\Transaction;
 use settings\repositories\irrigation\RoadIrrigationTaskRepository;
 use settings\repositories\irrigation\RoadRepository;
+use settings\status\irrigation\RoadStatus;
 use Yii;
 use yii\db\StaleObjectException;
 
@@ -106,6 +107,16 @@ class RoadService
             $form->status,
             $form->image_url,
         );
+        $this->roadRepository->save($road);
+    }
+
+    /**
+     * @param $id
+     */
+    public function activate($id)
+    {
+        $road = $this->roadRepository->get($id);
+        $road->status = ($road->status == RoadStatus::STATUS_INACTIVE) ? RoadStatus::STATUS_ACTIVE : RoadStatus::STATUS_INACTIVE;
         $this->roadRepository->save($road);
     }
 

@@ -126,6 +126,11 @@ class EnumRoadEmployeesController extends Controller
         ]);
     }
 
+    /**
+     * @param $id
+     * @param $status
+     * @return Response
+     */
     public function actionActivate($id, $status)
     {
         try {

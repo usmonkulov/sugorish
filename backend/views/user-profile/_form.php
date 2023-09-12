@@ -2,7 +2,6 @@
 
 use kartik\date\DatePicker;
 use kartik\depdrop\DepDrop;
-use kartik\widgets\DateTimePicker;
 use kartik\widgets\Select2;
 use mihaildev\ckeditor\CKEditor;
 use settings\entities\enums\EnumRegions;

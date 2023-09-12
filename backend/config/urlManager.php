@@ -5,7 +5,6 @@
 return [
     'class' => 'yii\web\UrlManager',
     'hostInfo' => $params['backendHostInfo'],
-//    'baseUrl' => '',
     'enablePrettyUrl' => true,
     'showScriptName' => false,
     'rules' => [
@@ -18,8 +17,11 @@ return [
         'enum-road-type/create'   => 'enum/enum-road-type/create',
         'enum-road-employees'          => 'enum/enum-road-employees/index',
         'enum-road-employees/create'   => 'enum/enum-road-employees/create',
-        'road/<action:(view)>/<id:\d+>'  => 'irrigation/road/<action>',
+        'road/<action:(view|update|delete)>/<id:\d+>'  => 'irrigation/road/<action>',
         '<_a:login|logout>' => 'auth/<_a>',
+
+        'user'                                          => 'user/index',
+        'user/<action:(view|update|delete)>/<id:\d+>'   => 'user/<action>',
 
         '<_c:[\w\-]+>' => '<_c>/index',
         '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',

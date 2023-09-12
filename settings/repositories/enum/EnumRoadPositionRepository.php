@@ -78,4 +78,14 @@ class EnumRoadPositionRepository
             throw new \RuntimeException(Yii::t('app', 'Removing error.'));
         }
     }
+
+    /**
+     * @return bool|int|string|null
+     */
+    public function positionAllCount(){
+        $position = EnumRoadPosition::find()->count();
+        if(!empty($position))
+            return $position;
+        return 0;
+    }
 }

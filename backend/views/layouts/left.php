@@ -30,22 +30,22 @@ use yii\helpers\Html;
         </div>
 
         <!-- search form -->
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search..."/>
-              <span class="input-group-btn">
-                <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-            </div>
-        </form>
+<!--        <form action="#" method="get" class="sidebar-form">-->
+<!--            <div class="input-group">-->
+<!--                <input type="text" name="q" class="form-control" placeholder="Search..."/>-->
+<!--              <span class="input-group-btn">-->
+<!--                <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>-->
+<!--                </button>-->
+<!--              </span>-->
+<!--            </div>-->
+<!--        </form>-->
         <!-- /.search form -->
 
         <?= dmstr\widgets\Menu::widget(
             [
                 'options' => ['class' => 'sidebar-menu', 'data-widget' => 'tree'],
                 'items' => [
-                    ['label' => 'Management', 'options' => ['class' => 'header']],
+                    ['label' => Yii::t('app', "Boshqaruv paneli"), 'options' => ['class' => 'header']],
                         ['label' => Yii::t('app', "Sug'orish"), 'options' => ['class' => 'no-active'], 'icon' => 'folder', 'items' => [
                             ['label' => Yii::t('app', "Yo'llar"), 'icon' => 'fa fa-irrigation', 'url' => ['/road/index'], 'active' => $this->context->id == 'irrigation/road'],
                             ['label' => Yii::t('app', 'Lavozimlar'), 'icon' => 'fa fa-user-secret', 'url' => ['/enum-road-position/index'], 'active' => $this->context->id == 'enum/enum-road-position'],

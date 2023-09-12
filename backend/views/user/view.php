@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= Html::a(
         '<i class="fa fa-pencil"></i>',
         ['update', 'id' => $model->id],
-        ['title' => Yii::t('yii','Tahrirlash'),'class' => 'btn btn-primary'])
+        ['title' => Yii::t('yii','Login parolni tahrirlash'),'class' => 'btn btn-primary'])
     ?>
 
     <?= Html::a(
@@ -54,15 +54,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ]
         )
     ?>
-    <?= Html::a('<i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success','title'=>Yii::t('yii','Create')]) ?>
+    <?= Html::a('<i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success','title'=>Yii::t('yii','Foydalanuvchi yaratish')]) ?>
 
     <?php
         if (empty($model->userProfile->user_id)) {
             echo Html::a('<i class="fa fa-user-md"></i>', ['user-profile/create', 'id' => $model->id],
-                ['title' => Yii::t('yii',"Profil ma'lumoti"), 'class' => 'btn btn-info']);
+                ['title' => Yii::t('yii',"Profil ma'lumotini yaratish"), 'class' => 'btn btn-info']);
         } else {
             echo Html::a('<i class="fa fa-user-md"></i>', ['user-profile/update', 'id' => $model->id],
-                ['title' => Yii::t('yii',"Profil ma'lumoti"), 'class' => 'btn btn-info']);
+                ['title' => Yii::t('yii',"Profil ma'lumotini tahrirlash"), 'class' => 'btn btn-info']);
         }
     ?>
 

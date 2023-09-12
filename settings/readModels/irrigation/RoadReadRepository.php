@@ -93,9 +93,7 @@ class RoadReadRepository
 
     public function backendSearch(RoadSearchForm $form): ActiveDataProvider
     {
-        $query = Road::find()
-            ->andWhere(["status" => GeneralStatus::STATUS_ENABLED])
-            ->orderBy("id desc")
+        $query = Road::find()->orderBy("id desc")
         ;
 
         if ($form->hasErrors()) {
